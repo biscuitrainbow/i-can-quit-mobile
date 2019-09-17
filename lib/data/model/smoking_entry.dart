@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:i_can_quit/ui/util/date_time_util.dart';
 
 class SmokingEntry {
   final int id;
@@ -44,6 +45,32 @@ class SmokingEntry {
       location: location ?? this.location,
       mood: mood ?? this.mood,
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'smoking_needed_level': this.smokingNeededLevel,
+      'has_smoked': hasSmoked ? 1 : 0,
+      'date_time': toMysqlDateTime(this.datetime),
+      'lat': this.location?.latitude,
+      'lng': this.location?.longitude,
+      'mood': this.mood,
+    };
+  }
+
+  static SmokingEntry fromJson(dynamic json) {
+    return SmokingEntry(
+      id: json['id'],
+      smokingNeededLevel: json['smoking_needed_level'],
+      hasSmoked: json['has_smoked'],
+      datetime: fromMysqlDateTime(json['date_time']),
+      location: json['lat'] != null && json['lng'] != null ? LatLng(json['lat'], json['lng']) : null,
+      mood: json['mood'] ?? null,
+    );
+  }
+
+  static List<SmokingEntry> fromJsonArray(List<dynamic> array) {
+    return array.map((json) => fromJson(json)).toList();
   }
 
   @override

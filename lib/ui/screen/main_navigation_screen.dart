@@ -1,0 +1,38 @@
+import 'package:flutter/material.dart';
+import 'package:i_can_quit/ui/screen/smoking_entry_form.dart';
+import 'package:i_can_quit/ui/screen/smoking_overview.dart';
+
+class MainNavigationScreen extends StatefulWidget {
+  static const route = '/main_navigation';
+  @override
+  _MainNavigationScreenState createState() => _MainNavigationScreenState();
+}
+
+class _MainNavigationScreenState extends State<MainNavigationScreen> {
+  int _currentScreen = 0;
+
+  void _changeScreen(int index) {
+    setState(() => _currentScreen = index);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Widget> screens = [
+      SmokingOverviewScreen(),
+      SmokingEntryFormScreen(),
+    ];
+
+    return Scaffold(
+      body: screens[_currentScreen],
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(title: Text('ภาพรวม'), icon: Icon(Icons.pie_chart_outlined)),
+          BottomNavigationBarItem(title: Text('บันทึก'), icon: Icon(Icons.edit)),
+          // BottomNavigationBarItem(title: Text('ข่าวสาร'), icon: Icon(Icons.pie_chart_outlined))
+        ],
+        onTap: _changeScreen,
+      ),
+    );
+    ;
+  }
+}

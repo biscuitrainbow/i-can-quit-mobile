@@ -9,6 +9,7 @@ class GroupSelector extends StatefulWidget {
     this.selectedItem = '',
     this.activeColor = Colors.green,
     this.title = '',
+    this.warp = true,
   });
 
   final String title;
@@ -16,6 +17,7 @@ class GroupSelector extends StatefulWidget {
   final Function(String) onChanged;
   final String selectedItem;
   final Color activeColor;
+  final bool warp;
 
   @override
   GroupSelectorState createState() {
@@ -48,24 +50,45 @@ class GroupSelectorState extends State<GroupSelector> {
               SizedBox(width: 16.0),
             ],
           ),
-        Expanded(
-          child: Wrap(
-            spacing: 4.0,
-            alignment: WrapAlignment.start,
-            children: [
-              for (final item in widget.items)
-                Container(
-                  margin: EdgeInsets.only(right: 4.0),
-                  child: ChipSelector(
-                    onPressed: () => widget.onChanged(item),
-                    activeColor: widget.activeColor,
-                    selected: _isSelected(item),
-                    label: item,
+        if (this.widget.warp)
+          Expanded(
+            child: Wrap(
+              spacing: 4.0,
+              alignment: WrapAlignment.start,
+              children: [
+                for (final item in widget.items)
+                  Container(
+                    margin: EdgeInsets.only(right: 4.0),
+                    child: ChipSelector(
+                      onPressed: () => widget.onChanged(item),
+                      activeColor: widget.activeColor,
+                      selected: _isSelected(item),
+                      label: item,
+                    ),
                   ),
-                ),
-            ],
+              ],
+            ),
+          )
+        else
+          Container(
+            height: 50.0,
+            width: MediaQuery.of(context).size.width,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                for (final item in widget.items)
+                  Container(
+                    margin: EdgeInsets.only(right: 4.0),
+                    child: ChipSelector(
+                      onPressed: () => widget.onChanged(item),
+                      activeColor: widget.activeColor,
+                      selected: _isSelected(item),
+                      label: item,
+                    ),
+                  ),
+              ],
+            ),
           ),
-        ),
       ],
     );
   }

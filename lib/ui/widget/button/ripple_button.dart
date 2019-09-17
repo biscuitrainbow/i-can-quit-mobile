@@ -24,6 +24,7 @@ class RippleButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: this.decoration,
+      color: this.backgroundColor,
       child: Material(
         color: Colors.transparent,
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
