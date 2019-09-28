@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:i_can_quit/ui/screen/news/news_list_screen.dart';
 import 'package:i_can_quit/ui/screen/smoking_entry_form.dart';
 import 'package:i_can_quit/ui/screen/smoking_overview.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   static const route = '/main_navigation';
@@ -20,6 +22,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     final List<Widget> screens = [
       SmokingOverviewScreen(),
       SmokingEntryFormScreen(),
+      NewsListScreen()
     ];
 
     return Scaffold(
@@ -28,7 +31,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         items: [
           BottomNavigationBarItem(title: Text('ภาพรวม'), icon: Icon(Icons.pie_chart_outlined)),
           BottomNavigationBarItem(title: Text('บันทึก'), icon: Icon(Icons.edit)),
-          // BottomNavigationBarItem(title: Text('ข่าวสาร'), icon: Icon(Icons.pie_chart_outlined))
+          BottomNavigationBarItem(title: Text('ข่าวสาร'), icon: Icon(Icons.pie_chart_outlined))
         ],
         onTap: _changeScreen,
       ),
