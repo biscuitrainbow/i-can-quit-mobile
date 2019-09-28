@@ -25,7 +25,7 @@ class _TimePassedState extends State<TimePassed> {
 
     _now = DateTime.now();
 
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() => _now = DateTime.now());
     });
   }
