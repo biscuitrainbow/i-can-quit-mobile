@@ -19,15 +19,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> screens = [
-      SmokingOverviewScreen(),
-      SmokingEntryFormScreen(),
-      NewsListScreen()
-    ];
+    final List<Widget> screens = [SmokingOverviewScreen(), SmokingEntryFormScreen(), NewsListScreen()];
 
     return Scaffold(
       body: screens[_currentScreen],
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentScreen,
         items: [
           BottomNavigationBarItem(title: Text('ภาพรวม'), icon: Icon(Icons.pie_chart_outlined)),
           BottomNavigationBarItem(title: Text('บันทึก'), icon: Icon(Icons.edit)),
