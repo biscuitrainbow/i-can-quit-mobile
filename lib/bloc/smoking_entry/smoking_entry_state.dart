@@ -15,7 +15,7 @@ class SmokingEntryLoaded extends SmokingEntryState {
     @required this.entries,
     @required this.latestHasSmokedEntry,
     @required this.nonSmokingDays,
-  });
+  }) : super([entries, latestHasSmokedEntry, nonSmokingDays]);
 }
 
 class SmokingEntryLoading extends SmokingEntryState {}

@@ -14,3 +14,4 @@ class SaveSmokingEntry extends SmokingEntryEvent {
   SaveSmokingEntry({@required this.entry});
 }
 
+ 
