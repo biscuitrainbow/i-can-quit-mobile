@@ -7,6 +7,7 @@ import 'package:i_can_quit/bloc/news/news_event.dart';
 import 'package:i_can_quit/bloc/news/news_state.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/ui/screen/news/news_screen.dart';
+import 'package:i_can_quit/ui/util/ui_util.dart';
 import 'package:i_can_quit/ui/widget/news/news_item.dart';
 
 class NewsListScreen extends StatefulWidget {
@@ -45,9 +46,11 @@ class _NewsListScreenState extends State<NewsListScreen> {
           if (state is NewsLoaded) {
             return RefreshIndicator(
               key: _refreshIndicatorKey,
-              onRefresh: () {
+              onRefresh: () async {
                 final _refreshCompleter = Completer<void>();
                 newsBloc.dispatch(RefreshNews(refreshComplete: _refreshCompleter));
+
+                _refreshCompleter.future.then((_) => UiUtil.showMessage('แสดงข่าวสารล่าสุดแล้ว'));
 
                 return _refreshCompleter.future;
               },

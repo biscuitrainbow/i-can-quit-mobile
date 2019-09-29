@@ -1,10 +1,8 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:i_can_quit/data/model/news.dart';
 import 'package:i_can_quit/ui/widget/shimmer/image_shimmer.dart';
-import 'package:shimmer/shimmer.dart';
 
 class NewsScreen extends StatefulWidget {
   final News news;
