@@ -41,6 +41,9 @@ dependencies:
   webview_flutter: ^0.3.14+1
   flutter_html: ^0.11.0
   cached_network_image: ^1.1.1
+  shimmer: ^1.0.1
+  auto_size_text: ^2.1.0
+  timeago: ^2.0.20
 
 dev_dependencies:
   flutter_test:

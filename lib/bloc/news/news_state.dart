@@ -12,5 +12,5 @@ class InitialNewsState extends NewsState {}
 class NewsLoaded extends NewsState {
   final List<News> news;
 
-  NewsLoaded({@required this.news});
+  NewsLoaded({@required this.news}) : super([news]);
 }

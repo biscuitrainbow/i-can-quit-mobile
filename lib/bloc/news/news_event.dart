@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -7,3 +9,9 @@ abstract class NewsEvent extends Equatable {
 }
 
 class FetchNews extends NewsEvent {}
+
+class RefreshNews extends NewsEvent {
+  final Completer<void> refreshComplete;
+
+  RefreshNews({@required this.refreshComplete});
+}

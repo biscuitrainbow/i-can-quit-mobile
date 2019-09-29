@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:i_can_quit/bloc/news/news_event.dart';
 import 'package:i_can_quit/bloc/news/news_state.dart';
-import 'package:i_can_quit/data/model/news.dart';
 import 'package:i_can_quit/data/repository/news_repository.dart';
 
 class NewsBloc extends Bloc<NewsEvent, NewsState> {
@@ -24,6 +23,19 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         yield NewsLoaded(news: news);
       } catch (error) {
         print(error);
+      }
+    }
+
+    if (event is RefreshNews) {
+      try { 
+        final news = await newsRepository.fetchNews();
+
+        print(news);
+        yield NewsLoaded(news: news);
+        event.refreshComplete.complete();
+      } catch (error) {
+        print(error);
+        event.refreshComplete.completeError(null);
       }
     }
   }

@@ -1,26 +1,31 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:i_can_quit/ui/util/date_time_util.dart';
 
 class News {
   final String title;
   final String content;
   final String featuredImage;
+  final DateTime updatedAt;
 
   News({
     @required this.title,
     @required this.content,
     @required this.featuredImage,
+    @required this.updatedAt,
   });
 
   News copyWith({
     String title,
     String content,
     String featuredImage,
+    DateTime updatedAt,
   }) {
     return News(
       title: title ?? this.title,
       content: content ?? this.content,
       featuredImage: featuredImage ?? this.featuredImage,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -38,7 +43,8 @@ class News {
     return News(
       title: map['title'],
       content: map['content'],
-      featuredImage: map['featuredImage'],
+      featuredImage: map['featured_image'],
+      updatedAt: fromMysqlDateTime(map['updated_at']),
     );
   }
 
