@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">I Can Quit</string>
+    <string name="facebook_app_id">2402065970040943</string>
+    <string name="fb_login_protocol_scheme">fb2402065970040943</string>
+</resources>

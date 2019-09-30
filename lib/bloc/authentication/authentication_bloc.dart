@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'dart:math';
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_event.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_state.dart';
 import 'package:i_can_quit/data/repository/token_repository.dart';
@@ -23,30 +24,87 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   Stream<AuthenticationState> mapEventToState(
     AuthenticationEvent event,
   ) async* {
-    if (event is AuthenticationLogin) {
+    if (event is AuthenticateUser) {
+      await tokenRepository.saveToken(event.user.token);
+
+      yield LoginSuccess(user: event.user);
+      yield UserAuthenticated();
+    }
+
+    if (event is LoginWithEmailAndPassword) {
+      yield LoginLoading();
+
       try {
-        final user = await userRepository.login(event.email, event.password);
+        final user = await userRepository.loginWithEmailAndPassword(event.email, event.password);
         await tokenRepository.saveToken(user.token);
 
         yield LoginSuccess(user: user);
-        yield AuthenticationAuthed();
+        yield UserAuthenticated();
       } catch (error) {
-        print(error);
+        yield LoginError();
       }
     }
 
-    if (event is AuthenticationCheck) {
+    if (event is LoginWithGoogle) {
+      yield LoginLoading();
+
+      try {
+        final googleUser = await userRepository.loginWithGoogle();
+        final user = await userRepository.loginWithOnlyEmail(googleUser.email);
+
+        await tokenRepository.saveToken(user.token);
+
+        yield LoginSuccess(user: user);
+        yield UserAuthenticated();
+      } on DioError catch (error) {
+        if (error.response.statusCode == HttpStatus.unauthorized) {
+          final googleUser = await userRepository.loginWithGoogle();
+
+          yield NewSocialUserHasRegistered(user: googleUser);
+        }
+      } on UserCanceledException catch (error) {
+        print(error);
+      } catch (error) {
+        yield LoginError();
+      }
+    }
+
+    if (event is LoginWithFacebook) {
+      yield LoginLoading();
+
+      try {
+        final facebookUser = await userRepository.loginWithFacebook();
+        final user = await userRepository.loginWithOnlyEmail(facebookUser.email);
+
+        await tokenRepository.saveToken(user.token);
+
+        yield LoginSuccess(user: user);
+        yield UserAuthenticated();
+      } on DioError catch (error) {
+        if (error.response.statusCode == HttpStatus.unauthorized) {
+          final facebookUser = await userRepository.loginWithFacebook();
+
+          yield NewSocialUserHasRegistered(user: facebookUser);
+        }
+      } on UserCanceledException catch (error) {
+        print(error);
+      } catch (error) {
+        yield LoginError();
+      }
+    }
+
+    if (event is CheckAuthenticated) {
       final token = await tokenRepository.getToken();
 
       if (token != null) {
-        yield AuthenticationAuthed();
+        // yield UserAuthenticated();
 
-        try {
-          final user = await userRepository.fetchUser();
-          print(user);
-        } catch (error) {
-          print(error);
-        }
+        // try {
+        //   final user = await userRepository.fetchUser();
+        //   print(user);
+        // } catch (error) {
+        //   print(error);
+        // }
       }
     }
   }

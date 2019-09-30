@@ -1,12 +1,23 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide TextField;
+import 'package:flutter/material.dart' as prefix0;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:i_can_quit/bloc/authentication/authentication_bloc.dart';
+import 'package:i_can_quit/bloc/authentication/authentication_state.dart';
+import 'package:i_can_quit/bloc/register/register_bloc.dart';
+import 'package:i_can_quit/bloc/register/register_event.dart';
+import 'package:i_can_quit/bloc/register/register_state.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
+import 'package:i_can_quit/constant/style.dart';
 import 'package:i_can_quit/data/model/user.dart';
 import 'package:i_can_quit/ui/widget/button/ripple_button.dart';
+import 'package:i_can_quit/ui/widget/form/text_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String route = '/register';
+
+  final User user;
+
+  const RegisterScreen({Key key, this.user}) : super(key: key);
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -17,9 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController _emailController;
   TextEditingController _passwordController;
 
-  FocusNode _nameFocusNode;
-  FocusNode _emailFocusNode;
-  FocusNode _passwordFocusNode;
+  FocusScopeNode _focusScopeNode = FocusScopeNode();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -27,7 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     // Navigator.of(context).pushReplacementNamed(MainScreen.route);
   }
 
-  void _register() {
+  void _register(RegistrationBloc bloc) {
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -38,25 +47,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
       password: _passwordController.text,
     );
 
-    // final completer = loadingThenPushReplaceCompleter(context, MainScreen.route, 'กำลังสมัครสมาชิก..', 'สมัครสมาชิกสำเร็จ', 'สมัครสมาชิกล้มเหลว ');
-    // widget.viewModel.onRegister(user, completer);
+    bloc.dispatch(Register(user: user));
   }
 
   @override
   void initState() {
     super.initState();
 
-//    _nameController = TextEditingController(text: 'natthapon');
-//    _emailController = TextEditingController(text: 'premium@gmail.com');
-//    _passwordController = TextEditingController(text: '123456');
-
-    _nameController = TextEditingController();
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
-
-    _nameFocusNode = FocusNode();
-    _emailFocusNode = FocusNode();
-    _passwordFocusNode = FocusNode();
+    _nameController = TextEditingController(text: widget.user != null ? widget.user.name : "");
+    _emailController = TextEditingController(text: widget.user != null ? widget.user.email : "");
+    _passwordController = TextEditingController(text: widget.user != null ? widget.user.password : "");
   }
 
   @override
@@ -66,78 +66,109 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-
-    _nameFocusNode.dispose();
-    _emailFocusNode.dispose();
-    _passwordFocusNode.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final AuthenticationBloc authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    final RegistrationBloc registrationBloc = BlocProvider.of<RegistrationBloc>(context);
+
     return Scaffold(
-      appBar: AppBar(title: Text("สร้างบัญชีผู้ใช้")),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.0),
-                child: TextFormField(
-                  controller: _nameController,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(labelText: 'ชื่อ'),
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (String value) => FocusScope.of(context).requestFocus(_emailFocusNode),
-                  validator: (String value) {
-                    if (value.isEmpty) return "กรุณากรอกชื่อ";
-
-                    return null;
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.0),
-                child: TextFormField(
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(labelText: 'อีเมลล์'),
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (String value) => FocusScope.of(context).requestFocus(_passwordFocusNode),
-                  validator: (String value) {
-                    if (value.isEmpty) return 'กรุณากรอกอีเมลล์';
-                    // if (!isEmail(value)) return 'รูปแบบอีเมลล์ไม่ถูกต้อง';
-
-                    return null;
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.0),
-                child: TextFormField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(labelText: 'รหัสผ่าน'),
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (String value) => _register(),
-                  validator: (String value) {
-                    if (value.isEmpty) return 'กรุณากรอกรหัสผ่าน';
-
-                    return null;
-                  },
-                ),
-              ),
-              SizedBox(height: 24.0),
-              RippleButton(
-                text: "สร้างบัญชีผู้ใช้",
-                backgroundColor: ColorPalette.primary,
-                highlightColor: ColorPalette.primarySplash,
-                textColor: Colors.white,
-                onPress: () => _register(),
-              ),
-            ],
+      appBar: AppBar(
+        title: Text(
+          'สร้างบัญชีผู้ใช้',
+          style: TextStyle(color: ColorPalette.primary),
+        ),
+        iconTheme: IconThemeData(color: ColorPalette.primary),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+      ),
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthenticationBloc, AuthenticationState>(
+            bloc: authenticationBloc,
+            listener: (context, state) {
+              if (state is UserAuthenticated) {
+                Navigator.of(context).pop();
+              }
+            },
           ),
+          BlocListener<RegistrationBloc, RegisterState>(
+            bloc: registrationBloc,
+            listener: (context, state) {
+              if (state is RegisterError) {
+                Scaffold.of(context).showSnackBar(SnackBar(content: Text('สร้างบัญชีผู้ใช้ไม่สำเร็จ')));
+              }
+            },
+          )
+        ],
+        child: BlocBuilder<RegistrationBloc, RegisterState>(
+          bloc: registrationBloc,
+          builder: (context, state) {
+            if (state is RegisterLoading) {
+              return Center(child: prefix0.CircularProgressIndicator());
+            }
+
+            return SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: FocusScope(
+                node: _focusScopeNode,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      TextField(
+                        controller: _nameController,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _focusScopeNode.nextFocus(),
+                        hintText: 'ชื่อ - สกุล',
+                        validator: (String value) {
+                          if (value.isEmpty) return "กรุณากรอกชื่อ";
+
+                          return null;
+                        },
+                      ),
+                      TextField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _focusScopeNode.nextFocus(),
+                        hintText: 'อีเมลล์',
+                        validator: (String value) {
+                          if (value.isEmpty) return 'กรุณากรอกอีเมลล์';
+
+                          return null;
+                        },
+                      ),
+                      TextField(
+                        controller: _passwordController,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                        obscureText: true,
+                        onFieldSubmitted: (String value) => _register(registrationBloc),
+                        hintText: 'รหัสผ่าน',
+                        validator: (String value) {
+                          if (value.isEmpty) return 'กรุณากรอกรหัสผ่าน';
+
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 24.0),
+                      RippleButton(
+                        text: "สร้างบัญชีผู้ใช้",
+                        backgroundColor: Colors.green,
+                        textColor: Colors.white,
+                        decoration: Styles.primaryButtonDecoration,
+                        onPress: () => _register(registrationBloc),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

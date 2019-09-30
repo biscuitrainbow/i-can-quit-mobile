@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:i_can_quit/data/model/user.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -6,11 +7,21 @@ abstract class AuthenticationEvent extends Equatable {
   AuthenticationEvent([List props = const <dynamic>[]]) : super(props);
 }
 
-class AuthenticationLogin extends AuthenticationEvent {
+class LoginWithEmailAndPassword extends AuthenticationEvent {
   final String email;
   final String password;
 
-  AuthenticationLogin({@required this.email, @required this.password});
+  LoginWithEmailAndPassword({@required this.email, @required this.password}) : super([email, password]);
 }
 
-class AuthenticationCheck extends AuthenticationEvent {}
+class LoginWithGoogle extends AuthenticationEvent {}
+
+class LoginWithFacebook extends AuthenticationEvent {}
+
+class CheckAuthenticated extends AuthenticationEvent {}
+
+class AuthenticateUser extends AuthenticationEvent {
+  final User user;
+
+  AuthenticateUser({@required this.user}) : super([user]);
+}

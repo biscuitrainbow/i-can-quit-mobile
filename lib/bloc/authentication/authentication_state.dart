@@ -14,9 +14,21 @@ class LoginLoading extends AuthenticationState {}
 class LoginSuccess extends AuthenticationState {
   final User user;
 
-  LoginSuccess({this.user});
+  LoginSuccess({this.user}) : super([user]);
 }
 
 class LoginError extends AuthenticationState {}
 
-class AuthenticationAuthed extends AuthenticationState {}
+class NewSocialUserHasRegistered extends AuthenticationState {
+  final User user;
+
+  NewSocialUserHasRegistered({@required this.user}) : super([user]);
+}
+
+class UserAuthenticated extends AuthenticationState {}
+
+class RegistrationSuccess extends AuthenticationState {
+  final User user;
+
+  RegistrationSuccess({@required this.user}) : super([user]);
+}

@@ -7,3 +7,9 @@ abstract class RegisterState extends Equatable {
 }
 
 class InitialRegisterState extends RegisterState {}
+
+class RegisterSuccess extends RegisterState {}
+
+class RegisterError extends RegisterState {}
+
+class RegisterLoading extends RegisterState {}

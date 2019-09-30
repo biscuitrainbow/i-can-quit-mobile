@@ -1,15 +1,16 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide TextField;
+import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_bloc.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_event.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_state.dart';
-import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
+import 'package:i_can_quit/constant/style.dart';
 import 'package:i_can_quit/ui/screen/user/user_register_screen.dart';
 import 'package:i_can_quit/ui/util/string_util.dart';
 import 'package:i_can_quit/ui/widget/button/ripple_button.dart';
+import 'package:i_can_quit/ui/widget/form/text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String route = '/login';
@@ -23,12 +24,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   TextEditingController _emailController;
   TextEditingController _passwordController;
+  FocusScopeNode _focusScopeNode = FocusScopeNode();
 
   FocusNode _emailNode;
   FocusNode _passwordNode;
 
   void _showRegister(BuildContext context) {
-    Navigator.of(context).pushNamed(RegisterScreen.route);
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisterScreen()));
   }
 
   void _login(AuthenticationBloc bloc) {
@@ -36,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    bloc.dispatch(AuthenticationLogin(email: _emailController.text, password: _passwordController.text));
+    bloc.dispatch(LoginWithEmailAndPassword(email: _emailController.text, password: _passwordController.text));
 
     // Completer<Null> completer = loadingCompleter(context, 'กำลังเข้าสู่ระบบ..', 'เข้าสู่ระบบสำเร็จ', 'เข้าสู่ระบบไม่สำเร็จ');
 
@@ -45,6 +47,14 @@ class _LoginScreenState extends State<LoginScreen> {
     //   _passwordController.text,
     //   completer,
     // );
+  }
+
+  void _loginWithFacebook(AuthenticationBloc bloc) {
+    bloc.dispatch(LoginWithFacebook());
+  }
+
+  void _loginWithGoogle(AuthenticationBloc bloc) {
+    bloc.dispatch(LoginWithGoogle());
   }
 
   @override
@@ -89,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
             key: Key('__app_name__'),
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 22.0,
+              fontSize: 28.0,
               color: ColorPalette.primary,
             ),
           ),
@@ -102,43 +112,59 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.0),
-            child: TextFormField(
-              validator: (String value) {
-                if (value.isEmpty) return 'กรุณากรอกอีเมลล์';
-                if (!isEmail(value)) return 'รูปแบบอีเมลล์ไม่ถูกต้อง';
+          TextField(
+            controller: _emailController,
+            keyboardType: TextInputType.emailAddress,
+            hintText: 'อีเมลล์',
+            validator: (String value) {
+              if (value.isEmpty) return 'กรุณากรอกอีเมลล์';
+              if (!isEmail(value)) return 'รูปแบบอีเมลล์ไม่ถูกต้อง';
 
-                return null;
-              },
-              controller: _emailController,
-              focusNode: _emailNode,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(labelText: 'อีเมลล์'),
-              textInputAction: TextInputAction.next,
-              onFieldSubmitted: (String value) => FocusScope.of(context).requestFocus(_passwordNode),
-            ),
+              return null;
+            },
+            onFieldSubmitted: (String value) => _focusScopeNode.nextFocus(),
+            textInputAction: TextInputAction.next,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.0),
-            child: TextFormField(
-              validator: (String value) => value.isEmpty ? 'กรุณากรอกรหัสผ่าน' : null,
-              controller: _passwordController,
-              focusNode: _passwordNode,
-              obscureText: true,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(labelText: 'รหัสผ่าน'),
-              textInputAction: TextInputAction.done,
-              onFieldSubmitted: (String value) => _login(authenticationBloc),
-            ),
+          TextField(
+            controller: _passwordController,
+            obscureText: true,
+            keyboardType: TextInputType.text,
+            hintText: 'รหัสผ่าน',
+            validator: (String value) => value.isEmpty ? 'กรุณากรอกรหัสผ่าน' : null,
+            onFieldSubmitted: (String value) => _login(authenticationBloc),
+            textInputAction: TextInputAction.done,
           ),
           SizedBox(height: 24.0),
           RippleButton(
             text: "เข้าสู่ระบบ",
-            backgroundColor: ColorPalette.primary,
-            highlightColor: ColorPalette.primarySplash,
+            backgroundColor: Colors.green,
             textColor: Colors.white,
+            decoration: Styles.primaryButtonDecoration,
             onPress: () => _login(authenticationBloc),
+          ),
+          SizedBox(height: 24.0),
+          RippleButton(
+            text: "เข้าสู่ระบบด้วย Google",
+            textColor: Colors.grey.shade600,
+            icon: Icon(FontAwesomeIcons.google, color: Colors.red, size: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(color: Colors.grey.shade300),
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            ),
+            onPress: () => _loginWithGoogle(authenticationBloc),
+          ),
+          SizedBox(height: 24.0),
+          RippleButton(
+            text: "เข้าสู่ระบบด้วย Facebook",
+            textColor: Colors.grey.shade600,
+            icon: Icon(FontAwesomeIcons.facebookF, color: Colors.blue, size: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(color: Colors.grey.shade300),
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            ),
+            onPress: () => _loginWithFacebook(authenticationBloc),
           ),
           SizedBox(height: 24.0),
           RippleButton(
@@ -153,13 +179,37 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          children: [
-            _header,
-            _form,
-          ],
+      body: BlocListener<AuthenticationBloc, AuthenticationState>(
+        bloc: authenticationBloc,
+        listener: (context, state) {
+          if (state is NewSocialUserHasRegistered) {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisterScreen(user: state.user)));
+          }
+
+          if (state is LoginError) {
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text('เข้าสู่ระบบไม่สำเร็จ')));
+          }
+        },
+        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          bloc: authenticationBloc,
+          builder: (context, state) {
+            if (state is LoginLoading) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            return SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                children: [
+                  _header,
+                  FocusScope(
+                    node: _focusScopeNode,
+                    child: _form,
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

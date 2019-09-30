@@ -37,4 +37,24 @@ abstract class Styles {
     fontWeight: FontWeight.w300,
     color: Color(0XFF9E9E9E),
   );
+
+  static final primaryButtonDecoration = BoxDecoration(
+    borderRadius: BorderRadius.circular(5.0),
+    gradient: LinearGradient(
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
+      stops: [0.1, 0.5, 0.7, 0.9],
+      colors: [
+        Colors.orange[700],
+        Colors.orange[600],
+        Colors.orange[500],
+        Colors.orange[400],
+      ],
+    ),
+  );
+
+  static final secondaryDangerButtonDecoration = BoxDecoration(
+    borderRadius: BorderRadius.circular(5.0),
+    border: Border.all(color: Colors.red),
+  );
 }

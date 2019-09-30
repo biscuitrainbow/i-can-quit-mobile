@@ -11,7 +11,7 @@ class User {
   final String password;
   final String token;
   final String gender;
-  final bool isNewUser;
+  final bool newUser;
   final List<UserSetup> setups;
 
   User({
@@ -21,7 +21,7 @@ class User {
     this.password,
     this.token,
     this.gender,
-    this.isNewUser,
+    this.newUser,
     this.setups,
   });
 
@@ -32,7 +32,7 @@ class User {
     this.id,
     this.token,
     this.gender,
-    this.isNewUser = false,
+    this.newUser = false,
     this.setups = const [],
   });
 
@@ -53,7 +53,7 @@ class User {
       password: password ?? this.password,
       token: token ?? this.token,
       gender: gender ?? this.gender,
-      isNewUser: isNewUser ?? this.isNewUser,
+      newUser: isNewUser ?? this.newUser,
       setups: setups ?? this.setups,
     );
   }
@@ -66,7 +66,7 @@ class User {
       'password': password,
       'token': token,
       'gender': gender,
-      'isNewUser': isNewUser,
+      'isNewUser': newUser,
     };
   }
 
@@ -80,7 +80,7 @@ class User {
       password: map['password'],
       token: map['token'],
       gender: map['gender'],
-      isNewUser: map['isNewUser'],
+      newUser: map['isNewUser'],
       setups: map['setups'] ?? [],
     );
   }
@@ -90,32 +90,7 @@ class User {
   static User fromJson(String source) => fromMap(json.decode(source));
 
   @override
-  bool operator ==(Object o) {
-    return o is User &&
-        o.id == id &&
-        o.name == name &&
-        o.email == email &&
-        o.password == password &&
-        o.token == token &&
-        o.gender == gender &&
-        o.isNewUser == isNewUser;
-  }
-
-  @override
-  int get hashCode {
-    return hashList([
-      id,
-      name,
-      email,
-      password,
-      token,
-      gender,
-      isNewUser,
-    ]);
-  }
-
-  @override
   String toString() {
-    return 'User id: $id, name: $name, email: $email, password: $password, token: $token, gender: $gender, isNewUser: $isNewUser, setups: $setups';
+    return 'User id: $id, name: $name, email: $email, password: $password, token: $token, gender: $gender, isNewUser: $newUser, setups: $setups';
   }
 }

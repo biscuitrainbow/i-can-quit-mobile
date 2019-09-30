@@ -5,6 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_bloc.dart';
 import 'package:i_can_quit/bloc/news/news_bloc.dart';
 import 'package:i_can_quit/bloc/register/register_bloc.dart';
@@ -15,11 +18,11 @@ import 'package:i_can_quit/data/repository/news_repository.dart';
 import 'package:i_can_quit/data/repository/smoking_entry_repository.dart';
 import 'package:i_can_quit/data/repository/token_repository.dart';
 import 'package:i_can_quit/data/repository/user_repository.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:i_can_quit/ui/screen/main_navigation_screen.dart';
 import 'package:i_can_quit/ui/screen/main_screen.dart';
 import 'package:i_can_quit/ui/screen/smoking_overview.dart';
 import 'package:i_can_quit/ui/screen/user/user_login_screen.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bloc/authentication/authentication_event.dart';
@@ -37,13 +40,22 @@ void main() async {
     },
   );
   final Dio dio = Dio(options);
+  // dio.interceptors.add(PrettyDioLogger());
+
+  final FacebookLogin facebookLogin = FacebookLogin();
+  final GoogleSignIn googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
 
   final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   final TokenRepository tokenRepository = TokenRepository(sharedPreferences);
 
   final UserSetupRepository userSetupRepository = UserSetupRepository(dio, tokenRepository);
   final SmokingEntryRepository smokingEntryRepository = SmokingEntryRepository(dio, tokenRepository);
-  final UserRepository userRepository = UserRepository(dio, tokenRepository);
+  final UserRepository userRepository = UserRepository(dio, tokenRepository, facebookLogin, googleSignIn);
   final NewsRepository newsRepository = NewsRepository(dio, tokenRepository);
 
   runApp(
@@ -75,22 +87,32 @@ class Application extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authenticationBloc = AuthenticationBloc(userRepository, tokenRepository);
+    final registrationBloc = RegistrationBloc(userRepository, tokenRepository, authenticationBloc);
+    final smokingEntryBloc = SmokingEntryBloc(this.smokingEntryRepository);
+    final userSetupBloc = UserFirstSetupBloc(this.userSetupRepository);
+    final newsBloc = NewsBloc(this.newsRepository);
+
+    authenticationBloc.dispatch(CheckAuthenticated());
+    smokingEntryBloc.dispatch(FetchSmokingEntry());
+    newsBloc.dispatch(FetchNews());
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<SmokingEntryBloc>(
-          builder: (context) => SmokingEntryBloc(this.smokingEntryRepository)..dispatch(FetchSmokingEntry()),
+          builder: (context) => smokingEntryBloc,
         ),
         BlocProvider<UserFirstSetupBloc>(
-          builder: (context) => UserFirstSetupBloc(this.userSetupRepository),
+          builder: (context) => userSetupBloc,
         ),
         BlocProvider<NewsBloc>(
-          builder: (context) => NewsBloc(this.newsRepository)..dispatch(FetchNews()),
+          builder: (context) => newsBloc,
         ),
         BlocProvider<AuthenticationBloc>(
-          builder: (context) => AuthenticationBloc(userRepository, tokenRepository)..dispatch(AuthenticationCheck()),
+          builder: (context) => authenticationBloc,
         ),
-        BlocProvider<RegisterBloc>(
-          builder: (context) => RegisterBloc(userRepository, tokenRepository),
+        BlocProvider<RegistrationBloc>(
+          builder: (context) => registrationBloc,
         ),
       ],
       child: MaterialApp(
