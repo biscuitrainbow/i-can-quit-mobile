@@ -37,20 +37,20 @@ class GroupSelectorState extends State<GroupSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        if (widget.title.isNotEmpty)
-          Row(
-            children: <Widget>[
-              Text(
-                widget.title,
-                style: Theme.of(context).textTheme.subtitle,
-              ),
-              SizedBox(width: 16.0),
-            ],
-          ),
-        if (this.widget.warp)
+    if (this.widget.warp) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          if (widget.title.isNotEmpty)
+            Row(
+              children: <Widget>[
+                Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.subtitle,
+                ),
+                SizedBox(width: 16.0),
+              ],
+            ),
           Expanded(
             child: Wrap(
               spacing: 4.0,
@@ -69,27 +69,28 @@ class GroupSelectorState extends State<GroupSelector> {
               ],
             ),
           )
-        else
-          Container(
-            height: 50.0,
-            width: MediaQuery.of(context).size.width,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                for (final item in widget.items)
-                  Container(
-                    margin: EdgeInsets.only(right: 4.0),
-                    child: ChipSelector(
-                      onPressed: () => widget.onChanged(item),
-                      activeColor: widget.activeColor,
-                      selected: _isSelected(item),
-                      label: item,
-                    ),
-                  ),
-              ],
+        ],
+      );
+    }
+
+    return Container(
+      height: 50.0,
+      width: MediaQuery.of(context).size.width,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          for (final item in widget.items)
+            Container(
+              margin: EdgeInsets.only(right: 4.0),
+              child: ChipSelector(
+                onPressed: () => widget.onChanged(item),
+                activeColor: widget.activeColor,
+                selected: _isSelected(item),
+                label: item,
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

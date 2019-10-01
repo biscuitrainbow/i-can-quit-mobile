@@ -15,9 +15,25 @@ class UserCigaretteSetupScreen extends StatefulWidget {
 }
 
 class _UserCigaretteSetupScreenState extends State<UserCigaretteSetupScreen> with AutomaticKeepAliveClientMixin<UserCigaretteSetupScreen> {
+  final _pricePerPackages = [for (var i = 50; i <= 120; i = i + 5) i].map((number) => number.toString()).toList();
+
   int numberOfCigarettesPerDay = 5;
   int numberOfCigarettesPerPackage = 15;
   int pricePerPackage = 50;
+
+  TextEditingController _pricePerPackageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pricePerPackageController = TextEditingController(text: _pricePerPackages.first.toString());
+  }
+
+  @override
+  void dispose() {
+    _pricePerPackageController.dispose();
+    super.dispose();
+  }
 
   @override
   bool get wantKeepAlive => true;
@@ -47,11 +63,33 @@ class _UserCigaretteSetupScreenState extends State<UserCigaretteSetupScreen> wit
                 'บุหรี่หนึ่งซองราคาเท่าไหร่',
                 style: Styles.titlePrimary,
               ),
-              GroupSelector(
-                items: [for (var i = 50; i <= 120; i = i + 5) i].map((number) => number.toString()).toList(),
-                selectedItem: pricePerPackage.toString(),
-                warp: false,
-                onChanged: (String number) => setState(() => pricePerPackage = int.parse(number)),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 8,
+                    child: GroupSelector(
+                      items: _pricePerPackages,
+                      selectedItem: pricePerPackage.toString(),
+                      warp: false,
+                      onChanged: (String number) => setState(() {
+                        pricePerPackage = int.parse(number);
+                        _pricePerPackageController.text = number;
+                      }),
+                    ),
+                  ),
+                  SizedBox(width: 16.0),
+                  Text('หรือ', style: Styles.descriptionSecondary),
+                  SizedBox(width: 16.0),
+                  Expanded(
+                    flex: 2,
+                    child: TextField(
+                      controller: _pricePerPackageController,
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      onChanged: (String number) => setState(() => pricePerPackage = int.parse(number)),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 28),
               Text(
@@ -67,9 +105,9 @@ class _UserCigaretteSetupScreenState extends State<UserCigaretteSetupScreen> wit
               SizedBox(height: 125),
               RippleButton(
                 text: 'เสร็จสิ้น',
-                backgroundColor: ColorPalette.primary,
-                highlightColor: ColorPalette.primarySplash,
+                backgroundColor: Colors.green,
                 textColor: Colors.white,
+                decoration: Styles.primaryButtonDecoration,
                 onPress: () => this.widget.onNext(numberOfCigarettesPerDay, pricePerPackage, numberOfCigarettesPerPackage),
               ),
               RippleButton(

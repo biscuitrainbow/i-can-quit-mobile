@@ -89,7 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           BlocListener<AuthenticationBloc, AuthenticationState>(
             bloc: authenticationBloc,
             listener: (context, state) {
-              if (state is UserAuthenticated) {
+              if (state is LoginSuccess) {
                 Navigator.of(context).pop();
               }
             },

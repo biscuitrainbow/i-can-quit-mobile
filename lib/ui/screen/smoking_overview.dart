@@ -38,13 +38,13 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          OverviewStatsItem.primary(
-            title: '200',
-            unit: 'วัน',
-            description: 'มีอายุยืนขึ้น',
-            icon: FontAwesomeIcons.heartbeat,
-          ),
-          SizedBox(height: 24),
+          // OverviewStatsItem.primary(
+          //   title: '200',
+          //   unit: 'วัน',
+          //   description: 'มีอายุยืนขึ้น',
+          //   icon: FontAwesomeIcons.heartbeat,
+          // ),
+          // SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[

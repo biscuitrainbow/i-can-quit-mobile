@@ -7,7 +7,7 @@ abstract class AuthenticationState extends Equatable {
   AuthenticationState([List props = const <dynamic>[]]) : super(props);
 }
 
-class InitialAuthenticationState extends AuthenticationState {}
+class UserIsUnAuthenticated extends AuthenticationState {}
 
 class LoginLoading extends AuthenticationState {}
 

@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'dart:ui';
 
-import 'package:i_can_quit/data/model/user_first_setup.dart';
+import 'package:i_can_quit/data/model/user_setup.dart';
 import 'package:meta/meta.dart';
 
 class User {
@@ -10,7 +9,6 @@ class User {
   final String email;
   final String password;
   final String token;
-  final String gender;
   final bool newUser;
   final List<UserSetup> setups;
 
@@ -20,7 +18,6 @@ class User {
     this.email,
     this.password,
     this.token,
-    this.gender,
     this.newUser,
     this.setups,
   });
@@ -31,7 +28,6 @@ class User {
     @required this.password,
     this.id,
     this.token,
-    this.gender,
     this.newUser = false,
     this.setups = const [],
   });
@@ -52,7 +48,6 @@ class User {
       email: email ?? this.email,
       password: password ?? this.password,
       token: token ?? this.token,
-      gender: gender ?? this.gender,
       newUser: isNewUser ?? this.newUser,
       setups: setups ?? this.setups,
     );
@@ -65,7 +60,6 @@ class User {
       'email': email,
       'password': password,
       'token': token,
-      'gender': gender,
       'isNewUser': newUser,
     };
   }
@@ -79,9 +73,8 @@ class User {
       email: map['email'],
       password: map['password'],
       token: map['token'],
-      gender: map['gender'],
       newUser: map['isNewUser'],
-      setups: map['setups'] ?? [],
+      setups: UserSetup.fromMapArray(map['setups']),
     );
   }
 
@@ -91,6 +84,6 @@ class User {
 
   @override
   String toString() {
-    return 'User id: $id, name: $name, email: $email, password: $password, token: $token, gender: $gender, isNewUser: $newUser, setups: $setups';
+    return 'User id: $id, name: $name, email: $email, password: $password, token: ${token[0]}, newUser: $newUser, setups: $setups';
   }
 }

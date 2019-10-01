@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:i_can_quit/data/model/quiting_path.dart';
-import 'package:i_can_quit/data/model/user_first_setup.dart';
+import 'package:i_can_quit/data/model/user_setup.dart';
 import 'package:i_can_quit/data/repository/token_repository.dart';
+import 'package:i_can_quit/ui/util/string_util.dart';
 
 class UserSetupRepository {
   final Dio dio;
@@ -15,7 +16,7 @@ class UserSetupRepository {
     await dio.post(
       '/user/setup',
       options: Options(headers: {
-        HttpHeaders.authorizationHeader: await tokenRepository.getToken(),
+        HttpHeaders.authorizationHeader: toBearer(await tokenRepository.getToken()),
       }),
       data: {
         'number_of_cigarette_per_day': setup.numberOfCigarettesPerDay,

@@ -18,7 +18,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   );
 
   @override
-  AuthenticationState get initialState => InitialAuthenticationState();
+  AuthenticationState get initialState => UserIsUnAuthenticated();
 
   @override
   Stream<AuthenticationState> mapEventToState(
@@ -28,7 +28,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       await tokenRepository.saveToken(event.user.token);
 
       yield LoginSuccess(user: event.user);
-      yield UserAuthenticated();
     }
 
     if (event is LoginWithEmailAndPassword) {
@@ -39,7 +38,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         await tokenRepository.saveToken(user.token);
 
         yield LoginSuccess(user: user);
-        yield UserAuthenticated();
       } catch (error) {
         yield LoginError();
       }
@@ -55,7 +53,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         await tokenRepository.saveToken(user.token);
 
         yield LoginSuccess(user: user);
-        yield UserAuthenticated();
       } on DioError catch (error) {
         if (error.response.statusCode == HttpStatus.unauthorized) {
           final googleUser = await userRepository.loginWithGoogle();
@@ -79,7 +76,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         await tokenRepository.saveToken(user.token);
 
         yield LoginSuccess(user: user);
-        yield UserAuthenticated();
       } on DioError catch (error) {
         if (error.response.statusCode == HttpStatus.unauthorized) {
           final facebookUser = await userRepository.loginWithFacebook();
@@ -88,23 +84,29 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         }
       } on UserCanceledException catch (error) {
         print(error);
+        yield LoginError();
       } catch (error) {
+        print(error);
         yield LoginError();
       }
     }
 
     if (event is CheckAuthenticated) {
       final token = await tokenRepository.getToken();
+      print(token);
+      yield LoginLoading();
 
       if (token != null) {
-        // yield UserAuthenticated();
+        try {
+          final user = await userRepository.fetchUser();
 
-        // try {
-        //   final user = await userRepository.fetchUser();
-        //   print(user);
-        // } catch (error) {
-        //   print(error);
-        // }
+          yield LoginSuccess(user: user);
+        } catch (error) {
+          print(error);
+        }
+      } else {
+        print('unauthenticated');
+        yield UserIsUnAuthenticated();
       }
     }
   }

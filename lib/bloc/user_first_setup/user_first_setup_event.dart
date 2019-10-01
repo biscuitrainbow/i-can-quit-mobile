@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:i_can_quit/data/model/user_first_setup.dart';
+import 'package:i_can_quit/data/model/user_setup.dart';
 import 'package:meta/meta.dart';
 
 @immutable

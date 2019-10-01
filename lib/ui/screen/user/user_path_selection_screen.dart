@@ -68,11 +68,11 @@ class _UserPathSelectionScreenState extends State<UserPathSelectionScreen> with 
               SizedBox(height: 64),
               RippleButton(
                 text: 'ต่อไป',
-                backgroundColor: ColorPalette.primary,
-                highlightColor: ColorPalette.primarySplash,
+                backgroundColor: Colors.green,
                 textColor: Colors.white,
+                decoration: Styles.primaryButtonDecoration,
                 onPress: () => this.widget.onNext(_path),
-              )
+              ),
             ],
           ),
         ),

@@ -8,8 +8,8 @@ abstract class UserFirstSetupState extends Equatable {
 
 class InitialUserFirstSetupState extends UserFirstSetupState {}
 
-class UserFirstSetupLoading extends UserFirstSetupState {}
+class SaveUserSetupLoading extends UserFirstSetupState {}
 
-class UserFirstSetupEmpty extends UserFirstSetupState {}
+class SaveUserSetupSuccess extends UserFirstSetupState {}
 
-class SaveUserFirstSetupSuccess extends UserFirstSetupState {}
+class SaveUserSetupError extends UserFirstSetupState {}

@@ -40,7 +40,16 @@ void main() async {
     },
   );
   final Dio dio = Dio(options);
-  // dio.interceptors.add(PrettyDioLogger());
+  dio.interceptors.add(
+    PrettyDioLogger(
+      requestHeader: false,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      error: true,
+      compact: true,
+    ),
+  );
 
   final FacebookLogin facebookLogin = FacebookLogin();
   final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -89,8 +98,8 @@ class Application extends StatelessWidget {
   Widget build(BuildContext context) {
     final authenticationBloc = AuthenticationBloc(userRepository, tokenRepository);
     final registrationBloc = RegistrationBloc(userRepository, tokenRepository, authenticationBloc);
-    final smokingEntryBloc = SmokingEntryBloc(this.smokingEntryRepository);
-    final userSetupBloc = UserFirstSetupBloc(this.userSetupRepository);
+    final smokingEntryBloc = SmokingEntryBloc(smokingEntryRepository);
+    final userSetupBloc = UserFirstSetupBloc(userSetupRepository, authenticationBloc, smokingEntryRepository);
     final newsBloc = NewsBloc(this.newsRepository);
 
     authenticationBloc.dispatch(CheckAuthenticated());
