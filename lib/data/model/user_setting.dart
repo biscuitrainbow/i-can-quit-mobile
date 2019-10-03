@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:i_can_quit/data/model/quiting_path.dart';
 
-class UserSetup {
+class UserSetting {
   final int id;
   final int numberOfCigarettesPerDay;
   final int numberOfCigarettesPerPackage;
   final int pricePerPackage;
   final QuitingPath path;
 
-  UserSetup({
+  UserSetting({
     this.id,
     @required this.numberOfCigarettesPerDay,
     @required this.numberOfCigarettesPerPackage,
@@ -17,7 +17,7 @@ class UserSetup {
     @required this.path,
   });
 
-  UserSetup.initial({
+  UserSetting.initial({
     this.id,
     this.numberOfCigarettesPerPackage = 20,
     this.pricePerPackage = 50,
@@ -25,14 +25,14 @@ class UserSetup {
     this.path = QuitingPath.slowyQuit,
   });
 
-  UserSetup copyWith({
+  UserSetting copyWith({
     int id,
     int numberOfCigarettesPerDay,
     int numberOfCigarettesPerPackage,
     int pricePerPackage,
     QuitingPath path,
   }) {
-    return UserSetup(
+    return UserSetting(
       id: id ?? this.id,
       numberOfCigarettesPerDay: numberOfCigarettesPerDay ?? this.numberOfCigarettesPerDay,
       numberOfCigarettesPerPackage: numberOfCigarettesPerPackage ?? this.numberOfCigarettesPerPackage,
@@ -51,10 +51,10 @@ class UserSetup {
     };
   }
 
-  static UserSetup fromMap(Map<String, dynamic> map) {
+  static UserSetting fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    return UserSetup(
+    return UserSetting(
       id: map['id'],
       numberOfCigarettesPerDay: map['number_of_cigarette_per_day'],
       numberOfCigarettesPerPackage: map['number_of_cigarette_per_package'],
@@ -63,13 +63,13 @@ class UserSetup {
     );
   }
 
-  static List<UserSetup> fromMapArray(List<dynamic> array) {
-    return array.map((setup) => UserSetup.fromMap(setup)).toList();
+  static List<UserSetting> fromMapArray(List<dynamic> array) {
+    return array.map((setting) => UserSetting.fromMap(setting)).toList();
   }
 
   String toJson() => json.encode(toMap());
 
-  static UserSetup fromJson(String source) => fromMap(json.decode(source));
+  static UserSetting fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -80,7 +80,7 @@ class UserSetup {
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is UserSetup &&
+    return o is UserSetting &&
         o.id == id &&
         o.numberOfCigarettesPerDay == numberOfCigarettesPerDay &&
         o.numberOfCigarettesPerPackage == numberOfCigarettesPerPackage &&

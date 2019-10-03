@@ -10,8 +10,8 @@ import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_event.dart';
 import 'package:i_can_quit/bloc/user/user_bloc.dart';
 import 'package:i_can_quit/bloc/user/user_event.dart';
-import 'package:i_can_quit/bloc/user_first_setup/user_first_setup_bloc.dart';
-import 'package:i_can_quit/bloc/user_first_setup/user_first_setup_event.dart';
+import 'package:i_can_quit/bloc/user_setting/user_setting_bloc.dart';
+import 'package:i_can_quit/bloc/user_setting/user_setting_event.dart';
 
 import 'application_event.dart';
 import 'application_state.dart';
@@ -20,7 +20,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   final AuthenticationBloc _authenticationBloc;
   final UserBloc _userBloc;
   final SmokingEntryBloc _smokingEntryBloc;
-  final UserSetupBloc _userSetupBloc;
+  final UserSettingBloc _userSettingBloc;
   final NewsBloc _newsBloc;
   final RegistrationBloc _registerBloc;
 
@@ -31,7 +31,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
     this._authenticationBloc,
     this._userBloc,
     this._smokingEntryBloc,
-    this._userSetupBloc,
+    this._userSettingBloc,
     this._newsBloc,
     this._registerBloc,
   ) {
@@ -45,7 +45,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   void _initilizeApplication() {
     _userBloc.dispatch(FetchUser());
     _smokingEntryBloc.dispatch(FetchSmokingEntry());
-    _userSetupBloc.dispatch(FetchUserSetups());
+    _userSettingBloc.dispatch(FetchUserSetting());
     _newsBloc.dispatch(FetchNews());
   }
 

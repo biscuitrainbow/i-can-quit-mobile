@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:i_can_quit/bloc/user_first_setup/user_first_setup_bloc.dart';
-import 'package:i_can_quit/bloc/user_first_setup/user_first_setup_event.dart';
-import 'package:i_can_quit/bloc/user_first_setup/user_first_setup_state.dart';
+import 'package:i_can_quit/bloc/user_setting/user_setting_bloc.dart';
+import 'package:i_can_quit/bloc/user_setting/user_setting_event.dart';
+import 'package:i_can_quit/bloc/user_setting/user_setting_state.dart';
 import 'package:i_can_quit/data/model/quiting_path.dart';
-import 'package:i_can_quit/data/model/user_setup.dart';
+import 'package:i_can_quit/data/model/user_setting.dart';
 import 'package:i_can_quit/ui/screen/main_navigation_screen.dart';
 import 'package:i_can_quit/ui/screen/user/user_cigarette_setup.dart';
 import 'package:i_can_quit/ui/screen/user/user_path_selection_screen.dart';
 
-class UserFirstSetupScreen extends StatefulWidget {
+class UserFirstSettingScreen extends StatefulWidget {
   @override
-  _UserFirstSetupScreenState createState() => _UserFirstSetupScreenState();
+  _UserFirstSettingScreenState createState() => _UserFirstSettingScreenState();
 }
 
-class _UserFirstSetupScreenState extends State<UserFirstSetupScreen> with AutomaticKeepAliveClientMixin<UserFirstSetupScreen> {
+class _UserFirstSettingScreenState extends State<UserFirstSettingScreen> with AutomaticKeepAliveClientMixin<UserFirstSettingScreen> {
   PageController _pageController = PageController();
-  UserSetup _setup = UserSetup.initial();
+  UserSetting _setting = UserSetting.initial();
 
   @override
   bool get wantKeepAlive => true;
@@ -27,25 +27,25 @@ class _UserFirstSetupScreenState extends State<UserFirstSetupScreen> with Automa
     super.dispose();
   }
 
-  void _submit(UserSetupBloc bloc) {
-    bloc.dispatch(SaveUserFirstSetup(setup: _setup));
+  void _submit(UserSettingBloc bloc) {
+    bloc.dispatch(SaveUserSetting(settings: _setting));
   }
 
   @override
   Widget build(BuildContext context) {
-    final UserSetupBloc userFirstSetupBloc = BlocProvider.of<UserSetupBloc>(context);
+    final UserSettingBloc userSettingBloc = BlocProvider.of<UserSettingBloc>(context);
 
-    return BlocListener<UserSetupBloc, UserFirstSetupState>(
+    return BlocListener<UserSettingBloc, UserSettingState>(
       listener: (context, state) {
-        if (state is SaveUserSetupSuccess) {
+        if (state is SaveUserSettingSuccess) {
           Navigator.of(context).pushReplacementNamed(MainNavigationScreen.route);
         }
       },
       child: Scaffold(
-        body: BlocBuilder<UserSetupBloc, UserFirstSetupState>(
-          bloc: userFirstSetupBloc,
+        body: BlocBuilder<UserSettingBloc, UserSettingState>(
+          bloc: userSettingBloc,
           builder: (context, state) {
-            if (state is SaveUserSetupLoading) {
+            if (state is SaveUserSettingLoading) {
               return Center(child: CircularProgressIndicator());
             }
 
@@ -55,23 +55,23 @@ class _UserFirstSetupScreenState extends State<UserFirstSetupScreen> with Automa
               children: <Widget>[
                 UserPathSelectionScreen(
                   onNext: (QuitingPath path) {
-                    setState(() => _setup = _setup.copyWith(path: path));
+                    setState(() => _setting = _setting.copyWith(path: path));
 
                     print('next');
 
                     _pageController.nextPage(duration: (Duration(milliseconds: 500)), curve: Curves.easeIn);
                   },
                 ),
-                UserCigaretteSetupScreen(
+                UserCigaretteSettingScreen(
                   onNext: (int numberOfCigarettesPerDay, int pricePerPackage, int numberOfCigarettesPerPackage) {
                     setState(
-                      () => _setup = _setup.copyWith(
+                      () => _setting = _setting.copyWith(
                           numberOfCigarettesPerDay: numberOfCigarettesPerDay,
                           pricePerPackage: pricePerPackage,
                           numberOfCigarettesPerPackage: numberOfCigarettesPerPackage),
                     );
 
-                    _submit(userFirstSetupBloc);
+                    _submit(userSettingBloc);
                   },
                   onBack: () {
                     _pageController.previousPage(duration: (Duration(milliseconds: 500)), curve: Curves.easeIn);

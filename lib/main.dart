@@ -15,7 +15,7 @@ import 'package:i_can_quit/bloc/news/news_bloc.dart';
 import 'package:i_can_quit/bloc/register/register_bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/user/user_bloc.dart';
-import 'package:i_can_quit/bloc/user_first_setup/user_first_setup_bloc.dart';
+import 'package:i_can_quit/bloc/user_setting/user_setting_bloc.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/data/repository/news_repository.dart';
 import 'package:i_can_quit/data/repository/smoking_entry_repository.dart';
@@ -32,7 +32,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bloc/application/application_bloc.dart';
 import 'bloc/authentication/authentication_event.dart';
-import 'data/repository/user_setup_repository.dart';
+import 'data/repository/user_setting_repository.dart';
 
 void main() async {
   await DotEnv().load('.env');
@@ -67,7 +67,7 @@ void main() async {
 
   final AuthenticationService authenticationService = AuthenticationService(dio, tokenRepository, facebookLogin, googleSignIn);
 
-  final UserSetupRepository userSetupRepository = UserSetupRepository(dio, tokenRepository);
+  final UserSettingRepository userSettingRepository = UserSettingRepository(dio, tokenRepository);
   final SmokingEntryRepository smokingEntryRepository = SmokingEntryRepository(dio, tokenRepository);
   final UserRepository userRepository = UserRepository(dio, tokenRepository);
   final NewsRepository newsRepository = NewsRepository(dio, tokenRepository);
@@ -75,7 +75,7 @@ void main() async {
   runApp(
     Application(
       smokingEntryRepository: smokingEntryRepository,
-      userSetupRepository: userSetupRepository,
+      userSettingRepository: userSettingRepository,
       userRepository: userRepository,
       tokenRepository: tokenRepository,
       newsRepository: newsRepository,
@@ -86,7 +86,7 @@ void main() async {
 
 class Application extends StatelessWidget {
   final SmokingEntryRepository smokingEntryRepository;
-  final UserSetupRepository userSetupRepository;
+  final UserSettingRepository userSettingRepository;
   final UserRepository userRepository;
   final TokenRepository tokenRepository;
   final NewsRepository newsRepository;
@@ -95,7 +95,7 @@ class Application extends StatelessWidget {
   const Application({
     Key key,
     @required this.smokingEntryRepository,
-    @required this.userSetupRepository,
+    @required this.userSettingRepository,
     @required this.userRepository,
     @required this.tokenRepository,
     @required this.newsRepository,
@@ -110,8 +110,8 @@ class Application extends StatelessWidget {
     final newsBloc = NewsBloc(this.newsRepository);
     final userBloc = UserBloc(userRepository);
 
-    final userSetupBloc = UserSetupBloc(
-      userSetupRepository,
+    final userSettingBloc = UserSettingBloc(
+      userSettingRepository,
       smokingEntryRepository,
     );
 
@@ -121,7 +121,7 @@ class Application extends StatelessWidget {
       authenticationService,
       userBloc,
       smokingEntryBloc,
-      userSetupBloc,
+      userSettingBloc,
     );
 
     final registrationBloc = RegistrationBloc(
@@ -135,7 +135,7 @@ class Application extends StatelessWidget {
       authenticationBloc,
       userBloc,
       smokingEntryBloc,
-      userSetupBloc,
+      userSettingBloc,
       newsBloc,
       registrationBloc,
     );
@@ -147,8 +147,8 @@ class Application extends StatelessWidget {
         BlocProvider<SmokingEntryBloc>(
           builder: (context) => smokingEntryBloc,
         ),
-        BlocProvider<UserSetupBloc>(
-          builder: (context) => userSetupBloc,
+        BlocProvider<UserSettingBloc>(
+          builder: (context) => userSettingBloc,
         ),
         BlocProvider<NewsBloc>(
           builder: (context) => newsBloc,

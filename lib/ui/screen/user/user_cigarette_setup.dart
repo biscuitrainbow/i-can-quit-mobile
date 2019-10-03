@@ -4,17 +4,17 @@ import 'package:i_can_quit/constant/style.dart';
 import 'package:i_can_quit/ui/widget/button/ripple_button.dart';
 import 'package:i_can_quit/ui/widget/selector/selector_group.dart';
 
-class UserCigaretteSetupScreen extends StatefulWidget {
+class UserCigaretteSettingScreen extends StatefulWidget {
   final Function(int, int, int) onNext;
   final Function onBack;
 
-  const UserCigaretteSetupScreen({Key key, this.onNext, this.onBack}) : super(key: key);
+  const UserCigaretteSettingScreen({Key key, this.onNext, this.onBack}) : super(key: key);
 
   @override
-  _UserCigaretteSetupScreenState createState() => _UserCigaretteSetupScreenState();
+  _UserCigaretteSettingScreenState createState() => _UserCigaretteSettingScreenState();
 }
 
-class _UserCigaretteSetupScreenState extends State<UserCigaretteSetupScreen> with AutomaticKeepAliveClientMixin<UserCigaretteSetupScreen> {
+class _UserCigaretteSettingScreenState extends State<UserCigaretteSettingScreen> with AutomaticKeepAliveClientMixin<UserCigaretteSettingScreen> {
   final _pricePerPackages = [for (var i = 50; i <= 120; i = i + 5) i].map((number) => number.toString()).toList();
 
   int numberOfCigarettesPerDay = 5;

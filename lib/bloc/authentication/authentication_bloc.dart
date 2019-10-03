@@ -8,7 +8,7 @@ import 'package:i_can_quit/bloc/authentication/authentication_state.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/user/user_bloc.dart';
 import 'package:i_can_quit/bloc/user/user_event.dart';
-import 'package:i_can_quit/bloc/user_first_setup/user_first_setup_bloc.dart';
+import 'package:i_can_quit/bloc/user_setting/user_setting_bloc.dart';
 import 'package:i_can_quit/data/repository/token_repository.dart';
 import 'package:i_can_quit/data/repository/user_repository.dart';
 import 'package:i_can_quit/data/service/authentication_service.dart';
@@ -19,7 +19,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   final AuthenticationService _authenticationService;
   final UserBloc _userBloc;
   final SmokingEntryBloc _smokingEntryBloc;
-  final UserSetupBloc _userSetupBloc;
+  final UserSettingBloc _userSettingBloc;
 
   AuthenticationBloc(
     this._userRepository,
@@ -27,7 +27,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     this._authenticationService,
     this._userBloc,
     this._smokingEntryBloc,
-    this._userSetupBloc,
+    this._userSettingBloc,
   );
 
   @override

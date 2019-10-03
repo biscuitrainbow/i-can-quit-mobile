@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:i_can_quit/data/model/user_setup.dart';
+import 'package:i_can_quit/data/model/user_setting.dart';
 import 'package:meta/meta.dart';
 
 class User {
@@ -10,7 +10,7 @@ class User {
   final String password;
   final String token;
   final bool newUser;
-  final List<UserSetup> setups;
+  final List<UserSetting> settings;
 
   User({
     this.id,
@@ -19,7 +19,7 @@ class User {
     this.password,
     this.token,
     this.newUser,
-    this.setups,
+    this.settings,
   });
 
   User.register({
@@ -29,7 +29,7 @@ class User {
     this.id,
     this.token,
     this.newUser = false,
-    this.setups = const [],
+    this.settings = const [],
   });
 
   User copyWith({
@@ -40,7 +40,7 @@ class User {
     String token,
     String gender,
     bool isNewUser,
-    List<UserSetup> setups,
+    List<UserSetting> settings,
   }) {
     return User(
       id: id ?? this.id,
@@ -49,7 +49,7 @@ class User {
       password: password ?? this.password,
       token: token ?? this.token,
       newUser: isNewUser ?? this.newUser,
-      setups: setups ?? this.setups,
+      settings: settings ?? this.settings,
     );
   }
 
@@ -74,7 +74,7 @@ class User {
       password: map['password'],
       token: map['token'],
       newUser: map['isNewUser'],
-      setups: UserSetup.fromMapArray(map['setups']),
+      settings: UserSetting.fromMapArray(map['setups']),
     );
   }
 
@@ -84,6 +84,6 @@ class User {
 
   @override
   String toString() {
-    return 'User id: $id, name: $name, email: $email, password: $password, token: ${token[0]}, newUser: $newUser, setups: $setups';
+    return 'User id: $id, name: $name, email: $email, password: $password, token: ${token[0]}, newUser: $newUser, setups: $settings';
   }
 }

@@ -4,9 +4,9 @@ import 'package:i_can_quit/bloc/authentication/authentication_bloc.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_state.dart';
 import 'package:i_can_quit/bloc/user/user_bloc.dart';
 import 'package:i_can_quit/bloc/user/user_state.dart';
-import 'package:i_can_quit/bloc/user_first_setup/user_first_setup_bloc.dart';
-import 'package:i_can_quit/bloc/user_first_setup/user_first_setup_state.dart';
-import 'package:i_can_quit/ui/screen/user/user_first_setup_screen.dart';
+import 'package:i_can_quit/bloc/user_setting/user_setting_bloc.dart';
+import 'package:i_can_quit/bloc/user_setting/user_setting_state.dart';
+import 'package:i_can_quit/ui/screen/user/user_first_setting_screen.dart';
 import 'package:i_can_quit/ui/screen/user/user_login_screen.dart';
 
 import 'main_navigation_screen.dart';
@@ -21,18 +21,18 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final AuthenticationBloc authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
-    final UserSetupBloc userSetupBloc = BlocProvider.of<UserSetupBloc>(context);
+    final UserSettingBloc userSettingBloc = BlocProvider.of<UserSettingBloc>(context);
 
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       bloc: authenticationBloc,
       builder: (context, authenticationState) {
-        return BlocBuilder<UserSetupBloc, UserFirstSetupState>(
-          bloc: userSetupBloc,
-          builder: (context, userSetupState) {
+        return BlocBuilder<UserSettingBloc, UserSettingState>(
+          bloc: userSettingBloc,
+          builder: (context, userSettingState) {
             if (authenticationState is UserAuthenticated) {
               
-              if (userSetupState is FetchUserSetupSuccess) {
-                return UserFirstSetupScreen();
+              if (userSettingState is FetchUserSettingSuccess) {
+                return UserFirstSettingScreen();
               }
 
               return MainNavigationScreen();
