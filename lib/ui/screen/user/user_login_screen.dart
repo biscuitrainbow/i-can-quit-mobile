@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide TextField;
-import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_bloc.dart';
@@ -39,14 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     bloc.dispatch(LoginWithEmailAndPassword(email: _emailController.text, password: _passwordController.text));
-
-    // Completer<Null> completer = loadingCompleter(context, 'กำลังเข้าสู่ระบบ..', 'เข้าสู่ระบบสำเร็จ', 'เข้าสู่ระบบไม่สำเร็จ');
-
-    // widget.viewModel.onLogin(
-    //   _emailController.text,
-    //   _passwordController.text,
-    //   completer,
-    // );
   }
 
   void _loginWithFacebook(AuthenticationBloc bloc) {
@@ -61,8 +52,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
 
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
+    _emailController = TextEditingController(text: 'user@email.com');
+    _passwordController = TextEditingController(text: 'password');
 
     _emailNode = FocusNode();
     _passwordNode = FocusNode();
@@ -182,8 +173,8 @@ class _LoginScreenState extends State<LoginScreen> {
       body: BlocListener<AuthenticationBloc, AuthenticationState>(
         bloc: authenticationBloc,
         listener: (context, state) {
-          if (state is NewSocialUserHasRegistered) {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisterScreen(user: state.user)));
+          if (state is ProviderEmailHasNotRegistered) {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisterScreen(email: state.email, name: state.name)));
           }
 
           if (state is LoginError) {

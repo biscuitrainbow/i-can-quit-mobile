@@ -8,15 +8,15 @@ class TokenRepository {
 
   TokenRepository(this.sharedPreferences);
 
-  Future<Null> saveToken(String token) async {
+  Future<Null> persist(String token) async {
     await sharedPreferences.setString(keyToken, token);
   }
 
-  Future<Null> deleteToken() async {
+  Future<Null> delete() async {
     await sharedPreferences.remove(keyToken);
   }
 
-  Future<String> getToken() async {
+  Future<String> token() async {
     return sharedPreferences.getString(keyToken);
   }
 }

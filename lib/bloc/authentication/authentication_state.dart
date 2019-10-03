@@ -7,22 +7,22 @@ abstract class AuthenticationState extends Equatable {
   AuthenticationState([List props = const <dynamic>[]]) : super(props);
 }
 
-class UserIsUnAuthenticated extends AuthenticationState {}
+class Unauthenticated extends AuthenticationState {}
 
 class LoginLoading extends AuthenticationState {}
 
-class LoginSuccess extends AuthenticationState {
-  final User user;
-
-  LoginSuccess({this.user}) : super([user]);
-}
+class LoginSuccess extends AuthenticationState {}
 
 class LoginError extends AuthenticationState {}
 
-class NewSocialUserHasRegistered extends AuthenticationState {
-  final User user;
+class ProviderEmailHasNotRegistered extends AuthenticationState {
+  final String email;
+  final String name;
 
-  NewSocialUserHasRegistered({@required this.user}) : super([user]);
+  ProviderEmailHasNotRegistered({
+    @required this.email,
+    @required this.name,
+  }) : super([email, name]);
 }
 
 class UserAuthenticated extends AuthenticationState {}

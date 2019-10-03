@@ -15,7 +15,7 @@ class SmokingEntryRepository {
     final response = await dio.post(
       '/entry',
       options: Options(headers: {
-        HttpHeaders.authorizationHeader: toBearer(await tokenRepository.getToken()),
+        HttpHeaders.authorizationHeader: toBearer(await tokenRepository.token()),
       }),
       data: entry.toMap(),
     );
@@ -27,7 +27,7 @@ class SmokingEntryRepository {
     final response = await dio.get(
       '/entry',
       options: Options(headers: {
-        HttpHeaders.authorizationHeader: toBearer(await tokenRepository.getToken()),
+        HttpHeaders.authorizationHeader: toBearer(await tokenRepository.token()),
       }),
     );
 

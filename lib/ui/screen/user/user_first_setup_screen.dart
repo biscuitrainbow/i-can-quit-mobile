@@ -27,22 +27,22 @@ class _UserFirstSetupScreenState extends State<UserFirstSetupScreen> with Automa
     super.dispose();
   }
 
-  void _submit(UserFirstSetupBloc bloc) {
+  void _submit(UserSetupBloc bloc) {
     bloc.dispatch(SaveUserFirstSetup(setup: _setup));
   }
 
   @override
   Widget build(BuildContext context) {
-    final UserFirstSetupBloc userFirstSetupBloc = BlocProvider.of<UserFirstSetupBloc>(context);
+    final UserSetupBloc userFirstSetupBloc = BlocProvider.of<UserSetupBloc>(context);
 
-    return BlocListener<UserFirstSetupBloc, UserFirstSetupState>(
+    return BlocListener<UserSetupBloc, UserFirstSetupState>(
       listener: (context, state) {
         if (state is SaveUserSetupSuccess) {
           Navigator.of(context).pushReplacementNamed(MainNavigationScreen.route);
         }
       },
       child: Scaffold(
-        body: BlocBuilder<UserFirstSetupBloc, UserFirstSetupState>(
+        body: BlocBuilder<UserSetupBloc, UserFirstSetupState>(
           bloc: userFirstSetupBloc,
           builder: (context, state) {
             if (state is SaveUserSetupLoading) {

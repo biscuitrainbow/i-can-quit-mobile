@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:i_can_quit/data/model/user.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -21,7 +20,7 @@ class LoginWithFacebook extends AuthenticationEvent {}
 class CheckAuthenticated extends AuthenticationEvent {}
 
 class AuthenticateUser extends AuthenticationEvent {
-  final User user;
+  final String token;
 
-  AuthenticateUser({@required this.user}) : super([user]);
+  AuthenticateUser({@required this.token});
 }

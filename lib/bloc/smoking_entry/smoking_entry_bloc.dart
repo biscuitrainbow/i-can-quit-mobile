@@ -17,12 +17,12 @@ class SmokingEntryBloc extends Bloc<SmokingEntryEvent, SmokingEntryState> {
 
       try {
         final entries = await _smokingEntryRepository.fetchEntries();
-        final latestHasSmokedEntry = entries.firstWhere((entry) => entry.hasSmoked);
+        // final latestHasSmokedEntry = entries.firstWhere((entry) => entry.hasSmoked);
         final nonSmokingDays = entries.where((entry) => !entry.hasSmoked).toList().length;
 
-        yield SmokingEntryLoaded(
+        yield FetchSmokingEntrySuccess(
           entries: entries,
-          latestHasSmokedEntry: latestHasSmokedEntry,
+          // latestHasSmokedEntry: latestHasSmokedEntry,
           nonSmokingDays: nonSmokingDays,
         );
       } catch (error) {

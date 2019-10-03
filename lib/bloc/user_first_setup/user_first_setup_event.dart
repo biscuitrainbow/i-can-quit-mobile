@@ -12,3 +12,5 @@ class SaveUserFirstSetup extends UserFirstSetupEvent {
 
   SaveUserFirstSetup({@required this.setup});
 }
+
+class FetchUserSetups extends UserFirstSetupEvent {}

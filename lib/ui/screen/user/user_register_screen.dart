@@ -15,9 +15,14 @@ import 'package:i_can_quit/ui/widget/form/text_field.dart';
 class RegisterScreen extends StatefulWidget {
   static const String route = '/register';
 
-  final User user;
+  final String email;
+  final String name;
 
-  const RegisterScreen({Key key, this.user}) : super(key: key);
+  const RegisterScreen({
+    Key key,
+    this.email,
+    this.name,
+  }) : super(key: key);
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -54,9 +59,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void initState() {
     super.initState();
 
-    _nameController = TextEditingController(text: widget.user != null ? widget.user.name : "");
-    _emailController = TextEditingController(text: widget.user != null ? widget.user.email : "");
-    _passwordController = TextEditingController(text: widget.user != null ? widget.user.password : "");
+    _nameController = TextEditingController(text: this.widget.name);
+    _emailController = TextEditingController(text: this.widget.email);
+    _passwordController = TextEditingController();
   }
 
   @override
@@ -86,17 +91,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       body: MultiBlocListener(
         listeners: [
-          BlocListener<AuthenticationBloc, AuthenticationState>(
-            bloc: authenticationBloc,
-            listener: (context, state) {
-              if (state is LoginSuccess) {
-                Navigator.of(context).pop();
-              }
-            },
-          ),
           BlocListener<RegistrationBloc, RegisterState>(
             bloc: registrationBloc,
             listener: (context, state) {
+              if (state is RegisterSuccess) {
+                Navigator.of(context).pop();
+              }
               if (state is RegisterError) {
                 Scaffold.of(context).showSnackBar(SnackBar(content: Text('สร้างบัญชีผู้ใช้ไม่สำเร็จ')));
               }

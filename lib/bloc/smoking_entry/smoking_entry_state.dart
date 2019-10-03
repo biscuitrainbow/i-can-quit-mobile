@@ -6,20 +6,22 @@ abstract class SmokingEntryState extends Equatable {
   SmokingEntryState([List props = const []]) : super(props);
 }
 
-class SmokingEntryLoaded extends SmokingEntryState {
+class FetchSmokingEntrySuccess extends SmokingEntryState {
   final List<SmokingEntry> entries;
-  final SmokingEntry latestHasSmokedEntry;
+  // final SmokingEntry latestHasSmokedEntry;
   final int nonSmokingDays;
 
-  SmokingEntryLoaded({
+  FetchSmokingEntrySuccess({
     @required this.entries,
-    @required this.latestHasSmokedEntry,
+    // @required this.latestHasSmokedEntry,
     @required this.nonSmokingDays,
-  }) : super([entries, latestHasSmokedEntry, nonSmokingDays]);
+  }) : super([entries, nonSmokingDays]);
 }
 
 class SmokingEntryLoading extends SmokingEntryState {}
 
 class SmokingEntryEmpty extends SmokingEntryState {}
+
+class SaveSmokingEntryLoading extends SmokingEntryState {}
 
 class SaveSmokingEntrySuccess extends SmokingEntryState {}

@@ -16,7 +16,7 @@ class UserSetupRepository {
     await dio.post(
       '/user/setup',
       options: Options(headers: {
-        HttpHeaders.authorizationHeader: toBearer(await tokenRepository.getToken()),
+        HttpHeaders.authorizationHeader: toBearer(await tokenRepository.token()),
       }),
       data: {
         'number_of_cigarette_per_day': setup.numberOfCigarettesPerDay,
@@ -27,5 +27,16 @@ class UserSetupRepository {
     );
 
     return null;
+  }
+
+  Future<List<UserSetup>> fetchUserSetups() async {
+    final response = await dio.get(
+      '/user/setup',
+      options: Options(headers: {
+        HttpHeaders.authorizationHeader: toBearer(await tokenRepository.token()),
+      }),
+    );
+
+    return UserSetup.fromMapArray(response.data);
   }
 }

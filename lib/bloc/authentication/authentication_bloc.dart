@@ -5,39 +5,56 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_event.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_state.dart';
+import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
+import 'package:i_can_quit/bloc/user/user_bloc.dart';
+import 'package:i_can_quit/bloc/user/user_event.dart';
+import 'package:i_can_quit/bloc/user_first_setup/user_first_setup_bloc.dart';
 import 'package:i_can_quit/data/repository/token_repository.dart';
 import 'package:i_can_quit/data/repository/user_repository.dart';
+import 'package:i_can_quit/data/service/authentication_service.dart';
 
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final UserRepository userRepository;
-  final TokenRepository tokenRepository;
+  final UserRepository _userRepository;
+  final TokenRepository _tokenRepository;
+  final AuthenticationService _authenticationService;
+  final UserBloc _userBloc;
+  final SmokingEntryBloc _smokingEntryBloc;
+  final UserSetupBloc _userSetupBloc;
 
   AuthenticationBloc(
-    this.userRepository,
-    this.tokenRepository,
+    this._userRepository,
+    this._tokenRepository,
+    this._authenticationService,
+    this._userBloc,
+    this._smokingEntryBloc,
+    this._userSetupBloc,
   );
 
   @override
-  AuthenticationState get initialState => UserIsUnAuthenticated();
+  AuthenticationState get initialState => Unauthenticated();
 
   @override
   Stream<AuthenticationState> mapEventToState(
     AuthenticationEvent event,
   ) async* {
     if (event is AuthenticateUser) {
-      await tokenRepository.saveToken(event.user.token);
+      await _tokenRepository.persist(event.token);
 
-      yield LoginSuccess(user: event.user);
+      yield UserAuthenticated();
     }
 
     if (event is LoginWithEmailAndPassword) {
       yield LoginLoading();
 
       try {
-        final user = await userRepository.loginWithEmailAndPassword(event.email, event.password);
-        await tokenRepository.saveToken(user.token);
+        final token = await _authenticationService.loginWithEmailAndPassword(
+          event.email,
+          event.password,
+        );
 
-        yield LoginSuccess(user: user);
+        await _tokenRepository.persist(token);
+
+        yield UserAuthenticated();
       } catch (error) {
         yield LoginError();
       }
@@ -47,17 +64,16 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       yield LoginLoading();
 
       try {
-        final googleUser = await userRepository.loginWithGoogle();
-        final user = await userRepository.loginWithOnlyEmail(googleUser.email);
+        final token = await _authenticationService.loginWithGoogle();
+        await _tokenRepository.persist(token);
 
-        await tokenRepository.saveToken(user.token);
-
-        yield LoginSuccess(user: user);
+        yield UserAuthenticated();
       } on DioError catch (error) {
         if (error.response.statusCode == HttpStatus.unauthorized) {
-          final googleUser = await userRepository.loginWithGoogle();
-
-          yield NewSocialUserHasRegistered(user: googleUser);
+          yield ProviderEmailHasNotRegistered(
+            email: error.response.data['email'],
+            name: error.response.data['name'],
+          );
         }
       } on UserCanceledException catch (error) {
         print(error);
@@ -70,17 +86,16 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       yield LoginLoading();
 
       try {
-        final facebookUser = await userRepository.loginWithFacebook();
-        final user = await userRepository.loginWithOnlyEmail(facebookUser.email);
+        final token = await _authenticationService.loginWithFacebook();
+        await _tokenRepository.persist(token);
 
-        await tokenRepository.saveToken(user.token);
-
-        yield LoginSuccess(user: user);
+        yield UserAuthenticated();
       } on DioError catch (error) {
         if (error.response.statusCode == HttpStatus.unauthorized) {
-          final facebookUser = await userRepository.loginWithFacebook();
-
-          yield NewSocialUserHasRegistered(user: facebookUser);
+          yield ProviderEmailHasNotRegistered(
+            email: error.response.data['email'],
+            name: error.response.data['name'],
+          );
         }
       } on UserCanceledException catch (error) {
         print(error);
@@ -92,21 +107,20 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     }
 
     if (event is CheckAuthenticated) {
-      final token = await tokenRepository.getToken();
-      print(token);
       yield LoginLoading();
+
+      final token = await _tokenRepository.token();
 
       if (token != null) {
         try {
-          final user = await userRepository.fetchUser();
+          await _authenticationService.checkAuthenticated();
 
-          yield LoginSuccess(user: user);
+          yield UserAuthenticated();
         } catch (error) {
-          print(error);
+          yield Unauthenticated();
         }
       } else {
-        print('unauthenticated');
-        yield UserIsUnAuthenticated();
+        yield Unauthenticated();
       }
     }
   }

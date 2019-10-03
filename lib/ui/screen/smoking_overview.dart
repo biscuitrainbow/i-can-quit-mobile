@@ -30,7 +30,7 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
     super.dispose();
   }
 
-  Widget _buildOverviewStats(SmokingEntryLoaded state) {
+  Widget _buildOverviewStats(FetchSmokingEntrySuccess state) {
     return Container(
       width: double.infinity,
       color: ColorPalette.primary,
@@ -68,7 +68,7 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
     );
   }
 
-  Widget _buildNonSmokingTimePassed(SmokingEntryLoaded state) {
+  Widget _buildNonSmokingTimePassed(FetchSmokingEntrySuccess state) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 24),
       child: Column(
@@ -81,7 +81,7 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
     );
   }
 
-  Widget _buildHealthRegenerationList(SmokingEntryLoaded state) {
+  Widget _buildHealthRegenerationList(FetchSmokingEntrySuccess state) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
@@ -130,7 +130,7 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
       body: BlocBuilder<SmokingEntryBloc, SmokingEntryState>(
           bloc: smokingEntryBloc,
           builder: (context, state) {
-            if (state is SmokingEntryLoaded) {
+            if (state is FetchSmokingEntrySuccess) {
               return SingleChildScrollView(
                 padding: EdgeInsets.only(bottom: 16),
                 child: Column(

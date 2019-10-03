@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:i_can_quit/data/model/user_setup.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -13,3 +14,17 @@ class SaveUserSetupLoading extends UserFirstSetupState {}
 class SaveUserSetupSuccess extends UserFirstSetupState {}
 
 class SaveUserSetupError extends UserFirstSetupState {}
+
+class FetchUserSetupLoading extends UserFirstSetupState {}
+
+class FetchUserSetupSuccess extends UserFirstSetupState {
+  final List<UserSetup> setups;
+  final UserSetup latestSetup;
+
+  FetchUserSetupSuccess({
+    @required this.setups,
+    @required this.latestSetup,
+  });
+}
+
+class FetchUserSetupError extends UserFirstSetupState {}
