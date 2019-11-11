@@ -5,3 +5,5 @@ abstract class ApplicationEvent extends Equatable {
 }
 
 class InitilizeApplication extends ApplicationEvent {}
+
+class ReadyApplication extends ApplicationEvent {}

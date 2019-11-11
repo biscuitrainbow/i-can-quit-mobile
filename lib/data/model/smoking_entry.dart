@@ -28,6 +28,14 @@ class SmokingEntry {
     this.mood,
   }) : datetime = DateTime.now();
 
+  SmokingEntry.firstTimes({
+    this.id,
+    this.smokingNeededLevel = 'ไม่เลย',
+    this.hasSmoked = true,
+    this.location,
+    this.mood,
+  }) : datetime = DateTime.now();
+
   SmokingEntry copyWith({
     int id,
     String smokingNeededLevel,

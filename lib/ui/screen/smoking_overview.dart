@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
-import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_event.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
+import 'package:i_can_quit/bloc/user_setting/user_setting_bloc.dart';
+import 'package:i_can_quit/bloc/user_setting/user_setting_state.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/constant/style.dart';
+import 'package:i_can_quit/ui/screen/user/user_first_setting_screen.dart';
+import 'package:i_can_quit/ui/widget/button/ripple_button.dart';
+import 'package:i_can_quit/ui/widget/navigation_drawer.dart';
 import 'package:i_can_quit/ui/widget/smoking_overview/health_regeneration_badge.dart';
 import 'package:i_can_quit/ui/widget/smoking_overview/overview_stats_item.dart';
 import 'package:i_can_quit/ui/widget/smoking_overview/time_passed.dart';
@@ -48,11 +52,27 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              OverviewStatsItem.secondary(
-                title: '+200',
-                unit: 'บาท',
-                description: 'มีเงินเก็บเพิ่ม',
-                icon: FontAwesomeIcons.piggyBank,
+              BlocBuilder<UserSettingBloc, UserSettingState>(
+                builder: (context, userSettingState) {
+                  return BlocBuilder<SmokingEntryBloc, SmokingEntryState>(
+                    builder: (context, smokingEntryState) {
+                      print(userSettingState);
+                      print(smokingEntryState);
+
+                      if (userSettingState is FetchUserSettingSuccess && smokingEntryState is FetchSmokingEntrySuccess) {
+                        return OverviewStatsItem.secondary(
+                          title:
+                              '${(smokingEntryState.entries.where((entry) => !entry.hasSmoked).length * userSettingState.latestSetting.pricePerPackage / userSettingState.latestSetting.numberOfCigarettesPerPackage).toStringAsFixed(2)}',
+                          unit: 'บาท',
+                          description: 'มีเงินเก็บเพิ่ม',
+                          icon: FontAwesomeIcons.piggyBank,
+                        );
+                      }
+                    },
+                  );
+
+                  //return Container();
+                },
               ),
               VerticalDivider(color: Colors.white, width: 10),
               OverviewStatsItem.secondary(
@@ -90,25 +110,30 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
         children: <Widget>[
           Text('การฟื้นฟูของร่างกาย', style: Styles.titlePrimary),
           SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              HealthRegenerationBadge(
-                title: 'ระดับความดันโลหิต',
-                duration: Duration(minutes: 1),
-                latestHasSmokedDateTime: state.latestHasSmokedEntry.datetime,
-              ),
-              HealthRegenerationBadge(
-                title: 'ระดับคาร์บอนมอนอกไซด์',
-                duration: Duration(hours: 12),
-                latestHasSmokedDateTime: state.latestHasSmokedEntry.datetime,
-              ),
-              HealthRegenerationBadge(
-                title: 'ความเสี่ยงโรคหัวใจ',
-                duration: Duration(days: 5),
-                latestHasSmokedDateTime: state.latestHasSmokedEntry.datetime,
-              ),
-            ],
+          Container(
+            height: 150,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                HealthRegenerationBadge(
+                  title: 'ระดับความดันโลหิต',
+                  duration: Duration(minutes: 1),
+                  latestHasSmokedDateTime: state.latestHasSmokedEntry.datetime,
+                ),
+                SizedBox(width: 24),
+                HealthRegenerationBadge(
+                  title: 'ระดับคาร์บอนมอนอกไซด์',
+                  duration: Duration(hours: 12),
+                  latestHasSmokedDateTime: state.latestHasSmokedEntry.datetime,
+                ),
+                SizedBox(width: 24),
+                HealthRegenerationBadge(
+                  title: 'ความเสี่ยงโรคหัวใจ',
+                  duration: Duration(days: 5),
+                  latestHasSmokedDateTime: state.latestHasSmokedEntry.datetime,
+                ),
+              ],
+            ),
           )
         ],
       ),
@@ -119,35 +144,75 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
   Widget build(BuildContext context) {
     final SmokingEntryBloc smokingEntryBloc = BlocProvider.of<SmokingEntryBloc>(context);
 
-    smokingEntryBloc.dispatch(FetchSmokingEntry());
-
     return Scaffold(
       appBar: AppBar(
         title: Text('ภาพรวม'),
         centerTitle: true,
         elevation: 0,
       ),
+      drawer: Drawer(
+        child: NavigationDrawer(),
+      ),
       body: BlocBuilder<SmokingEntryBloc, SmokingEntryState>(
           bloc: smokingEntryBloc,
-          builder: (context, state) {
-            if (state is FetchSmokingEntrySuccess) {
-              return SingleChildScrollView(
-                padding: EdgeInsets.only(bottom: 16),
-                child: Column(
-                  children: <Widget>[
-                    _buildOverviewStats(state),
-                    _buildNonSmokingTimePassed(state),
-                    _buildHealthRegenerationList(state),
-                  ],
-                ),
-              );
-            }
+          builder: (context, smokingEntryState) {
+            return BlocBuilder<UserSettingBloc, UserSettingState>(
+              builder: (context, userSettingState) {
+                if (smokingEntryState is SmokingEntryLoading || userSettingState is FetchUserSettingLoading) {
+                  return Center(child: CircularProgressIndicator());
+                }
 
-            if (state is SmokingEntryLoading) {
-              return Center(child: CircularProgressIndicator());
-            }
+                if (smokingEntryState is FetchSmokingEntrySuccess && userSettingState is FetchUserSettingSuccess) {
+                  print(smokingEntryState.latestHasSmokedEntry);
 
-            return Container();
+                  if (userSettingState.settings.isEmpty || smokingEntryState.entries.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            IconData(0xe7c6, fontFamily: 'iconfont'),
+                            color: Colors.grey.shade400,
+                            size: 64,
+                          ),
+                          SizedBox(height: 12),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Text(
+                              'ยินดีต้อนรับผู้ใช้ใหม่ กรุณาป้อนข้อมูลเบื้องต้นเกี่ยวกับพฤติกรรมการสูบบุหรี่ของคุณเพื่อเริ่มใช้งาน',
+                              style: Styles.descriptionSecondary,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          SizedBox(height: 12),
+                          FlatButton(
+                            child: Text(
+                              'กรอกข้อมูลเบื้องต้น',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            color: ColorPalette.primary,
+                            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => UserFirstSettingScreen())),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                }
+
+                return SingleChildScrollView(
+                  padding: EdgeInsets.only(bottom: 16),
+                  child: Column(
+                    children: <Widget>[
+                      _buildOverviewStats(smokingEntryState),
+                      _buildNonSmokingTimePassed(smokingEntryState),
+                      _buildHealthRegenerationList(smokingEntryState),
+                    ],
+                  ),
+                );
+              },
+            );
           }),
     );
   }

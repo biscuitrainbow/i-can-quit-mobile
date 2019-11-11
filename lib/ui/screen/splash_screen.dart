@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:i_can_quit/constant/assets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'main_screen.dart';
 
@@ -16,11 +18,11 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void initState() {
     super.initState();
 
-    animationController = new AnimationController(duration: Duration(seconds: 2), vsync: this)
+    animationController = new AnimationController(duration: Duration(seconds: 3), vsync: this)
       ..forward()
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          Navigator.of(context).pushReplacementNamed(MainScreen.route);
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MainScreen()));
         }
       });
   }
@@ -35,6 +37,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.red,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,41 +48,50 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    'iCanQuit',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 36.0,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  // Text(
+                  //   'iCanQuit',
+                  //   textAlign: TextAlign.center,
+                  //   style: TextStyle(
+                  //     color: Theme.of(context).primaryColor,
+                  //     fontSize: 36.0,
+                  //     fontWeight: FontWeight.w500,
+                  //   ),
+                  // ),
+                  // SvgPicture.asset(
+                  //   'assets/logo/brand.svg',
+                  //   semanticsLabel: 'Acme Logo',
+                  //   width: 350,
+                  // )
+                  Image.asset(
+                    AssetImages.logoApp,
+                    width: 256,
                   ),
-                  Text(
-                    'เค็มพอดี ชีวีมีสุข',
-                    textAlign: TextAlign.center,
-                    // style: Style.description.copyWith(
-                    //   fontSize: 20.0,
-                    //   color: Colors.grey.shade600,
-                    // ),
-                  ),
+                  // Text(
+                  //   'เค็มพอดี ชีวีมีสุข',
+                  //   textAlign: TextAlign.center,
+                  //   // style: Style.description.copyWith(
+                  //   //   fontSize: 20.0,
+                  //   //   color: Colors.grey.shade600,
+                  //   // ),
+                  // ),
                 ],
               ),
             ),
             Column(
               children: <Widget>[
-                // Image.asset(AssetImages.logoNrct, width: 80.0),
-                // SizedBox(height: 16.0),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: 16.0),
-                //   child: Text(
-                //     'ได้รับงบประมาณสนับสนุนจาก ทุนสร้างสถานภาพนักวิจัยรุ่นใหม่ประจำปี 2561',
-                //     textAlign: TextAlign.center,
-                //     style: TextStyle(
-                //       fontSize: 18.0,
-                //       color: Colors.grey.shade700,
-                //     ),
-                //   ),
-                // ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    'ได้รับงบประมาณสนับสนุนจาก',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18.0, 
+                      color: Colors.grey.shade700,
+                    ),
+                  ),
+                ),
+                Image.asset(AssetImages.logoSSS, width: 80.0),
+                SizedBox(height: 32.0),
               ],
             ),
             // Stack(

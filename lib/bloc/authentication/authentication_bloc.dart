@@ -117,6 +117,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
           yield UserAuthenticated();
         } catch (error) {
+          print(error);
           yield Unauthenticated();
         }
       } else {

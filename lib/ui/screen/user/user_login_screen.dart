@@ -32,20 +32,20 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisterScreen()));
   }
 
-  void _login(AuthenticationBloc bloc) {
+  void _loginWithEmailAndPassword(AuthenticationBloc bloc) {
     if (!_formKey.currentState.validate()) {
       return;
     }
 
-    bloc.dispatch(LoginWithEmailAndPassword(email: _emailController.text, password: _passwordController.text));
+    bloc.add(LoginWithEmailAndPassword(email: _emailController.text, password: _passwordController.text));
   }
 
   void _loginWithFacebook(AuthenticationBloc bloc) {
-    bloc.dispatch(LoginWithFacebook());
+    bloc.add(LoginWithFacebook());
   }
 
   void _loginWithGoogle(AuthenticationBloc bloc) {
-    bloc.dispatch(LoginWithGoogle());
+    bloc.add(LoginWithGoogle());
   }
 
   @override
@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
             keyboardType: TextInputType.text,
             hintText: 'รหัสผ่าน',
             validator: (String value) => value.isEmpty ? 'กรุณากรอกรหัสผ่าน' : null,
-            onFieldSubmitted: (String value) => _login(authenticationBloc),
+            onFieldSubmitted: (String value) => _loginWithEmailAndPassword(authenticationBloc),
             textInputAction: TextInputAction.done,
           ),
           SizedBox(height: 24.0),
@@ -131,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: Colors.green,
             textColor: Colors.white,
             decoration: Styles.primaryButtonDecoration,
-            onPress: () => _login(authenticationBloc),
+            onPress: () => _loginWithEmailAndPassword(authenticationBloc),
           ),
           SizedBox(height: 24.0),
           RippleButton(
@@ -171,7 +171,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       body: BlocListener<AuthenticationBloc, AuthenticationState>(
-        bloc: authenticationBloc,
         listener: (context, state) {
           if (state is ProviderEmailHasNotRegistered) {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisterScreen(email: state.email, name: state.name)));
@@ -182,7 +181,6 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         },
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          bloc: authenticationBloc,
           builder: (context, state) {
             if (state is LoginLoading) {
               return Center(child: CircularProgressIndicator());

@@ -1,11 +1,10 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_bloc.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_state.dart';
 import 'package:i_can_quit/bloc/news/news_bloc.dart';
 import 'package:i_can_quit/bloc/news/news_event.dart';
-import 'package:i_can_quit/bloc/register/register_bloc.dart';
-import 'package:i_can_quit/bloc/register/register_state.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_event.dart';
 import 'package:i_can_quit/bloc/user/user_bloc.dart';
@@ -22,10 +21,8 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   final SmokingEntryBloc _smokingEntryBloc;
   final UserSettingBloc _userSettingBloc;
   final NewsBloc _newsBloc;
-  final RegistrationBloc _registerBloc;
 
   StreamSubscription _authenticationSubscription;
-  StreamSubscription _registerSubscription;
 
   ApplicationBloc(
     this._authenticationBloc,
@@ -33,9 +30,8 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
     this._smokingEntryBloc,
     this._userSettingBloc,
     this._newsBloc,
-    this._registerBloc,
   ) {
-    _authenticationSubscription = _authenticationBloc.state.listen((state) {
+    _authenticationSubscription = _authenticationBloc.listen((state) {
       if (state is UserAuthenticated) {
         _initilizeApplication();
       }
@@ -43,18 +39,12 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   }
 
   void _initilizeApplication() {
-    _userBloc.dispatch(FetchUser());
-    _smokingEntryBloc.dispatch(FetchSmokingEntry());
-    _userSettingBloc.dispatch(FetchUserSetting());
-    _newsBloc.dispatch(FetchNews());
-  }
+    print('INITILIZED ##################################################################');
 
-  @override
-  void dispose() {
-    _authenticationSubscription.cancel();
-    _registerSubscription.cancel();
-
-    super.dispose();
+    _userSettingBloc.add(FetchUserSetting());
+    _smokingEntryBloc.add(FetchSmokingEntry());
+    _userBloc.add(FetchUser());
+    _newsBloc.add(FetchNews());
   }
 
   @override
@@ -64,9 +54,8 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   Stream<ApplicationState> mapEventToState(
     ApplicationEvent event,
   ) async* {
-    // if (event is InitilizeApplication) {
-    //   _smokingEntryBloc.dispatch(FetchSmokingEntry());
-    //   _newsBloc.dispatch(FetchNews());
-    // }
+    if (event is ReadyApplication) {
+      yield ApplicationReady();
+    }
   }
 }

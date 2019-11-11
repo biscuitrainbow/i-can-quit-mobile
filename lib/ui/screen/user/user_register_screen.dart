@@ -52,7 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       password: _passwordController.text,
     );
 
-    bloc.dispatch(Register(user: user));
+    bloc.add(Register(user: user));
   }
 
   @override
@@ -97,6 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               if (state is RegisterSuccess) {
                 Navigator.of(context).pop();
               }
+              
               if (state is RegisterError) {
                 Scaffold.of(context).showSnackBar(SnackBar(content: Text('สร้างบัญชีผู้ใช้ไม่สำเร็จ')));
               }

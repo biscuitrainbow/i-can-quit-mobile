@@ -5,13 +5,14 @@ String toBearer(String token) {
 }
 
 bool isEmail(String em) {
-  String p = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+  String p =
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
   RegExp regExp = new RegExp(p);
   return regExp.hasMatch(em);
 }
 
-String mysqlDateTimeFormat = 'yyyy-MM-dd hh:mm:ss';
+String mysqlDateTimeFormat = 'yyyy-MM-dd H:mm:ss';
 
 String toMysqlDateTime(DateTime datetime) {
   DateFormat formatter = DateFormat(mysqlDateTimeFormat);
@@ -31,4 +32,3 @@ String toThaiDate(DateTime datetime, [String format = 'dd MMM yyyy']) {
 String getFirstCharacter(String text) {
   return text[0];
 }
-

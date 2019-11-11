@@ -26,6 +26,12 @@ abstract class Styles {
     color: Colors.white,
   );
 
+   static const bigHeaderPrimary = TextStyle(
+    fontSize: 28,
+    fontWeight: FontWeight.w400,
+    color: ColorPalette.primary,
+  );
+
   static const description = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w300,

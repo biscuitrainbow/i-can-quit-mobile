@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/constant/style.dart';
@@ -16,6 +17,8 @@ class UserCigaretteSettingScreen extends StatefulWidget {
 
 class _UserCigaretteSettingScreenState extends State<UserCigaretteSettingScreen> with AutomaticKeepAliveClientMixin<UserCigaretteSettingScreen> {
   final _pricePerPackages = [for (var i = 50; i <= 120; i = i + 5) i].map((number) => number.toString()).toList();
+  final _numberOfCigarettesPerDays = [for (var i = 1; i <= 30; i++) i].map((number) => number.toString()).toList();
+  final _numberOfCigarettesPerPackages = [for (var i = 15; i <= 30; i++) i].map((number) => number.toString()).toList();
 
   int numberOfCigarettesPerDay = 5;
   int numberOfCigarettesPerPackage = 15;
@@ -53,7 +56,7 @@ class _UserCigaretteSettingScreenState extends State<UserCigaretteSettingScreen>
                 style: Styles.titlePrimary,
               ),
               GroupSelector(
-                items: [for (var i = 1; i <= 30; i++) i].map((number) => number.toString()).toList(),
+                items: _numberOfCigarettesPerDays,
                 selectedItem: numberOfCigarettesPerDay.toString(),
                 warp: false,
                 onChanged: (String number) => setState(() => numberOfCigarettesPerDay = int.parse(number)),
@@ -97,14 +100,14 @@ class _UserCigaretteSettingScreenState extends State<UserCigaretteSettingScreen>
                 style: Styles.titlePrimary,
               ),
               GroupSelector(
-                items: [for (var i = 15; i <= 30; i++) i].map((number) => number.toString()).toList(),
+                items: _numberOfCigarettesPerPackages,
                 selectedItem: numberOfCigarettesPerPackage.toString(),
                 warp: false,
                 onChanged: (String number) => setState(() => numberOfCigarettesPerPackage = int.parse(number)),
               ),
               SizedBox(height: 125),
               RippleButton(
-                text: 'เสร็จสิ้น',
+                text: 'ต่อไป',
                 backgroundColor: Colors.green,
                 textColor: Colors.white,
                 decoration: Styles.primaryButtonDecoration,

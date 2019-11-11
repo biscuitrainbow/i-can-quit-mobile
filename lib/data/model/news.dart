@@ -7,12 +7,14 @@ class News {
   final String content;
   final String featuredImage;
   final DateTime updatedAt;
+  final String category;
 
   News({
     @required this.title,
     @required this.content,
     @required this.featuredImage,
     @required this.updatedAt,
+    @required this.category,
   });
 
   News copyWith({
@@ -20,12 +22,14 @@ class News {
     String content,
     String featuredImage,
     DateTime updatedAt,
+    String category,
   }) {
     return News(
       title: title ?? this.title,
       content: content ?? this.content,
       featuredImage: featuredImage ?? this.featuredImage,
       updatedAt: updatedAt ?? this.updatedAt,
+      category: category ?? this.category,
     );
   }
 
@@ -34,6 +38,7 @@ class News {
       'title': title,
       'content': content,
       'featuredImage': featuredImage,
+      'category': category,
     };
   }
 
@@ -45,6 +50,7 @@ class News {
       content: map['content'],
       featuredImage: map['featured_image'],
       updatedAt: fromMysqlDateTime(map['updated_at']),
+      category: map['category'],
     );
   }
 
@@ -70,6 +76,7 @@ class News {
       title,
       content,
       featuredImage,
+      category,
     ]);
   }
 }

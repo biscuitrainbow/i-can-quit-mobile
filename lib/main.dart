@@ -22,8 +22,11 @@ import 'package:i_can_quit/data/repository/smoking_entry_repository.dart';
 import 'package:i_can_quit/data/repository/token_repository.dart';
 import 'package:i_can_quit/data/repository/user_repository.dart';
 import 'package:i_can_quit/data/service/authentication_service.dart';
+import 'package:i_can_quit/ui/screen/about/about_screen.dart';
+import 'package:i_can_quit/ui/screen/introduction_screen.dart';
 import 'package:i_can_quit/ui/screen/main_navigation_screen.dart';
 import 'package:i_can_quit/ui/screen/main_screen.dart';
+import 'package:i_can_quit/ui/screen/smoking_entry/smoking_entry_insight_screen.dart';
 import 'package:i_can_quit/ui/screen/smoking_overview.dart';
 import 'package:i_can_quit/ui/screen/splash_screen.dart';
 import 'package:i_can_quit/ui/screen/user/user_login_screen.dart';
@@ -43,17 +46,18 @@ void main() async {
       HttpHeaders.acceptHeader: 'application/json',
     },
   );
+
   final Dio dio = Dio(options);
-  // dio.interceptors.add(
-  //   PrettyDioLogger(
-  //     requestHeader: false,
-  //     requestBody: true,
-  //     responseBody: true,
-  //     responseHeader: false,
-  //     error: true,
-  //     compact: true,
-  //   ),
-  // );
+  dio.interceptors.add(
+    PrettyDioLogger(
+      requestHeader: false,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      error: true,
+      compact: true,
+    ),
+  );
 
   final FacebookLogin facebookLogin = FacebookLogin();
   final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -84,7 +88,7 @@ void main() async {
   );
 }
 
-class Application extends StatelessWidget {
+class Application extends StatefulWidget {
   final SmokingEntryRepository smokingEntryRepository;
   final UserSettingRepository userSettingRepository;
   final UserRepository userRepository;
@@ -103,45 +107,75 @@ class Application extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    BlocSupervisor.delegate = AppBlocDelegate();
+  _ApplicationState createState() => _ApplicationState();
+}
 
-    final smokingEntryBloc = SmokingEntryBloc(smokingEntryRepository);
-    final newsBloc = NewsBloc(this.newsRepository);
-    final userBloc = UserBloc(userRepository);
+class _ApplicationState extends State<Application> {
+  SmokingEntryBloc smokingEntryBloc;
+  NewsBloc newsBloc;
+  UserBloc userBloc;
+  UserSettingBloc userSettingBloc;
+  AuthenticationBloc authenticationBloc;
+  RegistrationBloc registrationBloc;
+  ApplicationBloc applicationBloc;
 
-    final userSettingBloc = UserSettingBloc(
-      userSettingRepository,
-      smokingEntryRepository,
+  @override
+  void initState() {
+    super.initState();
+
+    smokingEntryBloc = SmokingEntryBloc(widget.smokingEntryRepository);
+    newsBloc = NewsBloc(this.widget.newsRepository);
+    userBloc = UserBloc(widget.userRepository);
+
+    userSettingBloc = UserSettingBloc(
+      widget.userSettingRepository,
+      widget.smokingEntryRepository,
     );
 
-    final authenticationBloc = AuthenticationBloc(
-      userRepository,
-      tokenRepository,
-      authenticationService,
+    authenticationBloc = AuthenticationBloc(
+      widget.userRepository,
+      widget.tokenRepository,
+      widget.authenticationService,
       userBloc,
       smokingEntryBloc,
       userSettingBloc,
     );
 
-    final registrationBloc = RegistrationBloc(
-      userRepository,
-      tokenRepository,
-      authenticationService,
+    registrationBloc = RegistrationBloc(
+      widget.userRepository,
+      widget.tokenRepository,
+      widget.authenticationService,
       authenticationBloc,
     );
 
-    final applicationBloc = ApplicationBloc(
+    applicationBloc = ApplicationBloc(
       authenticationBloc,
       userBloc,
       smokingEntryBloc,
       userSettingBloc,
       newsBloc,
-      registrationBloc,
     );
 
-    authenticationBloc.dispatch(CheckAuthenticated());
+    authenticationBloc.add(CheckAuthenticated());
 
+    BlocSupervisor.delegate = AppBlocDelegate();
+  }
+
+  @override
+  void dispose() {
+    smokingEntryBloc.close();
+    newsBloc.close();
+    userBloc.close();
+    userSettingBloc.close();
+    authenticationBloc.close();
+    registrationBloc.close();
+    applicationBloc.close();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<SmokingEntryBloc>(
@@ -164,7 +198,7 @@ class Application extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'iCanQuit',
         theme: ThemeData(
           primaryColor: ColorPalette.primary,
           accentColor: ColorPalette.primary,
@@ -190,6 +224,9 @@ class Application extends StatelessWidget {
           LoginScreen.route: (_) => LoginScreen(),
           MainScreen.route: (_) => MainScreen(),
           MainNavigationScreen.route: (_) => MainNavigationScreen(),
+          AboutScreen.route: (_) => AboutScreen(),
+          IntroductionScreen.route: (_) => IntroductionScreen(),
+          SmokingEntryInsightScreen.route: (_) => SmokingEntryInsightScreen(),
         },
       ),
     );

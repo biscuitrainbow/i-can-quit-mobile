@@ -25,8 +25,9 @@ class UserSettingBloc extends Bloc<UserSettingEvent, UserSettingState> {
 
       try {
         await userSettingRepository.create(event.settings);
-
         yield SaveUserSettingSuccess();
+
+        this.add(FetchUserSetting());
       } catch (error) {
         yield SaveUserSettingError();
       }

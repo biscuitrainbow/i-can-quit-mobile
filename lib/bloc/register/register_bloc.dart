@@ -36,7 +36,7 @@ class RegistrationBloc extends Bloc<RegisterEvent, RegisterState> {
       try {
         final token = await _authenticationService.register(event.user);
 
-        _authenticationBloc.dispatch(AuthenticateUser(token: token));
+        _authenticationBloc.add(AuthenticateUser(token: token));
 
         yield RegisterSuccess();
       } catch (error) {
