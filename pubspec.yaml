@@ -27,7 +27,6 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_bloc: ^1.0.0
   bloc: ^1.0.0
-  zefyr: ^0.8.0
   font_awesome_flutter: ^8.5.0
   # flutter_local_notifications: ^0.8.2+1
   google_maps_flutter: ^0.5.21
@@ -38,7 +37,6 @@ dependencies:
   shared_preferences: ^0.5.4+1
   equatable: ^0.5.0
   rxdart: ^0.22.2
-  webview_flutter: ^0.3.14+1
   flutter_html: ^0.11.0
   cached_network_image: ^1.1.1
   shimmer: ^1.0.1
@@ -52,13 +50,12 @@ dependencies:
   kt_dart: ^0.6.2
   iconfont_dart: ^0.2.1
   intro_slider: ^2.2.8
-  flutter_svg: ^0.14.1
-  syncfusion_flutter_charts: ^17.3.26
   charts_flutter: ^0.8.1
   bubble_tab_indicator: ^0.1.4
-  fluster: ^1.1.2
   geolocator: ^5.1.5
-  g2x_week_calendar: ^0.1.3
+  youtube_player: ^3.5.0
+  flutter_calendar_carousel: ^1.4.6
+
 
 dev_dependencies:
   flutter_test:

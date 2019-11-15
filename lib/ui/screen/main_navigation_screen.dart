@@ -30,11 +30,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     return Scaffold(
       body: screens[_currentScreen],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _currentScreen,
         items: [
           BottomNavigationBarItem(title: Text('ภาพรวม'), icon: Icon(Icons.pie_chart_outlined)),
           BottomNavigationBarItem(title: Text('บันทึก'), icon: Icon(Icons.edit)),
-          BottomNavigationBarItem(title: Text('ประวัติ'), icon: Icon(FontAwesomeIcons.newspaper)),
+          BottomNavigationBarItem(title: Text('ข้อมูลเชิงลึก'), icon: Icon(FontAwesomeIcons.chartLine)),
           BottomNavigationBarItem(title: Text('ข่าวสาร'), icon: Icon(FontAwesomeIcons.newspaper))
         ],
         onTap: _changeScreen,

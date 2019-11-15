@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_event.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
 import 'package:i_can_quit/data/repository/smoking_entry_repository.dart';
+import 'package:i_can_quit/ui/screen/smoking_entry/smoking_entry_chart.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:intl/intl.dart';
 
@@ -25,11 +26,20 @@ class SmokingEntryBloc extends Bloc<SmokingEntryEvent, SmokingEntryState> {
         final nonSmokedDates = dateGroupedEntries.filter((date) {
           return date.value.filter((entry) => entry.hasSmoked).count() == 0;
         });
+        final timeSeries = dateGroupedEntries.map((date) {
+          return SmokingEntryTimeSeries(
+            dateTime: DateFormat('yyyy-MM-dd').parse(date.key),
+            smokingCount: date.value.count(),
+          );
+        });
+
+        print(timeSeries);
 
         yield FetchSmokingEntrySuccess(
           entries: entries,
           latestHasSmokedEntry: latestHasSmokedEntry,
           nonSmokingDays: nonSmokedDates.count(),
+          timeSeries: List.from(timeSeries.asList()),
         );
       } catch (error) {
         print(error);

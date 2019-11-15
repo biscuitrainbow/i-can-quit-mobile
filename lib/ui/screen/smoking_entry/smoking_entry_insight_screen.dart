@@ -6,7 +6,6 @@ import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/data/model/smoking_entry.dart';
 import 'package:i_can_quit/ui/screen/smoking_entry/smoking_entry_chart.dart';
 import 'package:i_can_quit/ui/screen/smoking_entry/smoking_entry_cluster_map.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 
 class SmokingEntryInsightScreen extends StatefulWidget {

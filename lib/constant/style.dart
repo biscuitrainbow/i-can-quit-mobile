@@ -12,12 +12,14 @@ abstract class Styles {
     fontSize: 22,
     fontWeight: FontWeight.w500,
     color: Color(0xFF1F2933),
+    fontFamily: 'Kanit',
   );
 
   static const biggerHeader = TextStyle(
     fontSize: 42,
     fontWeight: FontWeight.w500,
     color: Colors.white,
+    fontFamily: 'Kanit',
   );
 
   static const bigHeader = TextStyle(
@@ -26,7 +28,7 @@ abstract class Styles {
     color: Colors.white,
   );
 
-   static const bigHeaderPrimary = TextStyle(
+  static const bigHeaderPrimary = TextStyle(
     fontSize: 28,
     fontWeight: FontWeight.w400,
     color: ColorPalette.primary,

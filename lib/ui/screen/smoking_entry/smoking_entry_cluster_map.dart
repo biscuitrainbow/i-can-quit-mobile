@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:fluster/fluster.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 import 'package:geolocator/geolocator.dart';
@@ -42,37 +41,7 @@ class _SmokingEntryClusterMapState extends State<SmokingEntryClusterMap> {
 
   @override
   Widget build(BuildContext context) {
-    // final List<SmokingMarker> markers = locations
-    //     .map((location) => SmokingMarker(
-    //           id: locations.indexOf(location).toString(),
-    //           position: location,
-    //         ))
-    //     .toList();
-
-    // final Fluster fluster = Fluster<SmokingMarker>(
-    //     minZoom: 0,
-    //     maxZoom: 19,
-    //     radius: 150,
-    //     extent: 2048,
-    //     nodeSize: 64,
-    //     points: markers,
-    //     createCluster: (BaseCluster cluster, double lng, double lat) {
-    //       print('Point size: ${cluster.pointsSize}');
-
-    //       return SmokingMarker(
-    //         id: cluster.id.toString(),
-    //         position: LatLng(lat, lng),
-    //         isCluster: true,
-    //         clusterId: cluster.id,
-    //         pointsSize: cluster.pointsSize,
-    //         childMarkerId: cluster.childMarkerId,
-    //       );
-    //     });
-
-    // final List<Marker> googleMarkers = fluster.clusters([-180, -85, 180, 85], 13).map((cluster) {
-    //   return (cluster as SmokingMarker).toMarker();
-    // }).toList();
-
+  
     _createMarkser();
 
     print(_marker);
@@ -139,35 +108,3 @@ class _SmokingEntryClusterMapState extends State<SmokingEntryClusterMap> {
   }
 }
 
-class SmokingMarker extends Clusterable {
-  final String id;
-  final LatLng position;
-  final BitmapDescriptor icon;
-
-  SmokingMarker({
-    @required this.id,
-    @required this.position,
-    @required this.icon,
-    isCluster = false,
-    clusterId,
-    pointsSize,
-    childMarkerId,
-  }) : super(
-          markerId: id,
-          latitude: position.latitude,
-          longitude: position.longitude,
-          isCluster: isCluster,
-          clusterId: clusterId,
-          pointsSize: pointsSize,
-          childMarkerId: childMarkerId,
-        );
-
-  Marker toMarker() => Marker(
-        markerId: MarkerId(id),
-        position: LatLng(
-          position.latitude,
-          position.longitude,
-        ),
-        icon: this.icon,
-      );
-}

@@ -48,16 +48,16 @@ void main() async {
   );
 
   final Dio dio = Dio(options);
-  dio.interceptors.add(
-    PrettyDioLogger(
-      requestHeader: false,
-      requestBody: true,
-      responseBody: true,
-      responseHeader: false,
-      error: true,
-      compact: true,
-    ),
-  );
+  // dio.interceptors.add(
+  //   PrettyDioLogger(
+  //     requestHeader: false,
+  //     requestBody: true,
+  //     responseBody: true,
+  //     responseHeader: false,
+  //     error: true,
+  //     compact: true,
+  //   ),
+  // );
 
   final FacebookLogin facebookLogin = FacebookLogin();
   final GoogleSignIn googleSignIn = GoogleSignIn(
