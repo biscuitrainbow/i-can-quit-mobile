@@ -7,6 +7,8 @@ import 'package:i_can_quit/bloc/user_setting/user_setting_bloc.dart';
 import 'package:i_can_quit/bloc/user_setting/user_setting_state.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/constant/style.dart';
+import 'package:i_can_quit/data/static/static_data.dart';
+import 'package:i_can_quit/ui/screen/health_regeneration/health_regeneration_screen.dart';
 import 'package:i_can_quit/ui/screen/user/user_first_setting_screen.dart';
 import 'package:i_can_quit/ui/widget/button/ripple_button.dart';
 import 'package:i_can_quit/ui/widget/navigation_drawer.dart';
@@ -56,9 +58,6 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
                 builder: (context, userSettingState) {
                   return BlocBuilder<SmokingEntryBloc, SmokingEntryState>(
                     builder: (context, smokingEntryState) {
-                      print(userSettingState);
-                      print(smokingEntryState);
-
                       if (userSettingState is FetchUserSettingSuccess && smokingEntryState is FetchSmokingEntrySuccess) {
                         return OverviewStatsItem.secondary(
                           title:
@@ -108,31 +107,31 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('การฟื้นฟูของร่างกาย', style: Styles.titlePrimary),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text('การฟื้นฟูของร่างกาย', style: Styles.titlePrimary),
+              GestureDetector(
+                child: Text('ดูทั้งหมด', style: Styles.descriptionSecondary),
+                onTap: () => Navigator.of(context).pushNamed(HealthRegenerationScreen.route),
+              )
+            ],
+          ),
           SizedBox(height: 16),
           Container(
             height: 150,
-            child: ListView(
+            child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                HealthRegenerationBadge(
-                  title: 'ระดับความดันโลหิต',
-                  duration: Duration(minutes: 1),
+              itemCount: StaticData.healthRegnerations.length,
+              itemBuilder: (context, index) {
+                final healthRegeneration = StaticData.healthRegnerations[index];
+
+                return HealthRegenerationBadge(
+                  title: healthRegeneration.title,
+                  duration: healthRegeneration.duration,
                   latestHasSmokedDateTime: state.latestHasSmokedEntry.datetime,
-                ),
-                SizedBox(width: 24),
-                HealthRegenerationBadge(
-                  title: 'ระดับคาร์บอนมอนอกไซด์',
-                  duration: Duration(hours: 12),
-                  latestHasSmokedDateTime: state.latestHasSmokedEntry.datetime,
-                ),
-                SizedBox(width: 24),
-                HealthRegenerationBadge(
-                  title: 'ความเสี่ยงโรคหัวใจ',
-                  duration: Duration(days: 5),
-                  latestHasSmokedDateTime: state.latestHasSmokedEntry.datetime,
-                ),
-              ],
+                );
+              },
             ),
           )
         ],
@@ -163,8 +162,6 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
                 }
 
                 if (smokingEntryState is FetchSmokingEntrySuccess && userSettingState is FetchUserSettingSuccess) {
-                  print(smokingEntryState.latestHasSmokedEntry);
-
                   if (userSettingState.settings.isEmpty || smokingEntryState.entries.isEmpty) {
                     return Center(
                       child: Column(

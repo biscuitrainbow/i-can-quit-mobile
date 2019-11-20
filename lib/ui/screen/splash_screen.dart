@@ -17,11 +17,12 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void initState() {
     super.initState();
 
-    animationController = new AnimationController(duration: Duration(seconds: 3), vsync: this)
+    animationController = new AnimationController(duration: Duration(seconds: 5), vsync: this)
       ..forward()
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MainScreen()));
+          Navigator.of(context).pop();
+          //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MainScreen()));
         }
       });
   }
@@ -84,7 +85,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                     'ได้รับงบประมาณสนับสนุนจาก',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 18.0, 
+                      fontSize: 18.0,
                       color: Colors.grey.shade700,
                     ),
                   ),

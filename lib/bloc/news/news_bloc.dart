@@ -29,8 +29,6 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     if (event is RefreshNews) {
       try { 
         final news = await newsRepository.fetchNews();
-
-        print(news);
         yield NewsLoaded(news: news);
         event.refreshComplete.complete();
       } catch (error) {

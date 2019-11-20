@@ -11,7 +11,7 @@ description: Quit Smoking Application
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -55,6 +55,7 @@ dependencies:
   geolocator: ^5.1.5
   youtube_player: ^3.5.0
   flutter_calendar_carousel: ^1.4.6
+  sleek_circular_slider : ^1.0.7
 
 
 dev_dependencies:

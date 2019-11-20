@@ -33,8 +33,6 @@ class SmokingEntryBloc extends Bloc<SmokingEntryEvent, SmokingEntryState> {
           );
         });
 
-        print(timeSeries);
-
         yield FetchSmokingEntrySuccess(
           entries: entries,
           latestHasSmokedEntry: latestHasSmokedEntry,

@@ -32,3 +32,22 @@ String toThaiDate(DateTime datetime, [String format = 'dd MMM yyyy']) {
 String getFirstCharacter(String text) {
   return text[0];
 }
+
+class StringUtils {
+  static String toRemationText(Duration duration) {
+    String remaining = 'อีก';
+
+    // if (duration.inDays >= 365) remaining = '$remaining ${duration.inDays / 365} ปี';
+    // if (duration.inDays >= 1) remaining = '$remaining ${duration.inDays} วัน';
+    // if (duration.inHours >= 1) remaining = '$remaining ${duration.inHours} ชั่วโมง';
+    // if (duration.inMinutes >= 1) remaining = '$remaining ${duration.inMinutes} นาที';
+
+    if (duration.inDays >= 365) return '$remaining ${duration.inDays ~/ 365} ปี';
+    if (duration.inDays >= 1) return '$remaining ${duration.inDays} วัน';
+    if (duration.inHours >= 1) return '$remaining ${duration.inHours} ชั่วโมง';
+    if (duration.inMinutes >= 1) return '$remaining ${duration.inMinutes} นาที';
+    if (duration.inSeconds >= 1) return '$remaining ${duration.inSeconds} วินาที';
+
+    return remaining;
+  }
+}

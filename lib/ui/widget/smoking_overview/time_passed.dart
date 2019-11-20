@@ -58,8 +58,13 @@ class _TimePassedState extends State<TimePassed> {
         SizedBox(width: 32),
         Column(
           children: <Widget>[
-            Text('${formatter.format(_now.difference(this.widget.from).inMinutes % 60)}',
-                style: TextStyle(fontSize: 32, color: Colors.grey.shade700)),
+            Text(
+              '${formatter.format(_now.difference(this.widget.from).inMinutes % 60)}',
+              style: TextStyle(
+                fontSize: 32,
+                color: Colors.grey.shade700,
+              ),
+            ),
             Text('นาที', style: Styles.descriptionSecondary),
           ],
         ),

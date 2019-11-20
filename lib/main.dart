@@ -23,6 +23,7 @@ import 'package:i_can_quit/data/repository/token_repository.dart';
 import 'package:i_can_quit/data/repository/user_repository.dart';
 import 'package:i_can_quit/data/service/authentication_service.dart';
 import 'package:i_can_quit/ui/screen/about/about_screen.dart';
+import 'package:i_can_quit/ui/screen/health_regeneration/health_regeneration_screen.dart';
 import 'package:i_can_quit/ui/screen/introduction_screen.dart';
 import 'package:i_can_quit/ui/screen/main_navigation_screen.dart';
 import 'package:i_can_quit/ui/screen/main_screen.dart';
@@ -48,16 +49,16 @@ void main() async {
   );
 
   final Dio dio = Dio(options);
-  // dio.interceptors.add(
-  //   PrettyDioLogger(
-  //     requestHeader: false,
-  //     requestBody: true,
-  //     responseBody: true,
-  //     responseHeader: false,
-  //     error: true,
-  //     compact: true,
-  //   ),
-  // );
+  dio.interceptors.add(
+    PrettyDioLogger(
+      requestHeader: false,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      error: true,
+      compact: true,
+    ),
+  );
 
   final FacebookLogin facebookLogin = FacebookLogin();
   final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -158,7 +159,7 @@ class _ApplicationState extends State<Application> {
 
     authenticationBloc.add(CheckAuthenticated());
 
-    BlocSupervisor.delegate = AppBlocDelegate();
+    // BlocSupervisor.delegate = AppBlocDelegate();
   }
 
   @override
@@ -218,7 +219,7 @@ class _ApplicationState extends State<Application> {
           const Locale('en', 'US'), // English
           const Locale('th', 'TH'), // Thai
         ],
-        home: SplashScreen(),
+        home: MainScreen(),
         routes: {
           SmokingOverviewScreen.route: (_) => SmokingOverviewScreen(),
           LoginScreen.route: (_) => LoginScreen(),
@@ -227,6 +228,7 @@ class _ApplicationState extends State<Application> {
           AboutScreen.route: (_) => AboutScreen(),
           IntroductionScreen.route: (_) => IntroductionScreen(),
           SmokingEntryInsightScreen.route: (_) => SmokingEntryInsightScreen(),
+          HealthRegenerationScreen.route: (_) => HealthRegenerationScreen(),
         },
       ),
     );

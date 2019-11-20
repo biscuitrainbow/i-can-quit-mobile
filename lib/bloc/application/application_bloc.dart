@@ -39,8 +39,6 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   }
 
   void _initilizeApplication() {
-    print('INITILIZED ##################################################################');
-
     _userSettingBloc.add(FetchUserSetting());
     _smokingEntryBloc.add(FetchSmokingEntry());
     _userBloc.add(FetchUser());

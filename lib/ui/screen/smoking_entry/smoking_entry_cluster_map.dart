@@ -41,10 +41,8 @@ class _SmokingEntryClusterMapState extends State<SmokingEntryClusterMap> {
 
   @override
   Widget build(BuildContext context) {
-  
     _createMarkser();
 
-    print(_marker);
     return Scaffold(
       body: GoogleMap(
         initialCameraPosition: CameraPosition(
@@ -107,4 +105,3 @@ class _SmokingEntryClusterMapState extends State<SmokingEntryClusterMap> {
     return color;
   }
 }
-

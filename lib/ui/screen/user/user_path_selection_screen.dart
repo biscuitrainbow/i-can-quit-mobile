@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/constant/style.dart';
 import 'package:i_can_quit/data/model/quiting_path.dart';
 import 'package:i_can_quit/ui/widget/button/ripple_button.dart';
