@@ -11,8 +11,7 @@ description: Quit Smoking Application
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+2
-
+version: 1.0.0+3
 environment:
   sdk: ">=2.2.2 <3.0.0"
 
@@ -89,7 +88,11 @@ flutter:
     - assets/logo/mcu.png
     - assets/logo/sfive.png
     - assets/logo/sss.png
+    - assets/logo/nursing_payap.png
+    - assets/logo/nursing_chiang_rai.png
     - assets/logo/app-primary.png
+    - assets/logo/app-text.png
+    - assets/logo/buddhism_dham_jak.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

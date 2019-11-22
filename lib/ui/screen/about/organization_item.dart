@@ -5,13 +5,9 @@ class OrganizationItem extends StatelessWidget {
   final String nameThai;
   final String nameEnglish;
   final String imageAsset;
+  final double iconSize;
 
-  OrganizationItem({
-    Key key,
-    @required this.nameThai,
-    @required this.nameEnglish,
-    @required this.imageAsset,
-  }) : super(key: key);
+  OrganizationItem({Key key, @required this.nameThai, @required this.nameEnglish, @required this.imageAsset, this.iconSize = 70.0}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +15,7 @@ class OrganizationItem extends StatelessWidget {
       children: <Widget>[
         Image.asset(
           imageAsset,
-          width: 70.0,
+          width: iconSize,
         ),
         SizedBox(width: 14.0),
         Expanded(
