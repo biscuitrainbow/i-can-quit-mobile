@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
 import 'package:i_can_quit/data/static/static_data.dart';
-import 'package:i_can_quit/ui/%E0%B9%89health_regneration/health_regeneration_item.dart';
-import 'package:i_can_quit/ui/widget/smoking_overview/health_regeneration_badge.dart';
+import 'package:i_can_quit/ui/health_regeneration/health_regeneration_item.dart';
 
 class HealthRegenerationScreen extends StatefulWidget {
   static final String route = '/health_regeneration';

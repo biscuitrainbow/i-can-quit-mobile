@@ -34,13 +34,8 @@ String getFirstCharacter(String text) {
 }
 
 class StringUtils {
-  static String toRemationText(Duration duration) {
+  static String toRemainingText(Duration duration) {
     String remaining = 'อีก';
-
-    // if (duration.inDays >= 365) remaining = '$remaining ${duration.inDays / 365} ปี';
-    // if (duration.inDays >= 1) remaining = '$remaining ${duration.inDays} วัน';
-    // if (duration.inHours >= 1) remaining = '$remaining ${duration.inHours} ชั่วโมง';
-    // if (duration.inMinutes >= 1) remaining = '$remaining ${duration.inMinutes} นาที';
 
     if (duration.inDays >= 365) return '$remaining ${duration.inDays ~/ 365} ปี';
     if (duration.inDays >= 1) return '$remaining ${duration.inDays} วัน';

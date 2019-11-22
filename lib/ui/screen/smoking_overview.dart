@@ -8,11 +8,10 @@ import 'package:i_can_quit/bloc/user_setting/user_setting_state.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/constant/style.dart';
 import 'package:i_can_quit/data/static/static_data.dart';
+import 'package:i_can_quit/ui/health_regeneration/health_regeneration_item.dart';
 import 'package:i_can_quit/ui/screen/health_regeneration/health_regeneration_screen.dart';
 import 'package:i_can_quit/ui/screen/user/user_first_setting_screen.dart';
-import 'package:i_can_quit/ui/widget/button/ripple_button.dart';
 import 'package:i_can_quit/ui/widget/navigation_drawer.dart';
-import 'package:i_can_quit/ui/widget/smoking_overview/health_regeneration_badge.dart';
 import 'package:i_can_quit/ui/widget/smoking_overview/overview_stats_item.dart';
 import 'package:i_can_quit/ui/widget/smoking_overview/time_passed.dart';
 
@@ -44,13 +43,6 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          // OverviewStatsItem.primary(
-          //   title: '200',
-          //   unit: 'วัน',
-          //   description: 'มีอายุยืนขึ้น',
-          //   icon: FontAwesomeIcons.heartbeat,
-          // ),
-          // SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -112,28 +104,21 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
             children: <Widget>[
               Text('การฟื้นฟูของร่างกาย', style: Styles.titlePrimary),
               GestureDetector(
-                child: Text('ดูทั้งหมด', style: Styles.descriptionSecondary),
+                child: Text('ดูทั้งหมด', style: Theme.of(context).textTheme.title.copyWith(fontSize: 16, color: Colors.grey.shade500)),
                 onTap: () => Navigator.of(context).pushNamed(HealthRegenerationScreen.route),
               )
             ],
           ),
           SizedBox(height: 16),
-          Container(
-            height: 150,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: StaticData.healthRegnerations.length,
-              itemBuilder: (context, index) {
-                final healthRegeneration = StaticData.healthRegnerations[index];
-
-                return HealthRegenerationBadge(
-                  title: healthRegeneration.title,
-                  duration: healthRegeneration.duration,
-                  latestHasSmokedDateTime: state.latestHasSmokedEntry.datetime,
-                );
-              },
-            ),
-          )
+          ...StaticData.healthRegnerations.take(3).map(
+                (healthRegeneration) => Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  child: HealthRegenerationItem(
+                    healthRegeneration: healthRegeneration,
+                    latestHasSmokedDateTime: state.latestHasSmokedEntry.datetime,
+                  ),
+                ),
+              ),
         ],
       ),
     );

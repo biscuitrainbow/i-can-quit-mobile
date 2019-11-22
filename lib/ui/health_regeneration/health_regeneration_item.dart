@@ -33,9 +33,11 @@ class _HealthRegenerationItemState extends State<HealthRegenerationItem> {
 
   DateTime get regeneratedDateTime => widget.latestHasSmokedDateTime.add(widget.healthRegeneration.duration);
 
-  Duration get regenerationRemainingDuration => regeneratedDateTime.difference(widget.latestHasSmokedDateTime);
+  Duration get regenerationDuration => regeneratedDateTime.difference(widget.latestHasSmokedDateTime);
 
-  double get regenerationRemainingPercent => (afterLastSmokedDuration.inSeconds / regenerationRemainingDuration.inSeconds) * 100;
+  Duration get regenerationDurationRemaining => regeneratedDateTime.difference(_now);
+
+  double get regenerationProgressPercent => (afterLastSmokedDuration.inSeconds / regenerationDuration.inSeconds) * 100;
 
   @override
   void initState() {
@@ -63,6 +65,9 @@ class _HealthRegenerationItemState extends State<HealthRegenerationItem> {
         Column(
           children: <Widget>[
             SleekCircularSlider(
+              min: 0,
+              max: 100,
+              initialValue: regenerationProgressPercent > 100 ? 100 : regenerationProgressPercent,
               appearance: CircularSliderAppearance(
                 customColors: CustomSliderColors(
                   progressBarColor: ColorPalette.primary,
@@ -72,15 +77,19 @@ class _HealthRegenerationItemState extends State<HealthRegenerationItem> {
                 size: 70,
                 angleRange: 360,
               ),
-              min: 0,
-              max: 100,
-              initialValue: regenerationRemainingPercent > 100 ? 100 : regenerationRemainingPercent,
+              innerWidget: hasPassTheDuration ? (double value) => Icon(FontAwesomeIcons.running, color: ColorPalette.primary) : null,
             ),
             SizedBox(height: 4),
-            Text(
-              StringUtils.toRemationText(regeneratedDateTime.difference(_now)),
-              style: TextStyle(fontSize: 14, color: Color(0xFF1F2933)),
-            ),
+            if (regenerationDurationRemaining.isNegative)
+              Text(
+                'ฟื้นฟูแล้ว',
+                style: Theme.of(context).textTheme.title.copyWith(fontSize: 16),
+              )
+            else
+              Text(
+                StringUtils.toRemainingText(regenerationDurationRemaining),
+                style: TextStyle(fontSize: 14, color: Color(0XFF9E9E9E)),
+              )
           ],
         ),
         SizedBox(width: 12),
@@ -88,8 +97,14 @@ class _HealthRegenerationItemState extends State<HealthRegenerationItem> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(widget.healthRegeneration.title, style: Styles.title.copyWith(fontSize: 20)),
-              Text(widget.healthRegeneration.description, style: Styles.descriptionSecondary),
+              Text(
+                widget.healthRegeneration.title,
+                style: Styles.title.copyWith(fontSize: 18),
+              ),
+              Text(
+                widget.healthRegeneration.description,
+                style: Styles.descriptionSecondary,
+              ),
             ],
           ),
         )
