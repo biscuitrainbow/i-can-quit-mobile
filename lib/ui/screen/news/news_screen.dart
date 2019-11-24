@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:i_can_quit/data/model/news.dart';
 import 'package:i_can_quit/ui/widget/shimmer/image_shimmer.dart';
-import 'package:youtube_player/youtube_player.dart';
-import 'package:html/dom.dart' as dom;
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class NewsScreen extends StatefulWidget {
   final News news;
@@ -47,10 +46,13 @@ class _NewsScreenState extends State<NewsScreen> {
             customRender: (node, children) {
               if (node is dom.Element) {
                 if (node.localName == 'iframe') {
+                  YoutubePlayerController _controller = YoutubePlayerController(
+                    initialVideoId: YoutubePlayer.convertUrlToId(node.attributes['src']),
+                  );
+
                   return YoutubePlayer(
-                    context: context,
-                    source: node.attributes['src'],
-                    quality: YoutubeQuality.MEDIUM,
+                    controller: _controller,
+                    showVideoProgressIndicator: true,
                   );
                 }
               }
