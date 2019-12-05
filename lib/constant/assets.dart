@@ -19,6 +19,7 @@ class AssetImages {
   static final String logoMed = 'assets/logo/med.png';
   static final String logoMcu = 'assets/logo/mcu.png';
   static final String logoSFive = 'assets/logo/sfive.png';
+  static final String logoSwu = 'assets/logo/swu.png';
   static final String logoSSS = 'assets/logo/sss.png';
   static final String logoApp = 'assets/logo/app-primary.png';
   static final String logoAppText = 'assets/logo/app-text.png';

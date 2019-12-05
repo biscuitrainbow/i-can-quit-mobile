@@ -33,7 +33,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 Text(
                   'หยุดบุหรี่: ตั้งใจ ทำได้',
                   textAlign: TextAlign.center,
-                  style: Styles.title.copyWith(fontSize: 18, color: Colors.grey.shade700,fontWeight: FontWeight.w300),
+                  style: Styles.title.copyWith(fontSize: 18, color: Colors.grey.shade700, fontWeight: FontWeight.w300),
                 ),
               ],
             ),
@@ -52,12 +52,6 @@ class _AboutScreenState extends State<AboutScreen> {
                     ),
                     SizedBox(height: 16.0),
                     OrganizationItem(
-                      nameThai: 'ผศ.ดร.เบญจมาศ สุขสถิตย์',
-                      nameEnglish: 'คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่',
-                      imageAsset: AssetImages.logoNursing,
-                    ),
-                    SizedBox(height: 16.0),
-                    OrganizationItem(
                       nameThai: 'พระราชปริยัติ, รศ.ดร.',
                       nameEnglish: 'มหาวิทยาลัยมหาจุฬาลงกรณราชวิทยาลัย วิทยาเขตพะเยา',
                       imageAsset: AssetImages.logoMcu,
@@ -67,6 +61,12 @@ class _AboutScreenState extends State<AboutScreen> {
                       nameThai: 'พระครูพิศาลสรกิจ, ผศ.ดร.',
                       nameEnglish: 'มหาวิทยาลัยมหาจุฬาลงกรณราชวิทยาลัย วิทยาเขตพะเยา',
                       imageAsset: AssetImages.logoMcu,
+                    ),
+                    SizedBox(height: 16.0),
+                    OrganizationItem(
+                      nameThai: 'ผศ.ดร.เบญจมาศ สุขสถิตย์',
+                      nameEnglish: 'คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่',
+                      imageAsset: AssetImages.logoNursing,
                     ),
                     SizedBox(height: 16.0),
                     OrganizationItem(
@@ -89,14 +89,25 @@ class _AboutScreenState extends State<AboutScreen> {
                     SizedBox(height: 16.0),
                     OrganizationItem(
                       nameThai: 'พระพรหมเสนาบดี',
-                      nameEnglish: 'กรรมการมหาเถรสมาคม \nเจ้าอาวาสวัดปทุมคงคาราชวรวิหาร เจ้าคณะภาค ๗ และ ประธานคณะกรรมการฯ "หมู่บ้านรักษาศีล ๕"',
+                      nameEnglish: 'กรรมการมหาเถรสมาคม \nเจ้าอาวาสวัดปทุมคงคาราชวรวิหาร ผู้รักษาการเจ้าคณะภาค ๗ และ ประธานคณะกรรมการฯ "หมู่บ้านรักษาศีล ๕"',
                       imageAsset: AssetImages.logoSFive,
                     ),
                     SizedBox(height: 16.0),
                     OrganizationItem(
+                      nameThai: 'พระเทพปวรเมธี, รศ.ดร',
+                      nameEnglish: 'ผจล. และประธานองค์การศึกษา วัดประยุรวงศาวาสวรวิหาร รองอธิการบดีฝ่ายบริหารมหาวิทยาลัยมหาจุฬาลงกรณราชวิทยาลัย ประธาน คปพ."',
+                      imageAsset: AssetImages.logoMcu,
+                    ),
+                    SizedBox(height: 16.0),
+                    OrganizationItem(
+                      nameThai: 'พระเทพเวที, รศ.ดร.',
+                      nameEnglish: 'ผู้รักษาการเจ้าคณะภาค ๖ รองอธิการบดีฝ่ายกิจการนิสิต มหาวิทยาลัยมหาจุฬาลกรณราชวิทยาลัย และ ผู้ช่วยเจ้าอาวาสวัดสังเวชวิศยารามวรวิหาร',
+                      imageAsset: AssetImages.logoMcu,
+                    ),
+                    SizedBox(height: 16.0),
+                    OrganizationItem(
                       nameThai: 'พระศรีสมโพธิ, ดร.',
-                      nameEnglish:
-                          'ผู้จัดการโครงการเสริมสร้างสุขภาวะและเครือข่ายทางสังคมเพื่อลดปัจจัยเสี่ยงเชิงพุทธบูรณาการ เลขานุการรองเจ้าคณะภาค ๔ ผู้ช่วยเจ้าอาวาสวัดปากน้ำ พระอารามหลวง',
+                      nameEnglish: 'ผู้จัดการโครงการเสริมสร้างสุขภาวะและเครือข่ายทางสังคมเพื่อลดปัจจัยเสี่ยงเชิงพุทธบูรณาการ เลขานุการรองเจ้าคณะภาค ๔ ผู้ช่วยเจ้าอาวาสวัดปากน้ำ พระอารามหลวง',
                       imageAsset: AssetImages.logoSFive,
                     ),
                     SizedBox(height: 16.0),
@@ -107,16 +118,16 @@ class _AboutScreenState extends State<AboutScreen> {
                     ),
                     SizedBox(height: 16.0),
                     OrganizationItem(
-                      nameThai: 'พระเทพเวที, รศ.ดร.',
-                      nameEnglish:
-                          'ผู้รักษาการเจ้าคณะภาค ๖ รองอธิการบดีฝ่ายกิจการนิสิต มหาวิทยาลัยมหาจุฬาลกรณราชวิทยาลัย และ ผู้ช่วยเจ้าอาวาสวัดสังเวชวิศยารามวรวิหาร',
-                      imageAsset: AssetImages.logoMcu,
-                    ),
-                    SizedBox(height: 16.0),
-                    OrganizationItem(
                       nameThai: 'ศ.ดร.วิภาดา คุณาวิกติกุล',
                       nameEnglish: 'คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่',
                       imageAsset: AssetImages.logoNursing,
+                    ),
+                    SizedBox(height: 16.0),
+                    OrganizationItem(
+                      nameThai: 'รศ.ดร.ชลวิทย์​ เจียรจิตต์',
+                      nameEnglish: 'คณะสังคมศาสตร์​ มหาวิทยาลัย​ศรีนครินทรวิโรฒ',
+                      imageAsset: AssetImages.logoSwu,
+                      iconSize: 68,
                     ),
                     SizedBox(height: 32.0),
                     Text(
