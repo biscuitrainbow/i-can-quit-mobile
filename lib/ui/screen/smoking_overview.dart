@@ -3,14 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
-import 'package:i_can_quit/bloc/user_setting/user_setting_bloc.dart';
-import 'package:i_can_quit/bloc/user_setting/user_setting_state.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/constant/style.dart';
 import 'package:i_can_quit/data/static/static_data.dart';
+import 'package:i_can_quit/ui/general/new_user_acknowledgement.dart';
 import 'package:i_can_quit/ui/health_regeneration/health_regeneration_item.dart';
 import 'package:i_can_quit/ui/screen/health_regeneration/health_regeneration_screen.dart';
-import 'package:i_can_quit/ui/screen/user/user_first_setting_screen.dart';
 import 'package:i_can_quit/ui/widget/navigation_drawer.dart';
 import 'package:i_can_quit/ui/widget/smoking_overview/overview_stats_item.dart';
 import 'package:i_can_quit/ui/widget/smoking_overview/time_passed.dart';
@@ -46,24 +44,12 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              BlocBuilder<UserSettingBloc, UserSettingState>(
-                builder: (context, userSettingState) {
-                  return BlocBuilder<SmokingEntryBloc, SmokingEntryState>(
-                    builder: (context, smokingEntryState) {
-                      if (userSettingState is FetchUserSettingSuccess && smokingEntryState is FetchSmokingEntrySuccess) {
-                        return OverviewStatsItem.secondary(
-                          title:
-                              '${(smokingEntryState.entries.where((entry) => !entry.hasSmoked).length * userSettingState.latestSetting.pricePerPackage / userSettingState.latestSetting.numberOfCigarettesPerPackage).toStringAsFixed(2)}',
-                          unit: 'บาท',
-                          description: 'มีเงินเก็บเพิ่ม',
-                          icon: FontAwesomeIcons.piggyBank,
-                        );
-                      }
-                    },
-                  );
-
-                  //return Container();
-                },
+              OverviewStatsItem.secondary(
+                title:
+                    '${(state.entries.where((entry) => !entry.hasSmoked).length * state.latestUserSetting.pricePerPackage / state.latestUserSetting.numberOfCigarettesPerPackage).toStringAsFixed(2)}',
+                unit: 'บาท',
+                description: 'มีเงินเก็บเพิ่ม',
+                icon: FontAwesomeIcons.piggyBank,
               ),
               VerticalDivider(color: Colors.white, width: 10),
               OverviewStatsItem.secondary(
@@ -126,8 +112,6 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final SmokingEntryBloc smokingEntryBloc = BlocProvider.of<SmokingEntryBloc>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('ภาพรวม'),
@@ -137,65 +121,28 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
       drawer: Drawer(
         child: NavigationDrawer(),
       ),
-      body: BlocBuilder<SmokingEntryBloc, SmokingEntryState>(
-          bloc: smokingEntryBloc,
-          builder: (context, smokingEntryState) {
-            return BlocBuilder<UserSettingBloc, UserSettingState>(
-              builder: (context, userSettingState) {
-                if (smokingEntryState is SmokingEntryLoading || userSettingState is FetchUserSettingLoading) {
-                  return Center(child: CircularProgressIndicator());
-                }
-
-                if (smokingEntryState is FetchSmokingEntrySuccess && userSettingState is FetchUserSettingSuccess) {
-                  if (userSettingState.settings.isEmpty || smokingEntryState.entries.isEmpty) {
-                    return Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            IconData(0xe7c6, fontFamily: 'iconfont'),
-                            color: Colors.grey.shade400,
-                            size: 64,
-                          ),
-                          SizedBox(height: 12),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Text(
-                              'ยินดีต้อนรับผู้ใช้ใหม่ กรุณาป้อนข้อมูลเบื้องต้นเกี่ยวกับพฤติกรรมการสูบบุหรี่ของคุณเพื่อเริ่มใช้งาน',
-                              style: Styles.descriptionSecondary,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          SizedBox(height: 12),
-                          FlatButton(
-                            child: Text(
-                              'กรอกข้อมูลเบื้องต้น',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            color: ColorPalette.primary,
-                            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => UserFirstSettingScreen())),
-                          )
-                        ],
-                      ),
-                    );
-                  }
-                }
-
-                return SingleChildScrollView(
-                  padding: EdgeInsets.only(bottom: 16),
-                  child: Column(
-                    children: <Widget>[
-                      _buildOverviewStats(smokingEntryState),
-                      _buildNonSmokingTimePassed(smokingEntryState),
-                      _buildHealthRegenerationList(smokingEntryState),
-                    ],
-                  ),
-                );
-              },
+      body: BlocBuilder<SmokingEntryBloc, SmokingEntryState>(builder: (context, state) {
+        if (state is FetchSmokingEntrySuccess) {
+          if (state.userSettings.isEmpty || state.entries.isEmpty) {
+            return NewUserAcknowledgement();
+          } else {
+            return SingleChildScrollView(
+              padding: EdgeInsets.only(bottom: 16),
+              child: Column(
+                children: <Widget>[
+                  _buildOverviewStats(state),
+                  _buildNonSmokingTimePassed(state),
+                  _buildHealthRegenerationList(state),
+                ],
+              ),
             );
-          }),
+          }
+        }
+
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }),
     );
   }
 }

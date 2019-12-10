@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:i_can_quit/constant/style.dart';
 import 'package:i_can_quit/ui/screen/about/about_screen.dart';
 import 'package:i_can_quit/ui/screen/introduction_screen.dart';
+import 'package:i_can_quit/ui/user_setting/user_setting_screen.dart';
 import 'package:i_can_quit/ui/widget/navigation/navigation_tile.dart';
 import 'package:i_can_quit/ui/widget/section_divider.dart';
 
@@ -23,6 +24,11 @@ class NavigationDrawer extends StatelessWidget {
               //   subtitle: Text(viewModel.user.email),
               // ),
               SectionDivider(),
+              NavigationTile(
+                icon: FontAwesomeIcons.user,
+                title: 'ตั้งค่า',
+                onTap: () => Navigator.of(context).pushNamed(UserSettingScreen.route),
+              ),
               NavigationTile(
                 icon: FontAwesomeIcons.infoCircle,
                 title: 'เกี่ยวกับ',

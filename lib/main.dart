@@ -33,6 +33,7 @@ import 'package:i_can_quit/ui/screen/smoking_entry/smoking_entry_insight_screen.
 import 'package:i_can_quit/ui/screen/smoking_overview.dart';
 import 'package:i_can_quit/ui/screen/splash_screen.dart';
 import 'package:i_can_quit/ui/screen/user/user_login_screen.dart';
+import 'package:i_can_quit/ui/user_setting/user_setting_screen.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -131,11 +132,13 @@ class _ApplicationState extends State<Application> {
   void initState() {
     super.initState();
 
-    smokingEntryBloc = SmokingEntryBloc(widget.smokingEntryRepository);
+    smokingEntryBloc = SmokingEntryBloc(
+      widget.smokingEntryRepository,
+      widget.userSettingRepository,
+    );
     newsBloc = NewsBloc(this.widget.newsRepository);
     userBloc = UserBloc(widget.userRepository);
     achievementBloc = AchievementBloc(widget.achievementRepository);
-
     userSettingBloc = UserSettingBloc(
       widget.userSettingRepository,
       widget.smokingEntryRepository,
@@ -181,7 +184,6 @@ class _ApplicationState extends State<Application> {
     authenticationBloc.close();
     registrationBloc.close();
     applicationBloc.close();
-
     super.dispose();
   }
 
@@ -242,6 +244,7 @@ class _ApplicationState extends State<Application> {
           IntroductionScreen.route: (_) => IntroductionScreen(),
           SmokingEntryInsightScreen.route: (_) => SmokingEntryInsightScreen(),
           HealthRegenerationScreen.route: (_) => HealthRegenerationScreen(),
+          UserSettingScreen.route: (_) => UserSettingScreen(),
         },
       ),
     );

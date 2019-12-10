@@ -2,14 +2,16 @@ import 'package:bloc/bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_event.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
 import 'package:i_can_quit/data/repository/smoking_entry_repository.dart';
+import 'package:i_can_quit/data/repository/user_setting_repository.dart';
 import 'package:i_can_quit/ui/screen/smoking_entry/smoking_entry_chart.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:intl/intl.dart';
 
 class SmokingEntryBloc extends Bloc<SmokingEntryEvent, SmokingEntryState> {
   final SmokingEntryRepository _smokingEntryRepository;
+  final UserSettingRepository _userSettingRepository;
 
-  SmokingEntryBloc(this._smokingEntryRepository);
+  SmokingEntryBloc(this._smokingEntryRepository, this._userSettingRepository);
   @override
   SmokingEntryState get initialState => SmokingEntryLoading();
 
@@ -33,11 +35,16 @@ class SmokingEntryBloc extends Bloc<SmokingEntryEvent, SmokingEntryState> {
           );
         });
 
+        final settings = await _userSettingRepository.fetchUserSettings();
+        final latestSetting = settings.isNotEmpty ? settings.last : null;
+
         yield FetchSmokingEntrySuccess(
           entries: entries,
           latestHasSmokedEntry: latestHasSmokedEntry,
           nonSmokingDays: nonSmokedDates.count(),
           timeSeries: List.from(timeSeries.asList()),
+          userSettings: settings,
+          latestUserSetting: latestSetting,
         );
       } catch (error) {
         print(error);

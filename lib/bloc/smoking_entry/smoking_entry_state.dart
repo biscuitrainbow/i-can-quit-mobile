@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:i_can_quit/data/model/smoking_entry.dart';
+import 'package:i_can_quit/data/model/user_setting.dart';
 import 'package:i_can_quit/ui/screen/smoking_entry/smoking_entry_chart.dart';
 
 abstract class SmokingEntryState extends Equatable {
@@ -12,13 +13,24 @@ class FetchSmokingEntrySuccess extends SmokingEntryState {
   final SmokingEntry latestHasSmokedEntry;
   final int nonSmokingDays;
   final List<SmokingEntryTimeSeries> timeSeries;
+  final List<UserSetting> userSettings;
+  final UserSetting latestUserSetting;
 
   FetchSmokingEntrySuccess({
     @required this.entries,
     @required this.latestHasSmokedEntry,
     @required this.nonSmokingDays,
     @required this.timeSeries,
-  }) : super([entries, nonSmokingDays, latestHasSmokedEntry, timeSeries]);
+    @required this.userSettings,
+    @required this.latestUserSetting,
+  }) : super([
+          entries,
+          nonSmokingDays,
+          latestHasSmokedEntry,
+          timeSeries,
+          userSettings,
+          latestUserSetting,
+        ]);
 }
 
 class SmokingEntryLoading extends SmokingEntryState {}
