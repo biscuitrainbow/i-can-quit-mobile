@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:i_can_quit/data/model/user_setting.dart';
 import 'package:i_can_quit/ui/util/date_time_util.dart';
 
 class SmokingEntry {
@@ -10,6 +11,7 @@ class SmokingEntry {
   final DateTime datetime;
   final LatLng location;
   final String mood;
+  final UserSetting setting;
 
   SmokingEntry({
     this.id,
@@ -18,6 +20,7 @@ class SmokingEntry {
     this.datetime,
     this.location,
     this.mood,
+    this.setting,
   });
 
   SmokingEntry.create({
@@ -26,6 +29,7 @@ class SmokingEntry {
     this.hasSmoked = false,
     this.location,
     this.mood,
+    this.setting,
   }) : datetime = DateTime.now();
 
   SmokingEntry.firstTimes({
@@ -34,6 +38,7 @@ class SmokingEntry {
     this.hasSmoked = true,
     this.location,
     this.mood,
+    this.setting,
   }) : datetime = DateTime.now();
 
   SmokingEntry copyWith({
@@ -43,6 +48,7 @@ class SmokingEntry {
     DateTime datetime,
     LatLng location,
     String mood,
+    UserSetting setting,
   }) {
     return SmokingEntry(
       id: id ?? this.id,
@@ -51,6 +57,7 @@ class SmokingEntry {
       datetime: datetime ?? this.datetime,
       location: location ?? this.location,
       mood: mood ?? this.mood,
+      setting: setting ?? this.setting,
     );
   }
 
@@ -67,13 +74,13 @@ class SmokingEntry {
 
   static SmokingEntry fromJson(dynamic json) {
     return SmokingEntry(
-      id: json['id'],
-      smokingNeededLevel: json['smoking_needed_level'],
-      hasSmoked: json['has_smoked'],
-      datetime: fromMysqlDateTime(json['date_time']),
-      location: json['lat'] != null && json['lng'] != null ? LatLng(json['lat'], json['lng']) : null,
-      mood: json['mood'] ?? null,
-    );
+        id: json['id'],
+        smokingNeededLevel: json['smoking_needed_level'],
+        hasSmoked: json['has_smoked'],
+        datetime: fromMysqlDateTime(json['date_time']),
+        location: json['lat'] != null && json['lng'] != null ? LatLng(json['lat'], json['lng']) : null,
+        mood: json['mood'] ?? null,
+        setting: UserSetting.fromMap(json['setup']));
   }
 
   static List<SmokingEntry> fromJsonArray(List<dynamic> array) {
