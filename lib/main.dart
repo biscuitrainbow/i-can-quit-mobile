@@ -9,6 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:i_can_quit/bloc/achievement/achievement_bloc.dart';
 import 'package:i_can_quit/bloc/app_bloc_delegate.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_bloc.dart';
 import 'package:i_can_quit/bloc/news/news_bloc.dart';
@@ -17,6 +18,7 @@ import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/user/user_bloc.dart';
 import 'package:i_can_quit/bloc/user_setting/user_setting_bloc.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
+import 'package:i_can_quit/data/repository/achievement_repository.dart';
 import 'package:i_can_quit/data/repository/news_repository.dart';
 import 'package:i_can_quit/data/repository/smoking_entry_repository.dart';
 import 'package:i_can_quit/data/repository/token_repository.dart';
@@ -49,16 +51,16 @@ void main() async {
   );
 
   final Dio dio = Dio(options);
-  dio.interceptors.add(
-    PrettyDioLogger(
-      requestHeader: false,
-      requestBody: true,
-      responseBody: true,
-      responseHeader: false,
-      error: true,
-      compact: true,
-    ),
-  );
+  // dio.interceptors.add(
+  //   PrettyDioLogger(
+  //     requestHeader: false,
+  //     requestBody: true,
+  //     responseBody: true,
+  //     responseHeader: false,
+  //     error: true,
+  //     compact: true,
+  //   ),
+  // );
 
   final FacebookLogin facebookLogin = FacebookLogin();
   final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -76,6 +78,7 @@ void main() async {
   final SmokingEntryRepository smokingEntryRepository = SmokingEntryRepository(dio, tokenRepository);
   final UserRepository userRepository = UserRepository(dio, tokenRepository);
   final NewsRepository newsRepository = NewsRepository(dio, tokenRepository);
+  final AchievementRepository achievementRepository = AchievementRepository(dio, tokenRepository);
 
   runApp(
     Application(
@@ -84,6 +87,7 @@ void main() async {
       userRepository: userRepository,
       tokenRepository: tokenRepository,
       newsRepository: newsRepository,
+      achievementRepository: achievementRepository,
       authenticationService: authenticationService,
     ),
   );
@@ -95,6 +99,7 @@ class Application extends StatefulWidget {
   final UserRepository userRepository;
   final TokenRepository tokenRepository;
   final NewsRepository newsRepository;
+  final AchievementRepository achievementRepository;
   final AuthenticationService authenticationService;
 
   const Application({
@@ -104,6 +109,7 @@ class Application extends StatefulWidget {
     @required this.userRepository,
     @required this.tokenRepository,
     @required this.newsRepository,
+    @required this.achievementRepository,
     @required this.authenticationService,
   }) : super(key: key);
 
@@ -118,6 +124,7 @@ class _ApplicationState extends State<Application> {
   UserSettingBloc userSettingBloc;
   AuthenticationBloc authenticationBloc;
   RegistrationBloc registrationBloc;
+  AchievementBloc achievementBloc;
   ApplicationBloc applicationBloc;
 
   @override
@@ -127,6 +134,7 @@ class _ApplicationState extends State<Application> {
     smokingEntryBloc = SmokingEntryBloc(widget.smokingEntryRepository);
     newsBloc = NewsBloc(this.widget.newsRepository);
     userBloc = UserBloc(widget.userRepository);
+    achievementBloc = AchievementBloc(widget.achievementRepository);
 
     userSettingBloc = UserSettingBloc(
       widget.userSettingRepository,
@@ -155,11 +163,12 @@ class _ApplicationState extends State<Application> {
       smokingEntryBloc,
       userSettingBloc,
       newsBloc,
+      achievementBloc,
     );
 
     authenticationBloc.add(CheckAuthenticated());
 
-    // BlocSupervisor.delegate = AppBlocDelegate();
+    BlocSupervisor.delegate = AppBlocDelegate();
   }
 
   @override
@@ -168,6 +177,7 @@ class _ApplicationState extends State<Application> {
     newsBloc.close();
     userBloc.close();
     userSettingBloc.close();
+    achievementBloc.close();
     authenticationBloc.close();
     registrationBloc.close();
     applicationBloc.close();
@@ -187,6 +197,9 @@ class _ApplicationState extends State<Application> {
         ),
         BlocProvider<NewsBloc>(
           builder: (context) => newsBloc,
+        ),
+        BlocProvider<AchievementBloc>(
+          builder: (context) => achievementBloc,
         ),
         BlocProvider<AuthenticationBloc>(
           builder: (context) => authenticationBloc,

@@ -20,8 +20,8 @@ class _MainScreenState extends State<MainScreen> {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state is UserAuthenticated) {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => IntroductionScreen()));
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SplashScreen()));
+          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => IntroductionScreen()));
+          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SplashScreen()));
         }
       },
       child: BlocBuilder<AuthenticationBloc, AuthenticationState>(

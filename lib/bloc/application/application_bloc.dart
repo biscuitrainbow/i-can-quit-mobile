@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:i_can_quit/bloc/achievement/achievement_bloc.dart';
+import 'package:i_can_quit/bloc/achievement/achievement_event.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_bloc.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_state.dart';
 import 'package:i_can_quit/bloc/news/news_bloc.dart';
@@ -21,6 +23,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   final SmokingEntryBloc _smokingEntryBloc;
   final UserSettingBloc _userSettingBloc;
   final NewsBloc _newsBloc;
+  final AchievementBloc _achievementBloc;
 
   StreamSubscription _authenticationSubscription;
 
@@ -30,6 +33,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
     this._smokingEntryBloc,
     this._userSettingBloc,
     this._newsBloc,
+    this._achievementBloc,
   ) {
     _authenticationSubscription = _authenticationBloc.listen((state) {
       if (state is UserAuthenticated) {
@@ -43,6 +47,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
     _smokingEntryBloc.add(FetchSmokingEntry());
     _userBloc.add(FetchUser());
     _newsBloc.add(FetchNews());
+    _achievementBloc.add(FetchAchievements());
   }
 
   @override

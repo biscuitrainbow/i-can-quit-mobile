@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:i_can_quit/bloc/achievement/achievement_bloc.dart';
+import 'package:i_can_quit/bloc/achievement/achievement_state.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
 import 'package:i_can_quit/bloc/user_setting/user_setting_bloc.dart';
@@ -8,6 +10,7 @@ import 'package:i_can_quit/bloc/user_setting/user_setting_state.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/constant/style.dart';
 import 'package:i_can_quit/data/static/static_data.dart';
+import 'package:i_can_quit/ui/achievement/achievement_item.dart';
 import 'package:i_can_quit/ui/health_regeneration/health_regeneration_item.dart';
 import 'package:i_can_quit/ui/screen/health_regeneration/health_regeneration_screen.dart';
 import 'package:i_can_quit/ui/screen/user/user_first_setting_screen.dart';
@@ -124,10 +127,33 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
     );
   }
 
+  Widget _buildAchievementList(AchievementsLoaded state) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text('ความสำเร็จที่ผ่านมา', style: Styles.titlePrimary),
+            ],
+          ),
+          SizedBox(height: 16),
+          ...state.achievements.map(
+            (achievement) => Padding(
+              padding: EdgeInsets.symmetric(vertical: 12),
+              child: AchievementItem(achievement: achievement),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final SmokingEntryBloc smokingEntryBloc = BlocProvider.of<SmokingEntryBloc>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('ภาพรวม'),
@@ -137,65 +163,72 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
       drawer: Drawer(
         child: NavigationDrawer(),
       ),
-      body: BlocBuilder<SmokingEntryBloc, SmokingEntryState>(
-          bloc: smokingEntryBloc,
-          builder: (context, smokingEntryState) {
-            return BlocBuilder<UserSettingBloc, UserSettingState>(
-              builder: (context, userSettingState) {
-                if (smokingEntryState is SmokingEntryLoading || userSettingState is FetchUserSettingLoading) {
-                  return Center(child: CircularProgressIndicator());
-                }
+      body: BlocBuilder<SmokingEntryBloc, SmokingEntryState>(builder: (context, smokingEntryState) {
+        return BlocBuilder<UserSettingBloc, UserSettingState>(
+          builder: (context, userSettingState) {
+            if (smokingEntryState is SmokingEntryLoading || userSettingState is FetchUserSettingLoading) {
+              return Center(child: CircularProgressIndicator());
+            }
 
-                if (smokingEntryState is FetchSmokingEntrySuccess && userSettingState is FetchUserSettingSuccess) {
-                  if (userSettingState.settings.isEmpty || smokingEntryState.entries.isEmpty) {
-                    return Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            IconData(0xe7c6, fontFamily: 'iconfont'),
-                            color: Colors.grey.shade400,
-                            size: 64,
-                          ),
-                          SizedBox(height: 12),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Text(
-                              'ยินดีต้อนรับผู้ใช้ใหม่ กรุณาป้อนข้อมูลเบื้องต้นเกี่ยวกับพฤติกรรมการสูบบุหรี่ของคุณเพื่อเริ่มใช้งาน',
-                              style: Styles.descriptionSecondary,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          SizedBox(height: 12),
-                          FlatButton(
-                            child: Text(
-                              'กรอกข้อมูลเบื้องต้น',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            color: ColorPalette.primary,
-                            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => UserFirstSettingScreen())),
-                          )
-                        ],
-                      ),
-                    );
-                  }
-                }
-
-                return SingleChildScrollView(
-                  padding: EdgeInsets.only(bottom: 16),
+            if (smokingEntryState is FetchSmokingEntrySuccess && userSettingState is FetchUserSettingSuccess) {
+              if (userSettingState.settings.isEmpty || smokingEntryState.entries.isEmpty) {
+                return Center(
                   child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      _buildOverviewStats(smokingEntryState),
-                      _buildNonSmokingTimePassed(smokingEntryState),
-                      _buildHealthRegenerationList(smokingEntryState),
+                      Icon(
+                        IconData(0xe7c6, fontFamily: 'iconfont'),
+                        color: Colors.grey.shade400,
+                        size: 64,
+                      ),
+                      SizedBox(height: 12),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text(
+                          'ยินดีต้อนรับผู้ใช้ใหม่ กรุณาป้อนข้อมูลเบื้องต้นเกี่ยวกับพฤติกรรมการสูบบุหรี่ของคุณเพื่อเริ่มใช้งาน',
+                          style: Styles.descriptionSecondary,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 12),
+                      FlatButton(
+                        child: Text(
+                          'กรอกข้อมูลเบื้องต้น',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: ColorPalette.primary,
+                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => UserFirstSettingScreen())),
+                      )
                     ],
                   ),
                 );
-              },
+              }
+            }
+
+            return SingleChildScrollView(
+              padding: EdgeInsets.only(bottom: 16),
+              child: Column(
+                children: <Widget>[
+                  _buildOverviewStats(smokingEntryState),
+                  _buildNonSmokingTimePassed(smokingEntryState),
+                  _buildHealthRegenerationList(smokingEntryState),
+                  BlocBuilder<AchievementBloc, AchievementState>(
+                    builder: (context, state) {
+                      if (state is AchievementsLoaded) {
+                        return _buildAchievementList(state);
+                      }
+
+                      return CircularProgressIndicator();
+                    },
+                  )
+                ],
+              ),
             );
-          }),
+          },
+        );
+      }),
     );
   }
 }
