@@ -26,7 +26,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     final List<Widget> screens = [
       SmokingOverviewScreen(),
-      SmokingEntryFormScreen(),
+      SmokingEntryScreen(),
       SmokingEntryInsightScreen(),
       NewsListScreen(),
     ];

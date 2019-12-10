@@ -11,6 +11,7 @@ class SmokingEntry {
   final DateTime datetime;
   final LatLng location;
   final String mood;
+  final int numberOfCigarettes;
   final UserSetting setting;
 
   SmokingEntry({
@@ -20,6 +21,7 @@ class SmokingEntry {
     this.datetime,
     this.location,
     this.mood,
+    this.numberOfCigarettes = 0,
     this.setting,
   });
 
@@ -30,6 +32,7 @@ class SmokingEntry {
     this.location,
     this.mood,
     this.setting,
+    this.numberOfCigarettes,
   }) : datetime = DateTime.now();
 
   SmokingEntry.firstTimes({
@@ -39,6 +42,7 @@ class SmokingEntry {
     this.location,
     this.mood,
     this.setting,
+    this.numberOfCigarettes,
   }) : datetime = DateTime.now();
 
   SmokingEntry copyWith({
@@ -48,6 +52,7 @@ class SmokingEntry {
     DateTime datetime,
     LatLng location,
     String mood,
+    int numberOfCigarettes,
     UserSetting setting,
   }) {
     return SmokingEntry(
@@ -57,6 +62,7 @@ class SmokingEntry {
       datetime: datetime ?? this.datetime,
       location: location ?? this.location,
       mood: mood ?? this.mood,
+      numberOfCigarettes: numberOfCigarettes ?? this.numberOfCigarettes,
       setting: setting ?? this.setting,
     );
   }
@@ -68,6 +74,7 @@ class SmokingEntry {
       'date_time': toMysqlDateTime(this.datetime),
       'lat': this.location?.latitude,
       'lng': this.location?.longitude,
+      'number_of_cigarettes': this.numberOfCigarettes,
       'mood': this.mood,
     };
   }
@@ -79,6 +86,7 @@ class SmokingEntry {
         hasSmoked: json['has_smoked'],
         datetime: fromMysqlDateTime(json['date_time']),
         location: json['lat'] != null && json['lng'] != null ? LatLng(json['lat'], json['lng']) : null,
+        numberOfCigarettes: json['number_of_cigarettes'],
         mood: json['mood'] ?? null,
         setting: UserSetting.fromMap(json['setup']));
   }

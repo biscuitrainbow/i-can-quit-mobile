@@ -12,7 +12,7 @@ class SmokingEntryRepository {
   SmokingEntryRepository(this.dio, this.tokenRepository);
 
   Future<Null> create(SmokingEntry entry) async {
-    final response = await dio.post(
+    await dio.post(
       '/entry',
       options: Options(headers: {
         HttpHeaders.authorizationHeader: toBearer(await tokenRepository.token()),

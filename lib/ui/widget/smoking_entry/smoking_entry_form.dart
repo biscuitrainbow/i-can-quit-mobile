@@ -59,10 +59,37 @@ class _SmokingEntryFormState extends State<SmokingEntryForm> {
                 Switch(
                   value: _entry.hasSmoked,
                   onChanged: (bool smoked) {
-                    setState(() => _entry = _entry.copyWith(hasSmoked: smoked));
+                    setState(
+                      () => _entry = _entry.copyWith(
+                        hasSmoked: smoked,
+                        numberOfCigarettes: 0,
+                      ),
+                    );
+
                     widget.onChange(_entry);
                   },
                 )
+              ],
+            ),
+          ),
+        if (_entry.hasSmoked)
+          EntryContainer.secondary(
+            title: 'สูบไปเป็นจำนวน',
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Expanded(
+                  flex: 8,
+                  child: GroupSelector(
+                    items: [for (var i = 1; i <= 30; i = i + 1) i].map((number) => number.toString()).toList(),
+                    selectedItem: _entry.numberOfCigarettes.toString(),
+                    warp: false,
+                    onChanged: (String number) => setState(() {
+                      setState(() => _entry = _entry.copyWith(numberOfCigarettes: int.parse(number)));
+                      widget.onChange(_entry);
+                    }),
+                  ),
+                ),
               ],
             ),
           ),

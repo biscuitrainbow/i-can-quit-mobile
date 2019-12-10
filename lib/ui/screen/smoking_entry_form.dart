@@ -10,13 +10,13 @@ import 'package:i_can_quit/ui/widget/button/expanded_button.dart';
 import 'package:i_can_quit/ui/widget/container/vertical_divided_column.dart';
 import 'package:i_can_quit/ui/widget/smoking_entry/smoking_entry_form.dart';
 
-class SmokingEntryFormScreen extends StatefulWidget {
-  SmokingEntryFormScreen({Key key}) : super(key: key);
+class SmokingEntryScreen extends StatefulWidget {
+  SmokingEntryScreen({Key key}) : super(key: key);
 
-  _SmokingEntryFormScreenState createState() => _SmokingEntryFormScreenState();
+  _SmokingEntryScreenState createState() => _SmokingEntryScreenState();
 }
 
-class _SmokingEntryFormScreenState extends State<SmokingEntryFormScreen> {
+class _SmokingEntryScreenState extends State<SmokingEntryScreen> {
   SmokingEntry _entry = SmokingEntry.create();
 
   void _submit(SmokingEntryBloc bloc) {
@@ -25,8 +25,6 @@ class _SmokingEntryFormScreenState extends State<SmokingEntryFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final SmokingEntryBloc smokingEntryBloc = BlocProvider.of<SmokingEntryBloc>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -44,7 +42,6 @@ class _SmokingEntryFormScreenState extends State<SmokingEntryFormScreen> {
           }
         },
         child: BlocBuilder<SmokingEntryBloc, SmokingEntryState>(
-          bloc: smokingEntryBloc,
           builder: (context, state) {
             if (state is SaveSmokingEntryLoading) {
               return Center(child: CircularProgressIndicator());
@@ -56,7 +53,7 @@ class _SmokingEntryFormScreenState extends State<SmokingEntryFormScreen> {
               ),
               bottom: ExpandedButton(
                 title: 'บันทึก',
-                onPressed: () => _submit(smokingEntryBloc),
+                onPressed: () => _submit(BlocProvider.of<SmokingEntryBloc>(context)),
               ),
             );
           },
