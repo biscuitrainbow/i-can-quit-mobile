@@ -37,6 +37,7 @@ import 'package:i_can_quit/ui/user_setting/user_setting_screen.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_core/core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'bloc/application/application_bloc.dart';
 import 'bloc/authentication/authentication_event.dart';
@@ -83,6 +84,8 @@ void main() async {
   final NewsRepository newsRepository = NewsRepository(dio, tokenRepository);
   final AchievementRepository achievementRepository = AchievementRepository(dio, tokenRepository);
 
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   runApp(
     Application(
       smokingEntryRepository: smokingEntryRepository,
@@ -92,6 +95,7 @@ void main() async {
       newsRepository: newsRepository,
       achievementRepository: achievementRepository,
       authenticationService: authenticationService,
+      firebaseMessaging: _firebaseMessaging,
     ),
   );
 }
@@ -104,6 +108,7 @@ class Application extends StatefulWidget {
   final NewsRepository newsRepository;
   final AchievementRepository achievementRepository;
   final AuthenticationService authenticationService;
+  final FirebaseMessaging firebaseMessaging;
 
   const Application({
     Key key,
@@ -114,6 +119,7 @@ class Application extends StatefulWidget {
     @required this.newsRepository,
     @required this.achievementRepository,
     @required this.authenticationService,
+    @required this.firebaseMessaging,
   }) : super(key: key);
 
   @override
@@ -133,6 +139,8 @@ class _ApplicationState extends State<Application> {
   @override
   void initState() {
     super.initState();
+
+    widget.firebaseMessaging.subscribeToTopic('news');
 
     smokingEntryBloc = SmokingEntryBloc(
       widget.smokingEntryRepository,
