@@ -20,8 +20,8 @@ class _NewsListScreenState extends State<NewsListScreen> with SingleTickerProvid
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
 
   final List<Tab> tabs = <Tab>[
-    new Tab(text: "ข่าวสารบุหรี่"),
-    new Tab(text: "ข่าวสารพระพุทธศาสนา"),
+    Tab(text: "ข่าวสารพระพุทธศาสนา"),
+    Tab(text: "ข่าวสารบุหรี่"),
   ];
 
   TabController _tabController;
@@ -84,6 +84,17 @@ class _NewsListScreenState extends State<NewsListScreen> with SingleTickerProvid
                 physics: NeverScrollableScrollPhysics(),
                 children: <Widget>[
                   ListView.builder(
+                    itemCount: religionNews.length,
+                    itemBuilder: (context, index) {
+                      final news = religionNews[index];
+
+                      return NewsGeneralItem(
+                        news: news,
+                        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => NewsScreen(news: news))),
+                      );
+                    },
+                  ),
+                  ListView.builder(
                     itemCount: smokingNews.length,
                     itemBuilder: (context, index) {
                       final news = smokingNews[index];
@@ -94,17 +105,6 @@ class _NewsListScreenState extends State<NewsListScreen> with SingleTickerProvid
                       );
                     },
                   ),
-                  ListView.builder(
-                    itemCount: religionNews.length,
-                    itemBuilder: (context, index) {
-                      final news = religionNews[index];
-
-                      return NewsGeneralItem(
-                        news: news,
-                        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => NewsScreen(news: news))),
-                      );
-                    },
-                  )
                 ],
               ),
             );

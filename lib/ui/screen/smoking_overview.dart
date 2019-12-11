@@ -55,7 +55,7 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
               OverviewStatsItem.secondary(
                 title: '${state.nonSmokingDays}',
                 unit: 'วัน',
-                description: 'วันที่ไม่สูบบุหรี่',
+                description: 'วันที่ไม่สูบบุหรี่รวม',
                 icon: FontAwesomeIcons.smokingBan,
               ),
             ],
