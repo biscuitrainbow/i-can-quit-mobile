@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_event.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
+import 'package:i_can_quit/data/model/smoking_entry.dart';
 import 'package:i_can_quit/data/repository/smoking_entry_repository.dart';
 import 'package:i_can_quit/data/repository/user_setting_repository.dart';
 import 'package:i_can_quit/ui/screen/smoking_entry/smoking_entry_chart.dart';
@@ -28,11 +29,20 @@ class SmokingEntryBloc extends Bloc<SmokingEntryEvent, SmokingEntryState> {
         final nonSmokedDates = dateGroupedEntries.filter((date) {
           return date.value.filter((entry) => entry.hasSmoked).count() == 0;
         });
-        final timeSeries = dateGroupedEntries.map((date) {
+
+        final smokingCountTimeSeries = dateGroupedEntries.map((date) {
           return SmokingEntryTimeSeries(
             dateTime: DateFormat('yyyy-MM-dd').parse(date.key),
-            smokingCount: date.value.count(),
+            smokingCount: date.value.filter((SmokingEntry entry) => entry.hasSmoked).count(),
           );
+        });
+
+        final cigaretteCountTimeSeries = dateGroupedEntries.map((date) {
+          return SmokingEntryTimeSeries(
+              dateTime: DateFormat('yyyy-MM-dd').parse(date.key),
+              smokingCount: date.value.asList().fold(0, (int acc, SmokingEntry entry) {
+                return acc + entry.numberOfCigarettes;
+              }));
         });
 
         final settings = await _userSettingRepository.fetchUserSettings();
@@ -42,7 +52,8 @@ class SmokingEntryBloc extends Bloc<SmokingEntryEvent, SmokingEntryState> {
           entries: entries,
           latestHasSmokedEntry: latestHasSmokedEntry,
           nonSmokingDays: nonSmokedDates.count(),
-          timeSeries: List.from(timeSeries.asList()),
+          smokingCountTimeSeries: smokingCountTimeSeries.asList(),
+          cigarettCountTimeSeries: cigaretteCountTimeSeries.asList(),
           userSettings: settings,
           latestUserSetting: latestSetting,
         );

@@ -36,12 +36,14 @@ import 'package:i_can_quit/ui/screen/user/user_login_screen.dart';
 import 'package:i_can_quit/ui/user_setting/user_setting_screen.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:syncfusion_flutter_core/core.dart';
 
 import 'bloc/application/application_bloc.dart';
 import 'bloc/authentication/authentication_event.dart';
 import 'data/repository/user_setting_repository.dart';
 
 void main() async {
+  SyncfusionLicense.registerLicense("NT8mJyc2IWhiZH1gfWN9YmdoYmF8YGJ8ampqanNiYmlmamlmanMDHmg9MicnOzIjPD0gITowPCEnEzQ+Mjo/fTA8Pg==");
   await DotEnv().load('.env');
 
   final BaseOptions options = BaseOptions(
@@ -52,16 +54,16 @@ void main() async {
   );
 
   final Dio dio = Dio(options);
-  // dio.interceptors.add(
-  //   PrettyDioLogger(
-  //     requestHeader: false,
-  //     requestBody: true,
-  //     responseBody: true,
-  //     responseHeader: false,
-  //     error: true,
-  //     compact: true,
-  //   ),
-  // );
+  dio.interceptors.add(
+    PrettyDioLogger(
+      requestHeader: false,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      error: true,
+      compact: true,
+    ),
+  );
 
   final FacebookLogin facebookLogin = FacebookLogin();
   final GoogleSignIn googleSignIn = GoogleSignIn(

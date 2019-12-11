@@ -12,7 +12,9 @@ class FetchSmokingEntrySuccess extends SmokingEntryState {
   final List<SmokingEntry> entries;
   final SmokingEntry latestHasSmokedEntry;
   final int nonSmokingDays;
-  final List<SmokingEntryTimeSeries> timeSeries;
+  final List<SmokingEntryTimeSeries> smokingCountTimeSeries;
+  final List<SmokingEntryTimeSeries> cigarettCountTimeSeries;
+
   final List<UserSetting> userSettings;
   final UserSetting latestUserSetting;
 
@@ -20,14 +22,16 @@ class FetchSmokingEntrySuccess extends SmokingEntryState {
     @required this.entries,
     @required this.latestHasSmokedEntry,
     @required this.nonSmokingDays,
-    @required this.timeSeries,
+    @required this.smokingCountTimeSeries,
+    @required this.cigarettCountTimeSeries,
     @required this.userSettings,
     @required this.latestUserSetting,
   }) : super([
           entries,
           nonSmokingDays,
           latestHasSmokedEntry,
-          timeSeries,
+          smokingCountTimeSeries,
+          cigarettCountTimeSeries,
           userSettings,
           latestUserSetting,
         ]);

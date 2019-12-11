@@ -26,7 +26,6 @@ dependencies:
   bloc: ^1.0.0
   bubble_tab_indicator: ^0.1.4
   cached_network_image: ^1.1.1
-  charts_flutter: ^0.8.1
   cupertino_icons: ^0.1.2
   dio: ^3.0.3
   equatable: ^0.5.0
@@ -52,6 +51,7 @@ dependencies:
   shared_preferences: ^0.5.4+1
   shimmer: ^1.0.1
   sleek_circular_slider: ^1.0.7
+  syncfusion_flutter_charts: ^17.3.26
   timeago: ^2.0.20
   youtube_player_flutter: ^6.0.3+2
 
