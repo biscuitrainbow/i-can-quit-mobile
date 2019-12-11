@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:i_can_quit/bloc/achievement/achievement_bloc.dart';
+import 'package:i_can_quit/bloc/achievement/achievement_state.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/constant/style.dart';
 import 'package:i_can_quit/data/static/static_data.dart';
+import 'package:i_can_quit/ui/achievement/achievement_item.dart';
 import 'package:i_can_quit/ui/general/new_user_acknowledgement.dart';
 import 'package:i_can_quit/ui/health_regeneration/health_regeneration_item.dart';
 import 'package:i_can_quit/ui/screen/health_regeneration/health_regeneration_screen.dart';
@@ -110,6 +113,28 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
     );
   }
 
+  Widget _buildAchievementList(AchievementsLoaded state) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text('ความสำเร็จ', style: Styles.titlePrimary),
+          SizedBox(height: 16),
+          ...state.achievements.map(
+            (achievement) => Padding(
+              padding: EdgeInsets.symmetric(vertical: 12),
+              child: AchievementItem(
+                achievement: achievement,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,6 +158,15 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
                   _buildOverviewStats(state),
                   _buildNonSmokingTimePassed(state),
                   _buildHealthRegenerationList(state),
+                  BlocBuilder<AchievementBloc, AchievementState>(
+                    builder: (context, state) {
+                      if (state is AchievementsLoaded) {
+                        return _buildAchievementList(state);
+                      }
+
+                      return CircularProgressIndicator();
+                    },
+                  )
                 ],
               ),
             );
