@@ -6,6 +6,7 @@ import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/constant/style.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 class SmokingEntryChart extends StatefulWidget {
   @override
@@ -32,55 +33,74 @@ class _SmokingEntryChartState extends State<SmokingEntryChart> {
                   timeSerie.dateTime.isBefore(this._selectedDate.add(Duration(days: 6))))
               .toList();
 
-          return SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: 160,
-                  child: CalendarCarousel(
-                    weekFormat: true,
-                    locale: 'th',
-                    iconColor: ColorPalette.primary,
-                    headerTextStyle: Styles.title,
-                    weekdayTextStyle: Styles.title.copyWith(fontWeight: FontWeight.w600, fontSize: 14),
-                    daysTextStyle: Styles.title.copyWith(fontWeight: FontWeight.w400, fontSize: 14, color: Colors.grey.shade700),
-                    weekendTextStyle: Styles.title.copyWith(fontWeight: FontWeight.w400, fontSize: 14, color: Colors.grey.shade700),
-                    maxSelectedDate: DateTime.now(),
-                    selectedDayButtonColor: Colors.white,
-                    onCalendarChanged: (datetime) {
-                      setState(() {
-                        this._selectedDate = datetime;
-                      });
-                    },
+          return Column(
+            children: <Widget>[
+              Container(
+                height: 60,
+                child: CalendarCarousel(
+                  viewportFraction: 0.5,
+                  headerText:
+                      '${DateFormat('d MMM').format(this._selectedDate)} - ${DateFormat('d MMM').format(this._selectedDate.add(Duration(days: 6)))}',
+                  showHeader: true,
+                  weekFormat: true,
+                  locale: 'th',
+                  iconColor: ColorPalette.primary,
+                  headerTextStyle: Styles.title.copyWith(fontWeight: FontWeight.w400),
+                  maxSelectedDate: DateTime.now(),
+                  selectedDayButtonColor: Theme.of(context).scaffoldBackgroundColor,
+                  onCalendarChanged: (datetime) {
+                    setState(() {
+                      this._selectedDate = datetime;
+                    });
+                  },
+                ),
+              ),
+              SizedBox(height: 8),
+              Container(
+                child: SfCartesianChart(
+                  plotAreaBorderWidth: 0,
+                  tooltipBehavior: TooltipBehavior(enable: true),
+                  palette: [
+                    Colors.grey.shade400,
+                    Colors.grey.shade700,
+                  ],
+                  legend: Legend(
+                    isVisible: true,
+                    position: LegendPosition.bottom,
+                    toggleSeriesVisibility: true,
+                    textStyle: ChartTextStyle(fontFamily: 'Kanit'),
+                  ),
+                  enableSideBySideSeriesPlacement: false,
+                  series: <ChartSeries>[
+                    ColumnSeries<SmokingEntryTimeSeries, DateTime>(
+                      name: 'ปริมาณที่สูบ(มวน)',
+                      dataSource: cigarettCountPerDay,
+                      yValueMapper: (entry, _) => entry.smokingCount,
+                      xValueMapper: (entry, _) => entry.dateTime,
+                      width: 0.8,
+                    ),
+                    ColumnSeries<SmokingEntryTimeSeries, DateTime>(
+                      name: 'จำนวนครั้งที่สูบ',
+                      dataSource: smokingDaysCount,
+                      yValueMapper: (entry, _) => entry.smokingCount,
+                      xValueMapper: (entry, _) => entry.dateTime,
+                      opacity: 0.8,
+                      width: 0.6,
+                      spacing: 0.4,
+                    ),
+                  ],
+                  primaryXAxis: DateTimeAxis(
+                    majorGridLines: MajorGridLines(width: 0),
+                    labelStyle: ChartTextStyle(fontFamily: 'Kanit'),
+                  ),
+                  primaryYAxis: NumericAxis(
+                    majorGridLines: MajorGridLines(width: 0.3),
+                    labelStyle: ChartTextStyle(fontFamily: 'Kanit'),
                   ),
                 ),
-                Container(
-                  child: SfCartesianChart(
-                    palette: [
-                      ColorPalette.primary,
-                      ColorPalette.primaryBackground,
-                    ],
-                    series: <ChartSeries>[
-                      StackedColumnSeries<SmokingEntryTimeSeries, DateTime>(
-                        dataSource: smokingDaysCount,
-                        yValueMapper: (entry, _) => entry.smokingCount,
-                        xValueMapper: (entry, _) => entry.dateTime,
-                        enableTooltip: true,
-                      ),
-                      StackedColumnSeries<SmokingEntryTimeSeries, DateTime>(
-                        dataSource: cigarettCountPerDay,
-                        yValueMapper: (entry, _) => entry.smokingCount,
-                        xValueMapper: (entry, _) => entry.dateTime,
-                        enableTooltip: true,
-                      )
-                    ],
-                    primaryXAxis: DateTimeAxis(),
-                    primaryYAxis: NumericAxis(),
-                  ),
-                ),
-                SizedBox(height: 16),
-              ],
-            ),
+              ),
+              SizedBox(height: 16),
+            ],
           );
         }
 
