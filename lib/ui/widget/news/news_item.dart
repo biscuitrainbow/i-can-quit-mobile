@@ -34,7 +34,7 @@ class NewsGeneralItem extends StatelessWidget {
             Text(
               news.title,
               textAlign: TextAlign.start,
-              style: Styles.titlePrimary,
+              style: Styles.headerSectionPrimary,
             ),
             Text(
               timeago.format(news.updatedAt),

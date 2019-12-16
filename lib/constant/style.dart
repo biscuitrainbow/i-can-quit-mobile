@@ -2,48 +2,60 @@ import 'package:flutter/material.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
 
 abstract class Styles {
-  static const titlePrimary = TextStyle(
+  static final headerSection = TextStyle(
     fontSize: 22,
     fontWeight: FontWeight.w500,
+    color: Colors.grey.shade800,
+  );
+
+  static final headerSectionPrimary = headerSection.copyWith(
     color: ColorPalette.primary,
   );
 
-  static const title = TextStyle(
-    fontSize: 22,
-    fontWeight: FontWeight.w500,
-    color: Color(0xFF1F2933),
-    fontFamily: 'Kanit',
+  static final header = TextStyle(
+    fontSize: 28,
+    fontWeight: FontWeight.w400,
+    color: Colors.grey.shade800,
   );
 
-  static const biggerHeader = TextStyle(
+  static final headerAccent = header.copyWith(
+    color: Colors.white,
+  );
+
+  static final headerPrimary = headerAccent.copyWith(
+    color: ColorPalette.primary,
+  );
+
+  static final headerBigger = headerAccent.copyWith(
     fontSize: 42,
-    fontWeight: FontWeight.w500,
-    color: Colors.white,
-    fontFamily: 'Kanit',
   );
 
-  static const bigHeader = TextStyle(
-    fontSize: 28,
+  static final title = TextStyle(
+    fontSize: 18,
     fontWeight: FontWeight.w400,
+    color: Colors.grey.shade800,
+  );
+
+  static final titleAccent = title.copyWith(
     color: Colors.white,
   );
 
-  static const bigHeaderPrimary = TextStyle(
-    fontSize: 28,
-    fontWeight: FontWeight.w400,
-    color: ColorPalette.primary,
+  static final titleSecondary = title.copyWith(
+    color: ColorPalette.secondary,
   );
 
-  static const description = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w300,
-    color: Color(0xFFFFFFFF),
+  static final description = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w200,
+    color: Colors.grey.shade800,
   );
 
-  static const descriptionSecondary = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w300,
-    color: Color(0XFF9E9E9E),
+  static final descriptionAccent = description.copyWith(
+    color: Colors.white,
+  );
+
+  static final descriptionSecondary = description.copyWith(
+    color: ColorPalette.secondary,
   );
 
   static final primaryButtonDecoration = BoxDecoration(

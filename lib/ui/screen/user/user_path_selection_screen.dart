@@ -31,7 +31,7 @@ class _UserPathSelectionScreenState extends State<UserPathSelectionScreen> with 
             children: <Widget>[
               Text(
                 'เลือกเส้นทางสู่ความสำเร็จ',
-                style: Styles.titlePrimary,
+                style: Styles.headerSectionPrimary,
                 textAlign: TextAlign.center,
               ),
               Padding(

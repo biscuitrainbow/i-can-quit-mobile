@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_event.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
@@ -29,7 +30,7 @@ class _SmokingEntryScreenState extends State<SmokingEntryScreen> {
       appBar: AppBar(
         title: Text(
           'สร้างบันทึก',
-          style: TextStyle(color: ColorPalette.primary),
+          style: GoogleFonts.kanit().copyWith(color: ColorPalette.primary),
         ),
         centerTitle: true,
         elevation: 0,

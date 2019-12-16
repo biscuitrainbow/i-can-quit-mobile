@@ -17,7 +17,7 @@ class NavigationDrawer extends StatelessWidget {
             children: <Widget>[
               SizedBox(height: 32.0),
               ListTile(
-                title: Text('iCanQuit', style: Styles.bigHeaderPrimary),
+                title: Text('iCanQuit', style: Styles.headerPrimary),
               ),
               // ListTile(
               //   title: Text(viewModel.user.name),

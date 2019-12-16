@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:i_can_quit/bloc/achievement/achievement_bloc.dart';
 import 'package:i_can_quit/bloc/achievement/achievement_state.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
@@ -73,7 +74,10 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
       padding: EdgeInsets.symmetric(vertical: 24),
       child: Column(
         children: <Widget>[
-          Text('ไม่ได้สูบบุหรี่มาแล้ว', style: Styles.titlePrimary),
+          Text(
+            'ไม่ได้สูบบุหรี่มาแล้ว',
+            style: Styles.headerSectionPrimary,
+          ),
           SizedBox(height: 16),
           TimePassed(from: state.latestHasSmokedEntry.datetime),
         ],
@@ -91,9 +95,15 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('การฟื้นฟูของร่างกาย', style: Styles.titlePrimary),
+              Text(
+                'การฟื้นฟูของร่างกาย',
+                style: Styles.headerSectionPrimary,
+              ),
               GestureDetector(
-                child: Text('ดูทั้งหมด', style: Theme.of(context).textTheme.title.copyWith(fontSize: 16, color: Colors.grey.shade500)),
+                child: Text(
+                  'ดูทั้งหมด',
+                  style: Styles.descriptionSecondary,
+                ),
                 onTap: () => Navigator.of(context).pushNamed(HealthRegenerationScreen.route),
               )
             ],
@@ -120,7 +130,10 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('ความสำเร็จ', style: Styles.titlePrimary),
+          Text(
+            'ความสำเร็จ',
+            style: Styles.headerSectionPrimary,
+          ),
           SizedBox(height: 16),
           ...state.achievements.map(
             (achievement) => Padding(
@@ -139,7 +152,10 @@ class _SmokingOverviewScreenState extends State<SmokingOverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ภาพรวม'),
+        title: Text(
+          'ภาพรวม',
+          style: GoogleFonts.kanit(),
+        ),
         centerTitle: true,
         elevation: 0,
       ),

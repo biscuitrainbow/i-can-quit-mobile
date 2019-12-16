@@ -44,14 +44,14 @@ class _TimePassedState extends State<TimePassed> {
       children: <Widget>[
         Column(
           children: <Widget>[
-            Text('${formatter.format(_now.difference(this.widget.from).inDays)}', style: TextStyle(fontSize: 32, color: Colors.grey.shade700)),
+            Text('${formatter.format(_now.difference(this.widget.from).inDays)}', style: Styles.header),
             Text('วัน', style: Styles.descriptionSecondary),
           ],
         ),
         SizedBox(width: 32),
         Column(
           children: <Widget>[
-            Text('${formatter.format(_now.difference(this.widget.from).inHours % 24)}', style: TextStyle(fontSize: 32, color: Colors.grey.shade700)),
+            Text('${formatter.format(_now.difference(this.widget.from).inHours % 24)}', style: Styles.header),
             Text('ชั่วโมง', style: Styles.descriptionSecondary),
           ],
         ),
@@ -60,10 +60,7 @@ class _TimePassedState extends State<TimePassed> {
           children: <Widget>[
             Text(
               '${formatter.format(_now.difference(this.widget.from).inMinutes % 60)}',
-              style: TextStyle(
-                fontSize: 32,
-                color: Colors.grey.shade700,
-              ),
+              style: Styles.header,
             ),
             Text('นาที', style: Styles.descriptionSecondary),
           ],
@@ -71,8 +68,7 @@ class _TimePassedState extends State<TimePassed> {
         SizedBox(width: 32),
         Column(
           children: <Widget>[
-            Text('${formatter.format(_now.difference(this.widget.from).inSeconds % 60)}',
-                style: TextStyle(fontSize: 32, color: Colors.grey.shade700)),
+            Text('${formatter.format(_now.difference(this.widget.from).inSeconds % 60)}', style: Styles.header),
             Text('วินาที', style: Styles.descriptionSecondary),
           ],
         ),

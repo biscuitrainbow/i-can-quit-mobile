@@ -83,12 +83,12 @@ class _HealthRegenerationItemState extends State<HealthRegenerationItem> {
             if (regenerationDurationRemaining.isNegative)
               Text(
                 'ฟื้นฟูแล้ว',
-                style: Theme.of(context).textTheme.title.copyWith(fontSize: 16),
+                style: Styles.description,
               )
             else
               Text(
                 StringUtils.toRemainingText(regenerationDurationRemaining),
-                style: TextStyle(fontSize: 14, color: Color(0XFF9E9E9E)),
+                style: Styles.descriptionSecondary,
               )
           ],
         ),
@@ -99,7 +99,7 @@ class _HealthRegenerationItemState extends State<HealthRegenerationItem> {
             children: <Widget>[
               Text(
                 widget.healthRegeneration.title,
-                style: Styles.title.copyWith(fontSize: 18),
+                style: Styles.title,
               ),
               Text(
                 widget.healthRegeneration.description,

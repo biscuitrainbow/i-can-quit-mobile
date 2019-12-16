@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:flutter_rounded_date_picker/era_mode.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
+import 'package:i_can_quit/constant/style.dart';
 import 'package:i_can_quit/data/model/smoking_entry.dart';
 import 'package:i_can_quit/ui/widget/selector/selector_group.dart';
 import 'package:intl/intl.dart';
@@ -55,7 +56,10 @@ class _SmokingEntryFormState extends State<SmokingEntryForm> {
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(_entry.hasSmoked ? "สูบ" : "ไม่ได้สูบ", style: TextStyle(color: ColorPalette.detail)),
+                Text(
+                  _entry.hasSmoked ? "สูบ" : "ไม่ได้สูบ",
+                  style: Styles.descriptionSecondary,
+                ),
                 Switch(
                   value: _entry.hasSmoked,
                   onChanged: (bool smoked) {
@@ -99,7 +103,10 @@ class _SmokingEntryFormState extends State<SmokingEntryForm> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(DateFormat('dd MMM yyyy hh:mm', 'th').format(_entry.datetime), style: TextStyle(color: ColorPalette.detail)),
+                Text(
+                  DateFormat('dd MMM yyyy hh:mm', 'th').format(_entry.datetime),
+                  style: Styles.descriptionSecondary,
+                ),
               ],
             ),
             onTap: () => {
@@ -191,7 +198,7 @@ class EntryContainer extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.title.copyWith(fontSize: 16),
+            style: Styles.title,
           ),
           trailing,
         ],

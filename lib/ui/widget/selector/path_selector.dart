@@ -36,7 +36,7 @@ class PathSelector extends StatelessWidget {
           children: <Widget>[
             Text(
               title,
-              style: selected ? Styles.titlePrimary : Styles.title,
+              style: selected ? Styles.headerSectionPrimary : Styles.headerSection,
             ),
             Text(
               description,

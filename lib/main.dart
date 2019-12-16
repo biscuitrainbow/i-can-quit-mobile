@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:i_can_quit/bloc/achievement/achievement_bloc.dart';
 import 'package:i_can_quit/bloc/app_bloc_delegate.dart';
@@ -228,10 +229,7 @@ class _ApplicationState extends State<Application> {
         theme: ThemeData(
           primaryColor: ColorPalette.primary,
           accentColor: ColorPalette.primary,
-          fontFamily: 'Kanit',
-          textTheme: Theme.of(context).textTheme.copyWith(
-                title: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500),
-              ),
+          textTheme: GoogleFonts.kanitTextTheme(),
         ),
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,

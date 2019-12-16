@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:html/dom.dart' as dom;
+import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/data/model/news.dart';
 import 'package:i_can_quit/ui/widget/shimmer/image_shimmer.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -26,7 +28,10 @@ class _NewsScreenState extends State<NewsScreen> {
               expandedHeight: 200.0,
               floating: true,
               pinned: true,
-              title: Text(this.widget.news.title),
+              title: Text(
+                this.widget.news.title,
+                style: GoogleFonts.kanit(),
+              ),
               flexibleSpace: FlexibleSpaceBar(
                 background: CachedNetworkImage(
                     fit: BoxFit.cover,

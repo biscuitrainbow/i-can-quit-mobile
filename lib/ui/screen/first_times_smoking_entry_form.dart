@@ -28,7 +28,7 @@ class _FirstTimesSmokingEntryScreenState extends State<FirstTimesSmokingEntryScr
             children: <Widget>[
               Text(
                 'กรอกบันทึกการสูบบุหรี่ครั้งล่าสุดของคุณ',
-                style: Styles.titlePrimary,
+                style: Styles.headerSectionPrimary,
                 textAlign: TextAlign.center,
               ),
               Padding(

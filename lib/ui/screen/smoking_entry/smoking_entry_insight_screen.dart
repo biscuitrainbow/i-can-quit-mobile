@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
@@ -44,7 +45,7 @@ class _SmokingEntryInsightScreenState extends State<SmokingEntryInsightScreen> w
             SliverAppBar(
               title: Text(
                 'ข้อมูลเชิงลึก',
-                style: TextStyle(color: ColorPalette.primary),
+                style: GoogleFonts.kanit().copyWith(color: ColorPalette.primary),
               ),
               floating: true,
               pinned: true,
@@ -53,6 +54,7 @@ class _SmokingEntryInsightScreenState extends State<SmokingEntryInsightScreen> w
               elevation: 0,
               backgroundColor: Colors.white,
               bottom: TabBar(
+                labelStyle: GoogleFonts.kanit(),
                 isScrollable: true,
                 unselectedLabelColor: Colors.grey,
                 labelColor: Colors.white,

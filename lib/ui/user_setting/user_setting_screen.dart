@@ -52,7 +52,7 @@ class _UserSettingScreenState extends State<UserSettingScreen> {
           children: <Widget>[
             Text(
               'ในแต่ละวันคุณสูบบุหรี่กี่มวน',
-              style: Styles.titlePrimary,
+              style: Styles.headerSectionPrimary,
             ),
             GroupSelector(
               items: _numberOfCigarettesPerDays,
@@ -63,7 +63,7 @@ class _UserSettingScreenState extends State<UserSettingScreen> {
             SizedBox(height: 28),
             Text(
               'บุหรี่หนึ่งซองราคาเท่าไหร่',
-              style: Styles.titlePrimary,
+              style: Styles.headerSectionPrimary,
             ),
             Row(
               children: <Widget>[
@@ -96,7 +96,7 @@ class _UserSettingScreenState extends State<UserSettingScreen> {
             SizedBox(height: 28),
             Text(
               'จำนวนบุหรี่ในหนึ่งซอง',
-              style: Styles.titlePrimary,
+              style: Styles.headerSectionPrimary,
             ),
             GroupSelector(
               items: _numberOfCigarettesPerPackages,

@@ -39,6 +39,7 @@ dependencies:
   fluttertoast: ^3.1.3
   font_awesome_flutter: ^8.5.0
   geolocator: ^5.1.5
+  google_fonts: ^0.1.1
   google_map_location_picker: ^2.0.1
   # google_maps_flutter: ^0.5.21
   google_sign_in: ^4.0.7
@@ -106,26 +107,6 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Kanit
-      fonts:
-        - asset: fonts/Kanit-Black.ttf
-          weight: 900
-        - asset: fonts/Kanit-ExtraBold.ttf
-          weight: 800
-        - asset: fonts/Kanit-Bold.ttf
-          weight: 700
-        - asset: fonts/Kanit-Semibold.ttf
-          weight: 600
-        - asset: fonts/Kanit-Medium.ttf
-          weight: 500
-        - asset: fonts/Kanit-Regular.ttf
-          weight: 400
-        - asset: fonts/Kanit-Light.ttf
-          weight: 300
-        - asset: fonts/Kanit-Light.ttf
-          weight: 200
-        - asset: fonts/Kanit-Thin.ttf
-          weight: 100
     - family: iconfont
       fonts:
         - asset: fonts/icon-font/iconfont.ttf

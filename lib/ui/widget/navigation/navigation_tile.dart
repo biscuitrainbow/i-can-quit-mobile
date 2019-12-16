@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:i_can_quit/constant/style.dart';
 
 class NavigationTile extends StatelessWidget {
   final IconData icon;
@@ -23,7 +24,10 @@ class NavigationTile extends StatelessWidget {
             size: 18,
           ),
           SizedBox(width: 8.0),
-          Text(title),
+          Text(
+            title,
+            style: Styles.description,
+          ),
         ],
       ),
       onTap: onTap,

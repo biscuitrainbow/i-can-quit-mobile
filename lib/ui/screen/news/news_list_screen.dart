@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:i_can_quit/bloc/news/news_bloc.dart';
 import 'package:i_can_quit/bloc/news/news_event.dart';
 import 'package:i_can_quit/bloc/news/news_state.dart';
@@ -44,11 +45,15 @@ class _NewsListScreenState extends State<NewsListScreen> with SingleTickerProvid
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('ข่าวสาร', style: TextStyle(color: ColorPalette.primary)),
+        title: Text(
+          'ข่าวสาร',
+          style: GoogleFonts.kanit().copyWith(color: ColorPalette.primary),
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
         bottom: TabBar(
+          labelStyle: GoogleFonts.kanit(),
           isScrollable: true,
           unselectedLabelColor: Colors.grey,
           labelColor: Colors.white,

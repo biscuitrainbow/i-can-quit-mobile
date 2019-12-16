@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
+import 'package:google_fonts/google_fonts.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
@@ -45,7 +46,7 @@ class _SmokingEntryChartState extends State<SmokingEntryChart> {
                   weekFormat: true,
                   locale: 'th',
                   iconColor: ColorPalette.primary,
-                  headerTextStyle: Styles.title.copyWith(fontWeight: FontWeight.w400),
+                  headerTextStyle: Styles.headerSection.copyWith(fontWeight: FontWeight.w400),
                   maxSelectedDate: DateTime.now(),
                   selectedDayButtonColor: Theme.of(context).scaffoldBackgroundColor,
                   onCalendarChanged: (datetime) {
@@ -91,7 +92,7 @@ class _SmokingEntryChartState extends State<SmokingEntryChart> {
                   ],
                   primaryXAxis: DateTimeAxis(
                     majorGridLines: MajorGridLines(width: 0),
-                    labelStyle: ChartTextStyle(fontFamily: 'Kanit'),
+                    labelStyle: ChartTextStyle(fontFamily: GoogleFonts.kanit().fontFamily)
                   ),
                   primaryYAxis: NumericAxis(
                     majorGridLines: MajorGridLines(width: 0.3),

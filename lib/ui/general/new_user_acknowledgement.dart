@@ -37,7 +37,7 @@ class _NewUserAcknowledgementState extends State<NewUserAcknowledgement> {
           FlatButton(
             child: Text(
               'กรอกข้อมูลเบื้องต้น',
-              style: TextStyle(color: Colors.white),
+              style: Styles.titleAccent,
             ),
             color: ColorPalette.primary,
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => UserFirstSettingScreen())),

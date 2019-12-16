@@ -6,6 +6,6 @@ class ColorPalette {
 
   static const primaryBackground = Color(0xFFFFE8D9);
 
-  static const title = Color(0xFF1F2933);
-  static const detail = Color(0xFF52606D);
+  static const content = Color(0xFF1F2933);
+  static final secondary = Colors.grey.shade500;
 }

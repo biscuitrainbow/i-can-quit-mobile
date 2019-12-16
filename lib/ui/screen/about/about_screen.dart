@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:i_can_quit/constant/assets.dart';
+import 'package:i_can_quit/constant/color-palette.dart';
 import 'package:i_can_quit/constant/style.dart';
 import 'package:i_can_quit/ui/screen/about/organization_item.dart';
 
@@ -15,7 +17,10 @@ class _AboutScreenState extends State<AboutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('เกี่ยวกับ'),
+          title: Text(
+            'เกี่ยวกับ',
+            style: GoogleFonts.kanit(),
+          ),
           elevation: 0.3,
         ),
         body: ListView(
@@ -33,7 +38,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 Text(
                   'หยุดบุหรี่: ตั้งใจ ทำได้',
                   textAlign: TextAlign.center,
-                  style: Styles.title.copyWith(fontSize: 18, color: Colors.grey.shade700, fontWeight: FontWeight.w300),
+                  style: Styles.title,
                 ),
               ],
             ),
@@ -48,7 +53,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     Text(
                       'คณะผู้วิจัย',
                       textAlign: TextAlign.center,
-                      style: Styles.title,
+                      style: Styles.headerSection,
                     ),
                     SizedBox(height: 16.0),
                     OrganizationItem(
@@ -84,7 +89,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     Text(
                       'ที่ปรึกษา',
                       textAlign: TextAlign.center,
-                      style: Styles.title,
+                      style: Styles.headerSection,
                     ),
                     SizedBox(height: 16.0),
                     OrganizationItem(
@@ -144,13 +149,13 @@ class _AboutScreenState extends State<AboutScreen> {
                     Text(
                       'พัฒนาโดย',
                       textAlign: TextAlign.center,
-                      style: Styles.title,
+                      style: Styles.headerSection,
                     ),
                     SizedBox(height: 16.0),
                     Text(
                       'นายณัฐพล ศรีโคตร',
                       textAlign: TextAlign.left,
-                      style: Styles.title.copyWith(fontSize: 18),
+                      style: Styles.title,
                     ),
                     Text(
                       'Embedded System & Mobile Application Laboratory',

@@ -44,7 +44,7 @@ class OverviewStatsItem extends StatelessWidget {
                   SizedBox(width: 8.0),
                   Text(
                     description,
-                    style: Styles.description,
+                    style: Styles.descriptionAccent,
                   ),
                 ],
               ),
@@ -53,9 +53,9 @@ class OverviewStatsItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 textBaseline: TextBaseline.alphabetic,
                 children: <Widget>[
-                  Text(title, style: Styles.biggerHeader),
+                  Text(title, style: Styles.headerBigger),
                   SizedBox(width: 8),
-                  Text(unit, style: Styles.description),
+                  Text(unit, style: Styles.descriptionAccent),
                 ],
               ),
             ],
@@ -67,9 +67,9 @@ class OverviewStatsItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 textBaseline: TextBaseline.alphabetic,
                 children: <Widget>[
-                  Text(title, style: Styles.bigHeader),
+                  Text(title, style: Styles.headerAccent),
                   SizedBox(width: 8),
-                  Text(unit, style: Styles.description),
+                  Text(unit, style: Styles.descriptionAccent),
                 ],
               ),
               Row(
@@ -84,7 +84,7 @@ class OverviewStatsItem extends StatelessWidget {
                   SizedBox(width: 8.0),
                   Text(
                     description,
-                    style: Styles.description,
+                    style: Styles.descriptionAccent,
                   ),
                 ],
               ),

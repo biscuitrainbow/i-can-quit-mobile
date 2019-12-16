@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:i_can_quit/constant/style.dart';
 
 class FormContainer extends StatelessWidget {
   final String title;
@@ -24,7 +25,7 @@ class FormContainer extends StatelessWidget {
           this.label.isNotEmpty
               ? Text(
                   label,
-                  style: TextStyle(color: Colors.blueGrey.shade300),
+                  style: Styles.description,
                 )
               : SizedBox(),
           SizedBox(height: 8.0),
@@ -42,7 +43,7 @@ class FormContainer extends StatelessWidget {
                 title.isNotEmpty
                     ? Text(
                         title,
-                        style: Theme.of(context).textTheme.subhead,
+                        style: Styles.description,
                       )
                     : child,
                 Icon(

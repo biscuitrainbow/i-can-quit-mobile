@@ -50,7 +50,7 @@ class _AchievementItemState extends State<AchievementItem> {
             children: <Widget>[
               Text(
                 widget.achievement.name,
-                style: Styles.title.copyWith(fontSize: 18),
+                style: Styles.title,
               ),
               Text(
                 widget.achievement.description,

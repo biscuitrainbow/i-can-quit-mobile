@@ -24,7 +24,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
             "บุหรี่เป็นสาเหตุที่ทำให้เกิดโรคต่าง ๆ ได้มากมาย ผู้ที่สูบบุหรี่อย่างต่อเนื่องจะมีอัตราการเสียชีวิตเพิ่มขึ้นเป็น 3 เท่าของผู้ที่ไม่สูบบุหรี่",
         pathImage: "assets/images/lung.png",
         backgroundColor: Colors.white,
-        styleTitle: Styles.bigHeaderPrimary,
+        styleTitle: Styles.headerPrimary,
         styleDescription: Styles.descriptionSecondary,
       ),
     );
@@ -35,7 +35,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
             "บุหรี่ อันตรายกว่าที่คิดบุหรี่มีสารมากกว่า 7,000 ชนิดที่เกิดจากการเผาไหม้บุหรี่ ในจำนวนนั้นสารหลายร้อยชนิดมีผลต่อการทำงานของร่างกาย และมากกว่า 70 ชนิดที่เป็นสารก่อมะเร็ง",
         pathImage: "assets/images/smoke.png",
         backgroundColor: Colors.white,
-        styleTitle: Styles.bigHeaderPrimary,
+        styleTitle: Styles.headerPrimary,
         styleDescription: Styles.descriptionSecondary,
       ),
     );
@@ -46,7 +46,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
             "สารพิษจากควันบุหรี่ที่ตกค้างตามเส้นผม ผิวหนัง เสื้อผ้า พรม ผ้าม่าน ตุ๊กตา โซฟา ที่นอน ฯลฯ เป็นแหล่งของควันบุหรี่มือสาม มีสารพิษตกค้างที่ก่อให้เกิดมะเร็ง",
         pathImage: "assets/images/pregnancy.png",
         backgroundColor: Colors.white,
-        styleTitle: Styles.bigHeaderPrimary,
+        styleTitle: Styles.headerPrimary,
         styleDescription: Styles.descriptionSecondary,
       ),
     );
@@ -66,8 +66,8 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
       slides: this.slides,
       onDonePress: this.onDonePress,
       onSkipPress: this.onSkipPress,
-      styleNameSkipBtn: Styles.titlePrimary.copyWith(fontSize: 16),
-      styleNameDoneBtn: Styles.titlePrimary.copyWith(fontSize: 16),
+      styleNameSkipBtn: Styles.headerSectionPrimary.copyWith(fontSize: 16),
+      styleNameDoneBtn: Styles.headerSectionPrimary.copyWith(fontSize: 16),
     );
   }
 }
