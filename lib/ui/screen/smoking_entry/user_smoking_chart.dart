@@ -66,11 +66,10 @@ class _UserSmokingChartState extends State<UserSmokingChart> {
                     Colors.grey.shade700,
                   ],
                   legend: Legend(
-                    isVisible: true,
-                    position: LegendPosition.bottom,
-                    toggleSeriesVisibility: true,
-                    textStyle: ChartTextStyle(fontFamily: 'Kanit'),
-                  ),
+                      isVisible: true,
+                      position: LegendPosition.bottom,
+                      toggleSeriesVisibility: true,
+                      textStyle: ChartTextStyle(fontFamily: GoogleFonts.kanit().fontFamily)),
                   enableSideBySideSeriesPlacement: false,
                   series: <ChartSeries>[
                     ColumnSeries<SmokingEntryTimeSeries, DateTime>(
@@ -92,11 +91,11 @@ class _UserSmokingChartState extends State<UserSmokingChart> {
                   ],
                   primaryXAxis: DateTimeAxis(
                     majorGridLines: MajorGridLines(width: 0),
-                    labelStyle: ChartTextStyle(fontFamily: GoogleFonts.kanit().fontFamily)
+                    labelStyle: ChartTextStyle(fontFamily: GoogleFonts.kanit().fontFamily),
                   ),
                   primaryYAxis: NumericAxis(
                     majorGridLines: MajorGridLines(width: 0.3),
-                    labelStyle: ChartTextStyle(fontFamily: 'Kanit'),
+                    labelStyle: ChartTextStyle(fontFamily: GoogleFonts.kanit().fontFamily),
                   ),
                 ),
               ),
