@@ -9,12 +9,12 @@ import 'package:i_can_quit/constant/style.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 
-class SmokingEntryChart extends StatefulWidget {
+class UserSmokingChart extends StatefulWidget {
   @override
-  _SmokingEntryChartState createState() => _SmokingEntryChartState();
+  _UserSmokingChartState createState() => _UserSmokingChartState();
 }
 
-class _SmokingEntryChartState extends State<SmokingEntryChart> {
+class _UserSmokingChartState extends State<UserSmokingChart> {
   DateTime _selectedDate = DateTime.now().subtract(Duration(days: DateTime.now().weekday));
 
   @override
