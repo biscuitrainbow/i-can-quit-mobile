@@ -4,7 +4,7 @@ import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_state.dart';
 import 'package:i_can_quit/data/model/smoking_entry.dart';
 import 'package:i_can_quit/data/repository/smoking_entry_repository.dart';
 import 'package:i_can_quit/data/repository/user_setting_repository.dart';
-import 'package:i_can_quit/ui/screen/smoking_entry/smoking_entry_chart.dart';
+import 'package:i_can_quit/ui/screen/smoking_entry/user_smoking_chart.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:intl/intl.dart';
 

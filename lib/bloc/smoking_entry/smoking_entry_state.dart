@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:i_can_quit/data/model/smoking_entry.dart';
 import 'package:i_can_quit/data/model/user_setting.dart';
-import 'package:i_can_quit/ui/screen/smoking_entry/smoking_entry_chart.dart';
+import 'package:i_can_quit/ui/screen/smoking_entry/user_smoking_chart.dart';
 
 abstract class SmokingEntryState extends Equatable {
   SmokingEntryState([List props = const []]) : super(props);

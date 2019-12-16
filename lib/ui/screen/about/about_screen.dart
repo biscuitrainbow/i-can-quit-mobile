@@ -95,7 +95,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     OrganizationItem(
                       nameThai: 'พระพรหมเสนาบดี',
                       nameEnglish:
-                          'กรรมการมหาเถรสมาคม \nเจ้าอาวาสวัดปทุมคงคาราชวรวิหาร ผู้รักษาการเจ้าคณะภาค ๗ และ ประธานคณะกรรมการฯ "หมู่บ้านรักษาศีล ๕"',
+                          'กรรมการมหาเถรสมาคม \nเจ้าอาวาสวัดปทุมคงคาราชวรวิหาร เจ้าคณะภาค ๗ และ ประธานคณะกรรมการฯ "หมู่บ้านรักษาศีล ๕"',
                       imageAsset: AssetImages.logoSFive,
                     ),
                     SizedBox(height: 16.0),
@@ -109,7 +109,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     OrganizationItem(
                       nameThai: 'พระเทพเวที, รศ.ดร.',
                       nameEnglish:
-                          'ผู้รักษาการเจ้าคณะภาค ๖ รองอธิการบดีฝ่ายกิจการนิสิต มหาวิทยาลัยมหาจุฬาลกรณราชวิทยาลัย และ ผู้ช่วยเจ้าอาวาสวัดสังเวชวิศยารามวรวิหาร',
+                          'เจ้าคณะภาค ๖ รองอธิการบดีฝ่ายกิจการนิสิต มหาวิทยาลัยมหาจุฬาลกรณราชวิทยาลัย และ ผู้ช่วยเจ้าอาวาสวัดสังเวชวิศยารามวรวิหาร',
                       imageAsset: AssetImages.logoMcu,
                     ),
                     SizedBox(height: 16.0),
