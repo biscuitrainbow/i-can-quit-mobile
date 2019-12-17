@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           Navigator.of(context).pop();
-          //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MainScreen()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MainScreen()));
         }
       });
   }

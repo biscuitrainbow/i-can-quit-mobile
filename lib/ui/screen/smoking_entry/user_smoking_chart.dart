@@ -46,7 +46,7 @@ class _UserSmokingChartState extends State<UserSmokingChart> {
                   weekFormat: true,
                   locale: 'th',
                   iconColor: ColorPalette.primary,
-                  headerTextStyle: Styles.headerSection.copyWith(fontWeight: FontWeight.w400),
+                  headerTextStyle: Styles.headerSection,
                   maxSelectedDate: DateTime.now(),
                   selectedDayButtonColor: Theme.of(context).scaffoldBackgroundColor,
                   onCalendarChanged: (datetime) {
@@ -92,6 +92,7 @@ class _UserSmokingChartState extends State<UserSmokingChart> {
                   primaryXAxis: DateTimeAxis(
                     majorGridLines: MajorGridLines(width: 0),
                     labelStyle: ChartTextStyle(fontFamily: GoogleFonts.kanit().fontFamily),
+                    rangePadding: ChartRangePadding.none,
                   ),
                   primaryYAxis: NumericAxis(
                     majorGridLines: MajorGridLines(width: 0.3),

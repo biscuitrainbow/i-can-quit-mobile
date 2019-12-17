@@ -56,16 +56,16 @@ void main() async {
   );
 
   final Dio dio = Dio(options);
-  // dio.interceptors.add(
-  //   PrettyDioLogger(
-  //     requestHeader: false,
-  //     requestBody: true,
-  //     responseBody: true,
-  //     responseHeader: false,
-  //     error: true,
-  //     compact: true,
-  //   ),
-  // );
+  dio.interceptors.add(
+    PrettyDioLogger(
+      requestHeader: false,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      error: true,
+      compact: true,
+    ),
+  );
 
   final FacebookLogin facebookLogin = FacebookLogin();
   final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -242,7 +242,7 @@ class _ApplicationState extends State<Application> {
           const Locale('en', 'US'), // English
           const Locale('th', 'TH'), // Thai
         ],
-        home: MainScreen(),
+        home: SplashScreen(),
         routes: {
           SmokingOverviewScreen.route: (_) => SmokingOverviewScreen(),
           LoginScreen.route: (_) => LoginScreen(),

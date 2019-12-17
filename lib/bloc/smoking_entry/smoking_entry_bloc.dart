@@ -25,12 +25,15 @@ class SmokingEntryBloc extends Bloc<SmokingEntryEvent, SmokingEntryState> {
         final entries = await _smokingEntryRepository.fetchEntries();
         final latestHasSmokedEntry = entries.isNotEmpty ? entries.firstWhere((entry) => entry.hasSmoked) : null;
 
-        final dateGroupedEntries = KtList.from(entries).groupBy((entry) => DateFormat('yyyy-MM-dd').format(entry.datetime));
+        final dateGroupedEntries = KtList.from(entries)
+        .filter((entry) => entry.hasSmoked == true)
+        .groupBy((entry) => DateFormat('yyyy-MM-dd').format(entry.datetime));
         final nonSmokedDates = dateGroupedEntries.filter((date) {
           return date.value.filter((entry) => entry.hasSmoked).count() == 0;
         });
 
-        final smokingCountTimeSeries = dateGroupedEntries.map((date) {
+        final smokingCountTimeSeries = dateGroupedEntries
+        .map((date) {
           return SmokingEntryTimeSeries(
             dateTime: DateFormat('yyyy-MM-dd').parse(date.key),
             smokingCount: date.value.filter((SmokingEntry entry) => entry.hasSmoked).count(),

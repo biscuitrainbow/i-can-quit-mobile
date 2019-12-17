@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:i_can_quit/constant/color-palette.dart';
 
 abstract class Styles {
@@ -6,6 +7,7 @@ abstract class Styles {
     fontSize: 22,
     fontWeight: FontWeight.w500,
     color: Colors.grey.shade800,
+    fontFamily: GoogleFonts.kanit().fontFamily,
   );
 
   static final headerSectionPrimary = headerSection.copyWith(

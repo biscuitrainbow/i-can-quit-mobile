@@ -95,21 +95,21 @@ class _AboutScreenState extends State<AboutScreen> {
                     OrganizationItem(
                       nameThai: 'พระพรหมเสนาบดี',
                       nameEnglish:
-                          'กรรมการมหาเถรสมาคม \nเจ้าอาวาสวัดปทุมคงคาราชวรวิหาร เจ้าคณะภาค ๗ และ ประธานคณะกรรมการฯ "หมู่บ้านรักษาศีล ๕"',
+                          'กรรมการมหาเถรสมาคม \nเจ้าอาวาสวัดปทุมคงคาราชวรวิหาร เจ้าคณะภาค ๗ \nและ ประธานคณะกรรมการฯ "หมู่บ้านรักษาศีล ๕"',
                       imageAsset: AssetImages.logoSFive,
                     ),
                     SizedBox(height: 16.0),
                     OrganizationItem(
                       nameThai: 'พระเทพปวรเมธี, รศ.ดร',
                       nameEnglish:
-                          'ผจล. และประธานองค์การศึกษา วัดประยุรวงศาวาสวรวิหาร รองอธิการบดีฝ่ายบริหารมหาวิทยาลัยมหาจุฬาลงกรณราชวิทยาลัย ประธาน คปพ."',
+                          'ผจล. และประธานองค์การศึกษา วัดประยุรวงศาวาสวรวิหาร\nรองอธิการบดีฝ่ายบริหารมหาวิทยาลัยมหาจุฬาลงกรณราชวิทยาลัย ประธาน คปพ.',
                       imageAsset: AssetImages.logoMcu,
                     ),
                     SizedBox(height: 16.0),
                     OrganizationItem(
                       nameThai: 'พระเทพเวที, รศ.ดร.',
                       nameEnglish:
-                          'เจ้าคณะภาค ๖ รองอธิการบดีฝ่ายกิจการนิสิต มหาวิทยาลัยมหาจุฬาลกรณราชวิทยาลัย และ ผู้ช่วยเจ้าอาวาสวัดสังเวชวิศยารามวรวิหาร',
+                          'เจ้าคณะภาค ๖ \nรองอธิการบดีฝ่ายกิจการนิสิต\nมหาวิทยาลัยมหาจุฬาลกรณราชวิทยาลัย และ ผู้ช่วยเจ้าอาวาสวัดสังเวชวิศยารามวรวิหาร',
                       imageAsset: AssetImages.logoMcu,
                     ),
                     SizedBox(height: 16.0),
@@ -140,7 +140,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     ),
                     SizedBox(height: 16.0),
                     OrganizationItem(
-                      nameThai: 'สุพัตรา พันธุ์อำนวย',
+                      nameThai: 'คุณสุพัตรา พันธุ์อำนวย',
                       nameEnglish: 'สำนักงานกองทุนสนับสนุนการสร้างเสริมสุขภาพ (สสส.)',
                       imageAsset: AssetImages.logoSSS,
                       // iconSize: 60,
