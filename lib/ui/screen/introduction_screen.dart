@@ -46,7 +46,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
             "ควันบุหรี่มือสอง​ คือ​ ควันบุหรี่​ที่ผู้สูบบุหรี่​พ่นออกมาทางลมหายใจรวมกับควันจากบุหรี่ที่กำลังเผาไหม้​ มีสารเคมีที่เป็นอันตรายต่อสุขภาพเป็นจำนวนมาก \n\n ควันบุหรี่มือสาม คือสารพิษจากควันบุหรี่ที่ตกค้างตามเส้นผม ผิวหนัง เสื้อผ้า พรม ผ้าม่าน ตุ๊กตา โซฟา ที่นอน ฯลฯ มีสารพิษตกค้างที่ก่อให้เกิดมะเร็ง",
         pathImage: "assets/images/pregnancy.png",
         backgroundColor: Colors.white,
-        styleTitle: Styles.headerPrimary.copyWith(fontSize: 24),
+        styleTitle: Styles.headerPrimary.copyWith(fontSize: 18),
         styleDescription: Styles.descriptionSecondary,
       ),
     );
