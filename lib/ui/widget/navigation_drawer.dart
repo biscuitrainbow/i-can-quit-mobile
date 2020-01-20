@@ -6,6 +6,7 @@ import 'package:i_can_quit/ui/screen/introduction_screen.dart';
 import 'package:i_can_quit/ui/user_setting/user_setting_screen.dart';
 import 'package:i_can_quit/ui/widget/navigation/navigation_tile.dart';
 import 'package:i_can_quit/ui/widget/section_divider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NavigationDrawer extends StatelessWidget {
   @override
@@ -19,10 +20,6 @@ class NavigationDrawer extends StatelessWidget {
               ListTile(
                 title: Text('iCanQuit', style: Styles.headerPrimary),
               ),
-              // ListTile(
-              //   title: Text(viewModel.user.name),
-              //   subtitle: Text(viewModel.user.email),
-              // ),
               SectionDivider(),
               NavigationTile(
                 icon: FontAwesomeIcons.user,
@@ -38,17 +35,12 @@ class NavigationDrawer extends StatelessWidget {
                 icon: FontAwesomeIcons.book,
                 title: 'สาระน่ารู้เกี่ยวกับบุหรี่',
                 onTap: () => Navigator.of(context).pushNamed(IntroductionScreen.route),
+              ),
+              NavigationTile(
+                icon: FontAwesomeIcons.phone,
+                title: 'สายด่วนเลิกบุหรี่',
+                onTap: () => launch('tel:1600'),
               )
-              // NavigationTile(
-              //   icon: FontAwesomeIcons.heartbeat,
-              //   title: 'บันทึกความดันโลหิต',
-              //   onTap: () => Navigator.of(context).pushNamed(BloodPressureScreen.route),
-              // ),
-              // NavigationTile(
-              //   icon: FontAwesomeIcons.cog,
-              //   title: 'ตั้งค่า',
-              //   onTap: () => Navigator.of(context).pushNamed(ProfileScreen.route),
-              // ),
             ],
           ),
         ),

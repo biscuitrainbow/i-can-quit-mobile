@@ -40,6 +40,12 @@ class _AboutScreenState extends State<AboutScreen> {
                   textAlign: TextAlign.center,
                   style: Styles.title,
                 ),
+                SizedBox(height: 16),
+                Text(
+                  'ข้อมูลภายในแอปเป็นเพียงคำแนะนำเบื้องต้นในช่วยลดการสูบบุหรี่ โปรดปรึกษาผู้เชี่ยวชาญเพื่อประสิทธิภาพสูงสุด',
+                  textAlign: TextAlign.center,
+                  style: Styles.descriptionSecondary,
+                ),
               ],
             ),
             SizedBox(height: 16),
@@ -94,8 +100,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     SizedBox(height: 16.0),
                     OrganizationItem(
                       nameThai: 'พระพรหมเสนาบดี',
-                      nameEnglish:
-                          'กรรมการมหาเถรสมาคม \nเจ้าอาวาสวัดปทุมคงคาราชวรวิหาร เจ้าคณะภาค ๗ \nและ ประธานคณะกรรมการฯ "หมู่บ้านรักษาศีล ๕"',
+                      nameEnglish: 'กรรมการมหาเถรสมาคม \nเจ้าอาวาสวัดปทุมคงคาราชวรวิหาร เจ้าคณะภาค ๗ \nและ ประธานคณะกรรมการฯ "หมู่บ้านรักษาศีล ๕"',
                       imageAsset: AssetImages.logoSFive,
                     ),
                     SizedBox(height: 16.0),

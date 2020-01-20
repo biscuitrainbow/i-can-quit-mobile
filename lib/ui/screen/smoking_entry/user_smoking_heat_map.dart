@@ -16,19 +16,18 @@ class _UserSmokingHeatMapState extends State<UserSmokingHeatMap> {
 
   @override
   Widget build(BuildContext context) {
-    // return WebView(
-    //   initialUrl: "https://i-can-quit-map.firebaseapp.com/",
-    //   javascriptMode: JavascriptMode.unrestricted,
-    //   debuggingEnabled: true,
-    // );
-
     return InAppWebView(
       initialUrl: "https://i-can-quit-map.firebaseapp.com/",
+      onConsoleMessage: (_, message) {
+        print(message.message);
+      },
       initialOptions: InAppWebViewWidgetOptions(
         inAppWebViewOptions: InAppWebViewOptions(
           debuggingEnabled: true,
           javaScriptEnabled: true,
+          cacheEnabled: false,
         ),
+        
       ),
     );
   }
