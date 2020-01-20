@@ -45,7 +45,7 @@ import 'bloc/authentication/authentication_event.dart';
 import 'data/repository/user_setting_repository.dart';
 
 void main() async {
-  SyncfusionLicense.registerLicense("NT8mJyc2IWhiZH1gfWN9YmdoYmF8YGJ8ampqanNiYmlmamlmanMDHmg9MicnOzIjPD0gITowPCEnEzQ+Mjo/fTA8Pg==");
+  SyncfusionLicense.registerLicense("NT8mJyc2IWhiZH1nfWN9YGpoYmF8YGJ8ampqanNiYmlmamlmanMDHmg9MicnOzIjPD0gITowPCEnEzQ+Mjo/fTA8Pg==");
   await DotEnv().load('.env');
 
   final BaseOptions options = BaseOptions(
@@ -56,16 +56,16 @@ void main() async {
   );
 
   final Dio dio = Dio(options);
-  // dio.interceptors.add(
-  //   PrettyDioLogger(
-  //     requestHeader: false,
-  //     requestBody: true,
-  //     responseBody: true,
-  //     responseHeader: false,
-  //     error: true,
-  //     compact: true,
-  //   ),
-  // );
+  dio.interceptors.add(
+    PrettyDioLogger(
+      requestHeader: false,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      error: true,
+      compact: true,
+    ),
+  );
 
   final FacebookLogin facebookLogin = FacebookLogin();
   final GoogleSignIn googleSignIn = GoogleSignIn(

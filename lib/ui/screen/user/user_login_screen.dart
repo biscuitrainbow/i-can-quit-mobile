@@ -52,8 +52,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
 
-    _emailController = TextEditingController(text: 'user@email.com');
-    _passwordController = TextEditingController(text: 'password');
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
 
     _emailNode = FocusNode();
     _passwordNode = FocusNode();

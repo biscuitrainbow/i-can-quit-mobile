@@ -7,7 +7,6 @@ import 'package:i_can_quit/bloc/authentication/authentication_event.dart';
 import 'package:i_can_quit/bloc/authentication/authentication_state.dart';
 import 'package:i_can_quit/bloc/smoking_entry/smoking_entry_bloc.dart';
 import 'package:i_can_quit/bloc/user/user_bloc.dart';
-import 'package:i_can_quit/bloc/user/user_event.dart';
 import 'package:i_can_quit/bloc/user_setting/user_setting_bloc.dart';
 import 'package:i_can_quit/data/repository/token_repository.dart';
 import 'package:i_can_quit/data/repository/user_repository.dart';
@@ -56,6 +55,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
         yield UserAuthenticated();
       } catch (error) {
+        print(error);
         yield LoginError();
       }
     }
