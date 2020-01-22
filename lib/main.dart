@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -56,16 +57,19 @@ void main() async {
   );
 
   final Dio dio = Dio(options);
-  dio.interceptors.add(
-    PrettyDioLogger(
-      requestHeader: false,
-      requestBody: true,
-      responseBody: true,
-      responseHeader: false,
-      error: true,
-      compact: true,
-    ),
-  );
+
+  if (kDebugMode) {
+    dio.interceptors.add(
+      PrettyDioLogger(
+        requestHeader: false,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        error: true,
+        compact: true,
+      ),
+    );
+  }
 
   final FacebookLogin facebookLogin = FacebookLogin();
   final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -182,7 +186,9 @@ class _ApplicationState extends State<Application> {
 
     authenticationBloc.add(CheckAuthenticated());
 
-    BlocSupervisor.delegate = AppBlocDelegate();
+    if (kDebugMode) {
+      BlocSupervisor.delegate = AppBlocDelegate();
+    }
   }
 
   @override
