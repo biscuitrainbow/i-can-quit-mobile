@@ -39,7 +39,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     if (event is AuthenticateUser) {
       await _tokenRepository.persist(event.token);
 
-      yield UserAuthenticated();
+      yield UserAuthenticated(token: event.token);
     }
 
     if (event is LoginWithEmailAndPassword) {
@@ -53,7 +53,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
         await _tokenRepository.persist(token);
 
-        yield UserAuthenticated();
+        yield UserAuthenticated(token: token);
       } catch (error) {
         print(error);
         yield LoginError();
@@ -67,7 +67,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         final token = await _authenticationService.loginWithGoogle();
         await _tokenRepository.persist(token);
 
-        yield UserAuthenticated();
+        yield UserAuthenticated(token: token);
       } on DioError catch (error) {
         if (error.response.statusCode == HttpStatus.unauthorized) {
           yield ProviderEmailHasNotRegistered(
@@ -89,7 +89,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         final token = await _authenticationService.loginWithFacebook();
         await _tokenRepository.persist(token);
 
-        yield UserAuthenticated();
+        yield UserAuthenticated(token: token);
       } on DioError catch (error) {
         if (error.response.statusCode == HttpStatus.unauthorized) {
           yield ProviderEmailHasNotRegistered(
@@ -110,12 +110,11 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       yield LoginLoading();
 
       final token = await _tokenRepository.token();
-
       if (token != null) {
         try {
           await _authenticationService.checkAuthenticated();
 
-          yield UserAuthenticated();
+          yield UserAuthenticated(token: token);
         } catch (error) {
           print(error);
           yield Unauthenticated();

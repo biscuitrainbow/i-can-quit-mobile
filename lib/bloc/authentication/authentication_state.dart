@@ -25,7 +25,13 @@ class ProviderEmailHasNotRegistered extends AuthenticationState {
   }) : super([email, name]);
 }
 
-class UserAuthenticated extends AuthenticationState {}
+class UserAuthenticated extends AuthenticationState {
+  final String token;
+
+  UserAuthenticated({
+    @required this.token,
+  });
+}
 
 class RegistrationSuccess extends AuthenticationState {
   final User user;

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:i_can_quit/bloc/authentication/authentication_bloc.dart';
+import 'package:i_can_quit/bloc/authentication/authentication_state.dart';
+import 'package:i_can_quit/bloc/user/user_bloc.dart';
+import 'package:i_can_quit/bloc/user/user_event.dart';
+import 'package:i_can_quit/bloc/user/user_state.dart';
 
 class UserSmokingHeatMap extends StatefulWidget {
   @override
@@ -16,19 +20,23 @@ class _UserSmokingHeatMapState extends State<UserSmokingHeatMap> {
 
   @override
   Widget build(BuildContext context) {
-    return InAppWebView(
-      initialUrl: "https://i-can-quit-map.firebaseapp.com/",
-      onConsoleMessage: (_, message) {
-        print(message.message);
-      },
-      initialOptions: InAppWebViewWidgetOptions(
-        inAppWebViewOptions: InAppWebViewOptions(
-          debuggingEnabled: true,
-          javaScriptEnabled: true,
-          cacheEnabled: false,
-        ),
-        
-      ),
-    );
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(builder: (context, state) {
+      if (state is UserAuthenticated) {
+        return InAppWebView(
+          initialUrl: "https://i-can-quit-map.firebaseapp.com/heatmap/user/${state.token}",
+          initialOptions: InAppWebViewWidgetOptions(
+            inAppWebViewOptions: InAppWebViewOptions(
+              debuggingEnabled: true,
+              javaScriptEnabled: true,
+              cacheEnabled: false,
+            ),
+          ),
+        );
+      }
+
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    });
   }
 }

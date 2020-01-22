@@ -57,7 +57,6 @@ dependencies:
   syncfusion_flutter_charts: ^17.3.26
   timeago: ^2.0.20
   youtube_player_flutter: ^6.0.3+2
-  flutter_webview_plugin: 0.3.10
   flutter_inappwebview: ^2.1.0+1
   url_launcher: ^5.4.1
 
