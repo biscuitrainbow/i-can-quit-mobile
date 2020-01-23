@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>37690598092-s734dqoth2a20baedphrml2iqgdakpru.apps.googleusercontent.com</string>
+	<string>37690598092-3bfrqdv4t86ombmj5qlgs0n95rsd5vl1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.37690598092-s734dqoth2a20baedphrml2iqgdakpru</string>
+	<string>com.googleusercontent.apps.37690598092-3bfrqdv4t86ombmj5qlgs0n95rsd5vl1</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>37690598092-l5qqb57a0kqrfdd3ti9u54ou98hvtkt7.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>i.can.quit.camt.cmu.ac.th.iCanQuit</string>
+	<string>th.ac.camt.cmu.i.can.quit</string>
 	<key>PROJECT_ID</key>
 	<string>ican-d10b9</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:37690598092:ios:ec09e37b5757d366d65869</string>
+	<string>1:37690598092:ios:6743f28707456ad2d65869</string>
 	<key>DATABASE_URL</key>
 	<string>https://ican-d10b9.firebaseio.com</string>
 </dict>
